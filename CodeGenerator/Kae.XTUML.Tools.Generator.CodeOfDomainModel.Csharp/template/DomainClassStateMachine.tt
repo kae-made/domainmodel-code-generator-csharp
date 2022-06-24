@@ -195,22 +195,19 @@ namespace <#= nameSpace #>
     {
 #>
         public <#= stateMachineClassName #>(<#= domainClassName #> target) : base(0)
-        {
-            this.target = target;
-        }
-
 <#
     }
     else
 #>
         public <#= stateMachineClassName #>(<#= domainClassName #> target) : base(1)
-        {
-            this.target = target;
-        }
-
 <#
     {
 #>
+        {
+            this.target = target;
+            this.stateTransition = this;
+        }
+
 <#
     }
 
