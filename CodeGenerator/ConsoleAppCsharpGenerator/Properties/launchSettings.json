@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleAppCsharpGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "--metamodel bp\\tools\\mc\\schema\\xtumlmc_schema.sql --base-datatype bp\\tools\\mc\\Globals.xtuml --domainmodel bp\\workspace\\LaundromatInHotel\\models\\LaundromatInHotel --project LaundromatInHotel --dotnetver net5.0 --gen-folder demo\\xtuml\\csharp\\gen"
+    }
+  }
+}

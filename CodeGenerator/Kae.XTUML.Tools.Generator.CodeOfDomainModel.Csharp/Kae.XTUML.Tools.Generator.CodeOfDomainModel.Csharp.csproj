@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Kae.Tools.Generator" Version="2.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="template\DomainClassActions.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainClassActions.cs</LastGenOutput>
+    </None>
+    <None Update="template\DomainClassBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainClassBase.cs</LastGenOutput>
+    </None>
+    <None Update="template\DomainClassDefs.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainClassDefs.cs</LastGenOutput>
+    </None>
+    <None Update="template\DomainClassOperations.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainClassOperations.cs</LastGenOutput>
+    </None>
+    <None Update="template\DomainClassStateMachine.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainClassStateMachine.cs</LastGenOutput>
+    </None>
+    <None Update="template\DomainDataTypeDefs.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainDataTypeDefs.cs</LastGenOutput>
+    </None>
+    <None Update="template\InstanceRepository.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InstanceRepository.cs</LastGenOutput>
+    </None>
+    <None Update="template\ProjectFile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ProjectFile.cs</LastGenOutput>
+    </None>
+    <None Update="template\SuperTypeDefs.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SuperTypeDefs.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="template\DomainClassActions.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainClassActions.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainClassBase.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainClassBase.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainClassDefs.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainClassDefs.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainClassOperations.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainClassOperations.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainClassStateMachine.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainClassStateMachine.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainDataTypeDefs.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainDataTypeDefs.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\InstanceRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InstanceRepository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\ProjectFile.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProjectFile.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\SuperTypeDefs.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SuperTypeDefs.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
