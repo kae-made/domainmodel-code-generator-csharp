@@ -147,6 +147,7 @@ namespace <#= nameSpace #>
 
         }
 
+        bool isCreationEvent = IsCreationEvent(evtDef);
         var evtdiDefs = evtDef.LinkedFromR532();
         var createArgs = "";
         var constructorCallArgs = "";
@@ -171,14 +172,30 @@ namespace <#= nameSpace #>
         }
         string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
 #>
-            <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #>, InstanceRepository instanceRepository=null)
+            <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #><# if (isCreationEvent) { #>, InstanceRepository instanceRepository<# } #>)
             {
                 var newEvent = new <#= evtClassName #>()<#= constructorCallArgs #>;
-                if (receiver == null && instanceRepository !=null)
+<#
+        if (isCreationEvent)
+        {
+#>
+                if (receiver == null && instanceRepository != null)
                 {
                     receiver = <#= domainClassBaseName #>.CreateInstance(instanceRepository);
                 }
                 receiver.TakeEvent(newEvent);
+<#
+        }
+        else
+        {
+#>
+                if (receiver != null)
+                {
+                    receiver.TakeEvent(newEvent);
+                }
+<#
+        }
+#>
 
                 return newEvent;
             }
@@ -198,10 +215,11 @@ namespace <#= nameSpace #>
 <#
     }
     else
+    {
 #>
         public <#= stateMachineClassName #>(<#= domainClassName #> target) : base(1)
 <#
-    {
+    }
 #>
         {
             this.target = target;
@@ -209,8 +227,6 @@ namespace <#= nameSpace #>
         }
 
 <#
-    }
-
     var stateTransferTableDef = new List<StateTransfersEntry>();
     foreach (var stateDef in stateDefs)
     {

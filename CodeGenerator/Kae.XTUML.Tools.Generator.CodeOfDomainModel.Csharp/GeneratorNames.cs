@@ -10,6 +10,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 {
     internal class GeneratorNames
     {
+        public static string GetDomainFacadeClassName(string domainName)
+        {
+            return $"CIM{domainName}Lib";
+        }
         public static string GetDomainClassBaseInterfaceName()
         {
             return "DomainClassDef";

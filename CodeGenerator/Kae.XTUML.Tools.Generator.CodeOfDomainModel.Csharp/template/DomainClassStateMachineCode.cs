@@ -362,5 +362,24 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 
             return triggerEvtDef;
         }
+
+        public static bool IsCreationEvent(CIMClassSM_EVT evtDef)
+        {
+            bool result = false;
+            var subEvtDef = evtDef.SubClassR525();
+            if (subEvtDef is CIMClassSM_SEVT)
+            {
+                var subSevtDef = ((CIMClassSM_SEVT)(subEvtDef)).SubClassR526();
+                if (subSevtDef is CIMClassSM_LEVT)
+                {
+                    var crtxnDef = ((CIMClassSM_LEVT)subSevtDef).LinkedFromR509();
+                    if (crtxnDef != null)
+                    {
+                        result = true;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

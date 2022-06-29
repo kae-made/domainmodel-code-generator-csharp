@@ -153,10 +153,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}StateMachineActions.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassActionsCode,false).Wait();
                     Console.WriteLine($"Generated - {fileName}");
-                }
+                }            
             }
+            string domainFacadeClassName = GeneratorNames.GetDomainFacadeClassName(ProjectName);
+            var domainFacade = new DomainFacade(Version, ProjectName, domainFacadeClassName);
+            var domainFacadeCode = domainFacade.TransformText();
+            fileName = $"{domainFacadeClassName}.cs";
+            genFolder.WriteContentAsync(projectPath, fileName, domainFacadeCode).Wait();
+            Console.WriteLine($"Generated - {fileName}");
 
-
+            var syncDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_SYNC");
+            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs);
+            var domainOperationsCode = domainOperations.TransformText();
+            fileName = $"{domainFacadeClassName}Operations.cs";
+            genFolder.WriteContentAsync(projectPath,fileName,domainOperationsCode).Wait();
+            Console.WriteLine($"Generated - {fileName}");
         }
     }
 }

@@ -47,6 +47,14 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DomainDataTypeDefs.cs</LastGenOutput>
     </None>
+    <None Update="template\DomainFacade.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainFacade.cs</LastGenOutput>
+    </None>
+    <None Update="template\DomainOperations.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DomainOperations.cs</LastGenOutput>
+    </None>
     <None Update="template\InstanceRepository.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>InstanceRepository.cs</LastGenOutput>
@@ -95,6 +103,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DomainDataTypeDefs.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainFacade.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainFacade.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\DomainOperations.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainOperations.tt</DependentUpon>
     </Compile>
     <Compile Update="template\InstanceRepository.cs">
       <DesignTime>True</DesignTime>
