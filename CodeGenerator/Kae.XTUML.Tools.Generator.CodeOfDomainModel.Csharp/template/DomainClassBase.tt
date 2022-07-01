@@ -744,6 +744,20 @@ namespace <#= nameSpace #>
             return result;
         }
 <#
+                foreach(var subDef in subDefs)
+                {
+                    var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                    string methodNameLinked = GeneratorNames.GetRelationshipMethodName(subsupRelDef, "", "", GeneratorNames.RelLinkMethodType.Linked) + subObjDef.Attr_Key_Lett;
+                    string returnType = GeneratorNames.GetDomainClassName(subObjDef);
+#>
+        <#= returnType #> <#= methodNameLinked #>()
+        {
+            return (<#= returnType #>)<#= subClassGetMethodName #>();
+        }
+
+<#
+                }
+
         }
     }
     if (hasStateMachine)

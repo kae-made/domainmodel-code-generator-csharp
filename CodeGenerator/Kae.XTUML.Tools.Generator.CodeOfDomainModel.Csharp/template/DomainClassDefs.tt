@@ -224,6 +224,7 @@ namespace <#= nameSpace #>
                     }
 #>
         <#= returnType #> <#= methodNameLinked #>();
+
 <#
                 }
             }
@@ -247,6 +248,7 @@ namespace <#= nameSpace #>
                 }
 #>
         <#= returnType #> <#= methodNameLinked #>();
+
 <#
             }
             else if (subRto is CIMClassR_AOTH)
@@ -269,6 +271,7 @@ namespace <#= nameSpace #>
                 }
 #>
         <#= returnType #> <#= methodNameLinked #>();
+
 <#
             }
             else if (subRto is CIMClassR_SUPER)
@@ -279,7 +282,19 @@ namespace <#= nameSpace #>
                 var subClassGetMethodName = GeneratorNames.GetSubRelClassMethodName(subsupRelDef);
 #>
         <#= subClassIFName #> <#= subClassGetMethodName #>();
+
 <#
+                var subDefs = superDef.LinkedToR212().LinkedFromR213();
+                foreach(var subDef in subDefs)
+                {
+                    var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                    string methodNameLinked = GeneratorNames.GetRelationshipMethodName(subsupRelDef, "", "", GeneratorNames.RelLinkMethodType.Linked) + subObjDef.Attr_Key_Lett;
+                    string returnType = GeneratorNames.GetDomainClassName(subObjDef);
+#>
+        <#= returnType #> <#= methodNameLinked #>();
+
+<#
+                }
             }
         }
 
@@ -304,6 +319,7 @@ namespace <#= nameSpace #>
             }
 #>
         <#= retTypeName #> <#= opName #>(<#= args #>);
+
 <#
         }
 #>

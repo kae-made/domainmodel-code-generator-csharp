@@ -1,6 +1,7 @@
 ﻿using Kae.CIM.MetaModel.CIMofCIM;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -510,6 +511,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                     var subsupRelDef = subsupDef.CIMSuperClassR_REL();
                     var subClassIFName = GeneratorNames.GetSubRelInterfaceName(subsupRelDef);
                     var subClassGetMethodName = GeneratorNames.GetSubRelClassMethodName(subsupRelDef);
+
+                    var subDefs = superDef.LinkedToR212().LinkedFromR213();
+                    foreach (var subDef in subDefs)
+                    {
+                        var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                        string methodNameLinked = GeneratorNames.GetRelationshipMethodName(subsupRelDef, "", "", GeneratorNames.RelLinkMethodType.Linked) + subObjDef.Attr_Key_Lett;
+                        string returnType = GeneratorNames.GetDomainClassName(subObjDef);
+                    }
+
                 }
             }
 
@@ -594,6 +604,33 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
             }
             return condition;
+        }
+
+        public static string GetPropertyValueDomainRegexPattern(string descrip)
+        {
+            string pattern = null;
+            using (var reader = new StringReader(descrip))
+            {
+                string coloring = "@domain:";
+                string line = null;
+                while((line=reader.ReadLine()) != null)
+                {
+                    if (line.StartsWith(coloring))
+                    {
+                        string patternDef = line.Substring(coloring.Length);
+                        string[] frags = patternDef.Split(new char[] { '=' });
+                        if (frags.Length == 2)
+                        {
+                            if (frags[0] == "pattern")
+                            {
+                                pattern = frags[1];
+                                pattern = pattern.Substring(1, pattern.Length - 2);
+                            }
+                        }
+                    }
+                }
+            }
+            return pattern;
         }
 
         public class AttributeDef

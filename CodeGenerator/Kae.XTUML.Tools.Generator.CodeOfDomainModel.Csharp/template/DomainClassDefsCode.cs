@@ -210,6 +210,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         var subClassIFName = GeneratorNames.GetSubRelInterfaceName(subsupRelDef);
                         var subClassGetMethodName = GeneratorNames.GetSubRelClassMethodName(subsupRelDef);
 
+                        var subDefs = superDef.LinkedToR212().LinkedFromR213();
+                        foreach(var subDef in subDefs)
+                        {
+                            var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(subsupRelDef, "", "", GeneratorNames.RelLinkMethodType.Linked) + subObjDef.Attr_Key_Lett;
+                            string returnType = GeneratorNames.GetDomainClassName(subObjDef);
+                        }
+
                     }
                 }
 
