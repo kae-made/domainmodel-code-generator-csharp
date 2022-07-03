@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Kae.Utility.Logging;
 
 namespace <#= nameSpace #>
 {
@@ -24,6 +25,8 @@ namespace <#= nameSpace #>
     {
         protected InstanceRepository instanceRepository = new InstanceRepository();
         public static readonly string DomainName = "<#= nameSpace #>";
+
+        public Logger Logger { get; set; }
 
         public InstanceRepository InstanceRepository { get { return instanceRepository; } }
 

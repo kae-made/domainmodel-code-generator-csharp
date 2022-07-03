@@ -48,17 +48,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Kae.Utility.Logging;
 
 namespace ");
             
-            #line 21 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainFacade.tt"
+            #line 22 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainFacade.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public partial class ");
             
-            #line 23 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainFacade.tt"
+            #line 24 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainFacade.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainFacadeClassName));
             
             #line default
@@ -66,13 +67,13 @@ namespace ");
             this.Write("\r\n    {\r\n        protected InstanceRepository instanceRepository = new InstanceRe" +
                     "pository();\r\n        public static readonly string DomainName = \"");
             
-            #line 26 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainFacade.tt"
+            #line 27 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainFacade.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
-            this.Write("\";\r\n\r\n        public InstanceRepository InstanceRepository { get { return instanc" +
-                    "eRepository; } }\r\n\r\n    }\r\n}\r\n");
+            this.Write("\";\r\n\r\n        public Logger Logger { get; set; }\r\n\r\n        public InstanceReposi" +
+                    "tory InstanceRepository { get { return instanceRepository; } }\r\n\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

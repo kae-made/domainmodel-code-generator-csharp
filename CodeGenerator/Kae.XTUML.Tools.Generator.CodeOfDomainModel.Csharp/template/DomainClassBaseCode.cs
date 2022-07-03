@@ -633,6 +633,72 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             return pattern;
         }
 
+        public static string GetIdentityPropertiesArgsInFormattedString(CIMClassO_OBJ objDef, string varName)
+        {
+            string result = "";
+            var idAttrs = new Dictionary<string, CIMClassO_ATTR>();
+            var oidDefs = objDef.LinkedFromR104();
+            foreach (var oidDef in oidDefs)
+            {
+                if (oidDef.Attr_Oid_ID == 0)
+                {
+                    var oidaDefs = oidDef.LinkedOtherSideR105();
+                    foreach (var oidaDef in oidaDefs)
+                    {
+                        var attrDef = oidaDef.LinkedOtherSideR105();
+                        if (!idAttrs.ContainsKey(attrDef.Attr_Name))
+                        {
+                            idAttrs.Add(attrDef.Attr_Name, attrDef);
+                        }
+                    }
+                }
+            }
+            foreach (var attrName in idAttrs.Keys)
+            {
+                if (!string.IsNullOrEmpty(result))
+                {
+                    result += ",";
+                }
+                string propName = GeneratorNames.GetAttrPropertyName(idAttrs[attrName]);
+                result += $"{idAttrs[attrName].Attr_Name}=" +"{" + $"{varName}.{propName}"+ "}";
+            }
+            return result;
+        }
+
+        public static string GetLinkIdentitiePropertiesArgsInFormattedString(string varName, IEnumerable<CIMClassO_ATTR> idAttrDefs)
+        {
+            string result = "";
+            foreach (var attrDef in idAttrDefs)
+            {
+                string propName = GeneratorNames.GetAttrPropertyName(attrDef);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    result += ",";
+                    result += "{" + $"{varName}.{propName}:{attrDef.Attr_Name}" + "}";
+                }
+            }
+            return result;
+        }
+
+        public static bool IsIdentityAttribute(CIMClassO_ATTR attrDef)
+        {
+            bool isIdentity = false;
+            var oidDefs = attrDef.LinkedToR102().LinkedFromR104();
+            foreach(var oidDef in oidDefs)
+            {
+                var oidaDefs = oidDef.LinkedOtherSideR105();
+                foreach(var oidaDef in oidaDefs)
+                {
+                    var idAttrDef = oidaDef.LinkedOtherSideR105();
+                    if (attrDef.Attr_Attr_ID == idAttrDef.Attr_Attr_ID)
+                    {
+                        isIdentity = true;
+                        break;
+                    }
+                }
+            }
+            return isIdentity;
+        } 
         public class AttributeDef
         {
             public CIMClassO_ATTR AttrDef { get; set; }
