@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.2.2</Version>
+    <Version>0.2.3</Version>
     <Authors>Hiroshi Ota</Authors>
     <Company>Knowledge &amp; Experience</Company>
     <PackageProjectUrl>https://github.com/kae-made/domainmodel-code-generator-csharp</PackageProjectUrl>
@@ -58,6 +58,10 @@
     <None Update="template\InstanceRepository.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>InstanceRepository.cs</LastGenOutput>
+    </None>
+    <None Update="template\logging\Logging.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Logging.cs</LastGenOutput>
     </None>
     <None Update="template\ProjectFile.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -118,6 +122,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>InstanceRepository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\logging\Logging.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Logging.tt</DependentUpon>
     </Compile>
     <Compile Update="template\ProjectFile.cs">
       <DesignTime>True</DesignTime>

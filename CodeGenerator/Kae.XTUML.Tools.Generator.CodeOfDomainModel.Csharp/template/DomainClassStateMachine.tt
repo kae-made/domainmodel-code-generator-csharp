@@ -24,7 +24,7 @@ namespace <#= nameSpace #>
 <#
     string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
     string domainClassName = GeneratorNames.GetDomainClassName(objDef);
-    string logThisArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(objDef, "target");
+    // string logThisArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(objDef, "target");
 #>
     public partial class <#= stateMachineClassName #> : StateMachineBase, ITransition
     {
@@ -208,19 +208,18 @@ namespace <#= nameSpace #>
 
 #>
         protected <#= domainClassName #> target;
-        protected Logger logger;
 
 <#
     if (hasCreationEvent)
     {
 #>
-        public <#= stateMachineClassName #>(<#= domainClassName #> target, Logger logger) : base(0)
+        public <#= stateMachineClassName #>(<#= domainClassName #> target, Logger logger) : base(0, logger)
 <#
     }
     else
     {
 #>
-        public <#= stateMachineClassName #>(<#= domainClassName #> target, Logger logger) : base(1)
+        public <#= stateMachineClassName #>(<#= domainClassName #> target, Logger logger) : base(1, logger)
 <#
     }
 #>
@@ -306,6 +305,10 @@ namespace <#= nameSpace #>
             };
 
 <#
+    var logSttTxn0 = new logging.Logging("logger", "            ", objDef, "target", logging.Logging.Mode.StatTransition, "entering");
+    var logSttTxnE0Gen = logSttTxn0.TransformText();
+    var logSttTxn1 = new logging.Logging("logger", "            ", objDef, "target", logging.Logging.Mode.StatTransition, "entered");
+    var logSttTxnE1Gen = logSttTxn1.TransformText();
 #>
         public int GetNextState(int currentState, int eventNumber)
         {
@@ -314,7 +317,7 @@ namespace <#= nameSpace #>
 
         protected override void RunEntryAction(int nextState, EventData eventData)
         {
-            if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= logThisArgs #>):entering[current={CurrentState},event={eventData.EventNumber},to={nextState}]");
+<#= logSttTxnE0Gen #>
             switch (nextState)
             {
 <#
@@ -351,7 +354,7 @@ namespace <#= nameSpace #>
     }
 #>
             }
-            if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= logThisArgs #>):entered[current={CurrentState},event={eventData.EventNumber},to={nextState}]");
+<#= logSttTxnE1Gen #>
         }
     }
 }

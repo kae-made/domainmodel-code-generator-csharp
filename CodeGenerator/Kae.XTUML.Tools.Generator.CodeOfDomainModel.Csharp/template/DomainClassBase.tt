@@ -96,12 +96,13 @@ namespace <#= nameSpace #>
         }
     }
     // Constructor Signature
-    string logCreateAttrDefs = GetIdentityPropertiesArgsInFormattedString(objDef, "newInstance");
+    var logInstanceCreation = new logging.Logging("logger", "            ", objDef, "newInstance", logging.Logging.Mode.InstanceLifeCycle, "create");
+    var logInstanceCreationGen = logInstanceCreation.TransformText();
 #>
         public static <#= domainClassBaseName #> CreateInstance(InstanceRepository instanceRepository, Logger logger)
         {
             var newInstance = new <#= domainClassBaseName #>(instanceRepository, logger);
-            if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= logCreateAttrDefs #>):create");
+<#= logInstanceCreationGen #>
             instanceRepository.Add(newInstance);
 
             return newInstance;
@@ -340,9 +341,17 @@ namespace <#= nameSpace #>
                 this.<#= thisAttrName #> = <#= condTargetVarName #>.<#= tgtAttrName #>;
 <#
                     }
+                    var logLink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+                    logLink.oneObjDef = targetObjDef;
+                    logLink.oneVarName = "instance";
+                    var logLinkGen = logLink.TransformText();
+                    var logUnlink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "unlink");
+                    logUnlink.oneObjDef = targetObjDef;
+                    logUnlink.oneVarName = "instance";
+                    var logUnlinkGen = logUnlink.TransformText();
 #>
 
-                if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= thisLogArgs #>):linked[from(<#= targetObjDef.Attr_Key_Lett #>(<#= targetLogArgs #>))]");
+<#= logLinkGen #>
                 result = true;
             }
             return result;
@@ -365,7 +374,8 @@ namespace <#= nameSpace #>
 #>
                 <#= relVarName #> = null;
 
-                if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= thisLogArgs #>):unlinked[from(<#= targetObjDef.Attr_Key_Lett #>(<#= targetLogArgs #>))]");
+<#= logUnlinkGen #>
+
                 result = true;
             }
             return result;
@@ -410,6 +420,15 @@ namespace <#= nameSpace #>
             string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, "");
             string thisLogArgs = GetIdentityPropertiesArgsInFormattedString(objDef, "this");
             string targetLogArgs = GetIdentityPropertiesArgsInFormattedString(targetObjDef, condTargetVarName);
+
+            var logLink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+            logLink.oneObjDef = targetObjDef;
+            logLink.oneVarName = condTargetVarName;
+            var logLinkGen = logLink.TransformText();
+            var logUnlink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "unlink");
+            logUnlink.oneObjDef = targetObjDef;
+            logUnlink.oneVarName = condTargetVarName;
+            var logUnlinkGen = logUnlink.TransformText();
 #>
         public <#= targetClassName #> <#= methodNameLinked #>()
         {
@@ -438,7 +457,8 @@ namespace <#= nameSpace #>
 <#
                     }
 #>
-                if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= thisLogArgs #>):linked[super(<#= targetObjDef.Attr_Key_Lett #>(<#= targetLogArgs #>))]");
+
+<#= logLinkGen #>
                 result = true;
             }
             return result;
@@ -461,7 +481,7 @@ namespace <#= nameSpace #>
 #>
                 <#= relVarName #> = null;
 
-                if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= thisLogArgs #>):unlinked[super(<#= targetObjDef.Attr_Key_Lett #>(<#= targetLogArgs #>))]");
+<#= logUnlinkGen #>
                 result = true;
             }
             return result;
@@ -499,6 +519,18 @@ namespace <#= nameSpace #>
             string oneLogArgs = GetIdentityPropertiesArgsInFormattedString(oneObjDef, relOneVarName);
             string otherLogArgs = GetIdentityPropertiesArgsInFormattedString(otherObjDef, relOtherVarName);
 
+            var logLink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+            logLink.oneObjDef = oneObjDef;
+            logLink.oneVarName = oneArgName;
+            logLink.otherObjDef = otherObjDef;
+            logLink.otherVarName = otherArgName;
+            var logLinkGen = logLink.TransformText();
+            var logUnlink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "unlink");
+            logUnlink.oneObjDef = oneObjDef;
+            logUnlink.oneVarName = oneArgName;
+            logLink.otherObjDef = otherObjDef;
+            logLink.otherVarName = otherArgName;
+            var logUnlinkGen = logUnlink.TransformText();
 
             var orefDefs = rgo.LinkedOtherSideR111();
 #>
@@ -532,7 +564,8 @@ namespace <#= nameSpace #>
                 }
             }
 #>
-                if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= thisLogArgs #>):linked[one(<#= oneObjDef.Attr_Key_Lett #>(<#= oneLogArgs #>))other(<#= otherObjDef #>(<#= otherLogArgs #>))]");
+
+<#= logLinkGen #>
                 result = true;
             }
             return result;
@@ -572,7 +605,7 @@ namespace <#= nameSpace #>
                     <#= relOneVarName #> = null;
                     <#= relOtherVarName #> = null;
 
-                    if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= thisLogArgs #>):unlinked[one(<#= oneObjDef.Attr_Key_Lett #>(<#= oneLogArgs #>))other(<#= otherObjDef #>(<#= otherLogArgs #>))]");
+<#= logUnlinkGen #>
                     result = true;
                 }
             }
@@ -1015,14 +1048,16 @@ namespace <#= nameSpace #>
 <#
         }
     }
-    string logDeleteAttrDefs = GetIdentityPropertiesArgsInFormattedString(objDef, "this");
+    // string logDeleteAttrDefs = GetIdentityPropertiesArgsInFormattedString(objDef, "this");
+    var logInstanceDelete = new logging.Logging("logger", "            ", objDef, "this", logging.Logging.Mode.InstanceLifeCycle, "delete");
+    var logInstanceDeleteGen = logInstanceDelete.TransformText();
 #>
             return isValid;
         }
 
         public void Dispose()
         {
-            if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= logDeleteAttrDefs #>):delete");
+<#= logInstanceDeleteGen #>
             instanceRepository.Delete(this);
         }
     }

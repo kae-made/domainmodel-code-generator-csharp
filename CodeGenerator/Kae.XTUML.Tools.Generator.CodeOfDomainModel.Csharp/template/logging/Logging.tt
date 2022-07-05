@@ -1,0 +1,46 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    string logVarCheck = $"if ({logVarName} != null) ";
+    string logThisIdProps = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(subjectObjDef, subjectVarName);
+    if (mode== Mode.InstanceLifeCycle)
+    {
+#>
+<#= indent #><#= logVarCheck #><#= logVarName #>.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= subjectObjDef.Attr_Key_Lett #>(<#= logThisIdProps #>):<#= verb #>");
+<#
+    }
+    else if (mode== Mode.LinkLifeCycle)
+    {
+        string oneVarIdProps = "";
+        string otherVarIdProps = "";
+        if (!string.IsNullOrEmpty(oneVarName))
+        {
+            oneVarIdProps = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(oneObjDef, oneVarName);
+        }
+        if (!string.IsNullOrEmpty(otherVarName))
+        {
+            otherVarIdProps = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(otherObjDef, otherVarName);
+        }
+        string objectLog = "";
+        if (string.IsNullOrEmpty(otherVarIdProps))
+        {
+            objectLog = $"{oneObjDef.Attr_Key_Lett}({oneVarIdProps})";
+        }
+        else
+        {
+            objectLog = $"One({oneObjDef.Attr_Key_Lett}({oneVarIdProps})),Other({otherObjDef.Attr_Key_Lett}({otherVarIdProps}))";
+        }
+#>
+<#= indent #><#= logVarCheck #><#= logVarName #>.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= subjectObjDef.Attr_Key_Lett #>(<#= logThisIdProps #>):<#= verb #>[<#= objectLog #>]");
+<#
+    }
+    else if (mode == Mode.StatTransition)
+    {
+#>
+<#= indent #><#= logVarCheck #><#= logVarName #>.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= subjectObjDef.Attr_Key_Lett #>(<#= logThisIdProps #>):<#= verb #>[current={CurrentState},event={eventData.EventNumber}");
+<#
+    }
+#>

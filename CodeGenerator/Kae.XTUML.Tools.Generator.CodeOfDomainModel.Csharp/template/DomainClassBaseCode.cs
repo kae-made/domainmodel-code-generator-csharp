@@ -164,6 +164,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
             }
 
+            var logInstanceCreation = new logging.Logging("logger", "", objDef, "newInstance", logging.Logging.Mode.InstanceLifeCycle, "create");
+            var logInstanceCreationGen = logInstanceCreation.TransformText();
+
             var joinedRgos = DomainClassDefs.GetJoinedRGOs(objDef);
             foreach (var rgo in joinedRgos)
             {
@@ -263,6 +266,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                                 string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
                                 string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
                             }
+                            var logLink = new logging.Logging("logger", "", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+                            logLink.oneObjDef = targetObjDef;
+                            logLink.oneVarName = "instance";
+                            var logLinkGen = logLink.TransformText();
+
                         }
                         else
                         {

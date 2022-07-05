@@ -261,7 +261,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
             }
 
-
+            var logSttTxn0 = new logging.Logging("logger", "", objDef, "this", logging.Logging.Mode.StatTransition, "entering");
+            var logSttTxnE0Gen = logSttTxn0.TransformText();
+            var logSttTxn1 = new logging.Logging("logger", "", objDef, "this", logging.Logging.Mode.StatTransition, "entered");
+            var logSttTxnE1Gen = logSttTxn1.TransformText();
 
             foreach (var stateDef in stateDefs)
             {

@@ -75,7 +75,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string projectPath = ProjectName;
             genFolder.CreateFolder(projectPath);
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
-            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.0.1" },
+            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.1.1" },
               new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"} });
             var projectFileCode = projectFile.TransformText();
             string fileName = $"{ProjectName}.csproj";
