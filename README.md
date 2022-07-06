@@ -22,4 +22,3 @@
 |operation|->|methods of DomainClass<i>ClassName</i>|
 
 - Relationships are defined in the DomainClass<i>ClassName</i> interface as reference instance, get linked instances, link and unlink method.
-
