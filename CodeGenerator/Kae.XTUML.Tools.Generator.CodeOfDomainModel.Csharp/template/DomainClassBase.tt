@@ -152,6 +152,7 @@ namespace <#= nameSpace #>
     }
     foreach(var implAttrDef in implAttrDefs)
     {
+        string stateVarName = GeneratorNames.GetPropertyStateVariableName(implAttrDef.AttrDef);
         if (!implAttrDef.IsState)
         {
             var dtDef = DomainDataTypeDefs.GetBaseDT(implAttrDef.AttrDef);
@@ -168,6 +169,10 @@ namespace <#= nameSpace #>
         <#= stateMachineClassName #> <#= stateMachineLocalVariableName #>;
 <#
         }
+#>
+        bool <#= stateVarName #> = false;
+
+<#
     }
     // property implementation
     if (implAttrDefs.Count()>0)
@@ -182,6 +187,7 @@ namespace <#= nameSpace #>
         var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
         string localVarName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
         string propName = GeneratorNames.GetAttrPropertyName(implAttrDef.AttrDef);
+        string stateVarName = GeneratorNames.GetPropertyStateVariableName(implAttrDef.AttrDef);
         string accessorImple = "";
         if (implAttrDef.IsState)
         {
@@ -195,7 +201,7 @@ namespace <#= nameSpace #>
         {
             if (!implAttrDef.IsState)
             {
-                accessorImple += " set { " + $"{localVarName} = value" + "; }";
+                accessorImple += " set { " + $"{localVarName} = value; {stateVarName} = true;" + " }";
             }
         }
 #>
@@ -1060,5 +1066,101 @@ namespace <#= nameSpace #>
 <#= logInstanceDeleteGen #>
             instanceRepository.Delete(this);
         }
+
+        // methods for storage
+        public void Restore(Dictionary<string, object> propertyValues)
+        {
+<#
+    foreach (var implAttrDef in implAttrDefs)
+    {
+        var attrDef = implAttrDef.AttrDef;
+        var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+        string dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        string localPropVarName = GeneratorNames.GetAttrPropertyLocalName(attrDef);
+        string stateOfPropVarName = GeneratorNames.GetPropertyStateVariableName(attrDef);
+        if (implAttrDef.IsState)
+        {
+#>
+            <#= stateMachineLocalVariableName #>.ForceUpdateState((int)propertyValues["<#= attrDef.Attr_Name #>"]);
+<#
+        }
+        else
+        {
+#>
+            <#= localPropVarName #> = (<#= dataTypeName #>)propertyValues["<#= attrDef.Attr_Name #>"];
+            <#= stateOfPropVarName #> = false;
+<#
+        }
+    }
+
+#>
+        }
+        
+        public Dictionary<string, object> ChangedProperties()
+        {
+            var results = new Dictionary<string, object>();
+<#
+    foreach (var implAttrDef in implAttrDefs)
+    {
+        var attrDef = implAttrDef.AttrDef;
+        var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+        string dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        string localPropVarName = GeneratorNames.GetAttrPropertyLocalName(attrDef);
+        string stateOfPropVarName = GeneratorNames.GetPropertyStateVariableName(attrDef);
+        if (implAttrDef.IsState)
+        {
+#>
+            results.Add("<#= attrDef.Attr_Name #>", <#= stateMachineLocalVariableName #>.CurrentState);
+
+<#
+        }
+        else
+        {
+#>
+            if (<#= stateOfPropVarName #>)
+            {
+                results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
+                <#= stateOfPropVarName #> = false;
+            }
+<#
+        }
+    }
+
+#>
+
+            return results;
+        }
+        
+        public Dictionary<string, object> GetProperties()
+        {
+            var results = new Dictionary<string, object>();
+
+<#
+    foreach (var implAttrDef in implAttrDefs)
+    {
+        var attrDef = implAttrDef.AttrDef;
+        var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+        string dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        string localPropVarName = GeneratorNames.GetAttrPropertyLocalName(attrDef);
+        string stateOfPropVarName = GeneratorNames.GetPropertyStateVariableName(attrDef);
+        if (implAttrDef.IsState)
+        {
+#>
+            results.Add("<#= attrDef.Attr_Name #>", <#= stateMachineLocalVariableName #>.CurrentState);
+<#
+        }
+        else
+        {
+#>
+            results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
+<#
+        }
+    }
+
+#>
+
+            return results;
+        }
+
     }
 }

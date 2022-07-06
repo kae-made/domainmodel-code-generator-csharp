@@ -590,6 +590,19 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             return condition;
         }
 
+        public void prototypeForStorage()
+        {
+            var storageAttrDefs = objDef.LinkedFromR102();
+            foreach (var attrDef in storageAttrDefs)
+            {
+                var dtDef = attrDef.LinkedToR114();
+                var subDtDef = dtDef.SubClassR17();
+                string dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+                string localPropVarName = GeneratorNames.GetAttrPropertyLocalName(attrDef);
+                string stateOfPropVarName = GeneratorNames.GetPropertyStateVariableName(attrDef);
+            }
+        }
+
         public static string GetUnrelCondition(CIMClassR_RGO rgo, string targetClassName, string targetVarName)
         {
             var orefDefs = rgo.LinkedOtherSideR111();

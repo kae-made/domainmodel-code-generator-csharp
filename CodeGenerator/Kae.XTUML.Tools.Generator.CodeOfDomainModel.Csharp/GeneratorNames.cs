@@ -86,6 +86,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return $"IEventArgs{ToProgramAvailableString(stateDef.Attr_Name)}";
         }
 
+        public static string GetPropertyStateVariableName(CIMClassO_ATTR attrDef)
+        {
+            return $"stateof_{attrDef.Attr_Name}";
+        }
+
         public static string ToProgramAvailableString(string content)
         {
             string result = "";
