@@ -65,5 +65,11 @@ namespace <#= nameSpace #>
 
             return result;
         }
+
+        public void UpdateState(DomainClassDef instance, IDictionary<string,object> chnaged)
+        {
+            // TODO : write code to store changed state into eternal storage.
+        }
+
     }
 }

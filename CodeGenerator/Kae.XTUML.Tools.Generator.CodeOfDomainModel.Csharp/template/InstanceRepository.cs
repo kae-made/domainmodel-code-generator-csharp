@@ -73,7 +73,10 @@ namespace ");
                     "mainName))\r\n            {\r\n                var instances = domainInstances[domai" +
                     "nName];\r\n                foreach(var instance in instances)\r\n                {\r\n" +
                     "                    result.Add(instance);\r\n                }\r\n            }\r\n\r\n " +
-                    "           return result;\r\n        }\r\n    }\r\n}\r\n");
+                    "           return result;\r\n        }\r\n\r\n        public void UpdateState(DomainCl" +
+                    "assDef instance, IDictionary<string,object> chnaged)\r\n        {\r\n            // " +
+                    "TODO : write code to store changed state into eternal storage.\r\n        }\r\n\r\n   " +
+                    " }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
