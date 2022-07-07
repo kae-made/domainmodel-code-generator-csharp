@@ -45,38 +45,105 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 // ------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using Kae.Utility.Logging;
 
 namespace ");
             
-            #line 18 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 19 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    public class InstanceRepository\r\n    {\r\n        private Dictionary<strin" +
-                    "g, List<DomainClassDef>> domainInstances = new Dictionary<string, List<DomainCla" +
-                    "ssDef>>();\r\n\r\n        public void Add(DomainClassDef instance)\r\n        {\r\n     " +
-                    "       if (!domainInstances.ContainsKey(instance.ClassName))\r\n            {\r\n   " +
-                    "             domainInstances.Add(instance.ClassName, new List<DomainClassDef>())" +
-                    ";\r\n            }\r\n            domainInstances[instance.ClassName].Add(instance);" +
-                    "\r\n        }\r\n\r\n        public bool Delete(DomainClassDef instance)\r\n        {\r\n " +
-                    "           bool result = false;\r\n\r\n            if (domainInstances.ContainsKey(i" +
-                    "nstance.ClassName))\r\n            {\r\n                if (domainInstances[instance" +
-                    ".ClassName].Contains(instance))\r\n                {\r\n                    domainIn" +
-                    "stances[instance.ClassName].Remove(instance);\r\n                    if (domainIns" +
-                    "tances[instance.ClassName].Count == 0)\r\n                    {\r\n                 " +
-                    "       domainInstances.Remove(instance.ClassName);\r\n                    }\r\n     " +
-                    "               result = true;\r\n                }\r\n            }\r\n\r\n            r" +
-                    "eturn result;\r\n        }\r\n\r\n        public IEnumerable<DomainClassDef> GetDomain" +
-                    "Instances(string domainName)\r\n        {\r\n            List<DomainClassDef> result" +
-                    " = new List<DomainClassDef>();\r\n\r\n            if (domainInstances.ContainsKey(do" +
-                    "mainName))\r\n            {\r\n                var instances = domainInstances[domai" +
-                    "nName];\r\n                foreach(var instance in instances)\r\n                {\r\n" +
-                    "                    result.Add(instance);\r\n                }\r\n            }\r\n\r\n " +
-                    "           return result;\r\n        }\r\n\r\n        public void UpdateState(DomainCl" +
-                    "assDef instance, IDictionary<string,object> chnaged)\r\n        {\r\n            // " +
-                    "TODO : write code to store changed state into eternal storage.\r\n        }\r\n\r\n   " +
-                    " }\r\n}\r\n");
+            this.Write("\r\n{\r\n    public abstract class InstanceRepository\r\n    {\r\n        private Diction" +
+                    "ary<string, List<DomainClassDef>> domainInstances = new Dictionary<string, List<" +
+                    "DomainClassDef>>();\r\n\r\n        public void Add(DomainClassDef instance)\r\n       " +
+                    " {\r\n            if (!domainInstances.ContainsKey(instance.ClassName))\r\n         " +
+                    "   {\r\n                domainInstances.Add(instance.ClassName, new List<DomainCla" +
+                    "ssDef>());\r\n            }\r\n            domainInstances[instance.ClassName].Add(i" +
+                    "nstance);\r\n        }\r\n\r\n        public bool Delete(DomainClassDef instance)\r\n   " +
+                    "     {\r\n            bool result = false;\r\n\r\n            if (domainInstances.Cont" +
+                    "ainsKey(instance.ClassName))\r\n            {\r\n                if (domainInstances" +
+                    "[instance.ClassName].Contains(instance))\r\n                {\r\n                   " +
+                    " domainInstances[instance.ClassName].Remove(instance);\r\n                    if (" +
+                    "domainInstances[instance.ClassName].Count == 0)\r\n                    {\r\n        " +
+                    "                domainInstances.Remove(instance.ClassName);\r\n                   " +
+                    " }\r\n                    result = true;\r\n                }\r\n            }\r\n\r\n    " +
+                    "        return result;\r\n        }\r\n\r\n        public IEnumerable<DomainClassDef> " +
+                    "GetDomainInstances(string domainName)\r\n        {\r\n            List<DomainClassDe" +
+                    "f> result = new List<DomainClassDef>();\r\n\r\n            if (domainInstances.Conta" +
+                    "insKey(domainName))\r\n            {\r\n                var instances = domainInstan" +
+                    "ces[domainName];\r\n                foreach(var instance in instances)\r\n          " +
+                    "      {\r\n                    result.Add(instance);\r\n                }\r\n         " +
+                    "   }\r\n\r\n            return result;\r\n        }\r\n\r\n        ///\r\n        /// Update" +
+                    " stored state of the instance by changed argument.\r\n        /// changed.key is n" +
+                    "ame of property of the instance.\r\n        /// changed.value is value of the prop" +
+                    "erty that the name of it  is changed.key\r\n        ///\r\n        public abstract v" +
+                    "oid UpdateState(DomainClassDef instance, IDictionary<string, object> chnaged);\r\n" +
+                    "\r\n        ///\r\n        /// Construct state of the instances by instances argumen" +
+                    "t.\r\n        /// instances.key is domain class name.\r\n        /// instances.value" +
+                    " is instances states of the domain class.\r\n        /// each item of the instance" +
+                    "s.value is property name and value pairs.\r\n        ///\r\n        public abstract " +
+                    "void LoadState(IDictionary<string, IList<IDictionary<string, object>>> instances" +
+                    ");\r\n\r\n    }\r\n\r\n    public class InstanceRepositoryInMemory : InstanceRepository\r" +
+                    "\n    {\r\n        private Logger logger;\r\n\r\n        public InstanceRepositoryInMem" +
+                    "ory(Logger logger)\r\n        {\r\n            this.logger = logger;\r\n        }\r\n\r\n " +
+                    "       public override void UpdateState(DomainClassDef instance, IDictionary<str" +
+                    "ing, object> chnaged)\r\n        {\r\n            // Do nothing.\r\n        }\r\n\r\n     " +
+                    "   public override void LoadState(IDictionary<string, IList<IDictionary<string, " +
+                    "object>>> instances)\r\n        {\r\n            foreach (var className in instances" +
+                    ".Keys)\r\n            {\r\n                foreach (var states in instances[classNam" +
+                    "e])\r\n                {\r\n                    DomainClassDef newInstance = null;\r\n" +
+                    "                    switch (className)\r\n                    {\r\n");
+            
+            #line 110 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+
+    foreach(var objDef in objDefs)
+    {
+        string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
+        string domainClassName = objDef.Attr_Key_Lett;
+
+            
+            #line default
+            #line hidden
+            this.Write("                        case \"");
+            
+            #line 116 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\":\r\n                            newInstance = ");
+            
+            #line 117 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(domainClassBaseName));
+            
+            #line default
+            #line hidden
+            this.Write(".CreateInstance(this, logger);\r\n                            break;\r\n");
+            
+            #line 119 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+
+    }
+
+            
+            #line default
+            #line hidden
+            this.Write(@"                        default:
+                            if (logger != null) logger.LogError($""{className} is not right domain class."");
+                            break;
+                    }
+                    if (newInstance != null)
+                    {
+                        newInstance.Restore(states);
+                    }
+                }
+            }
+        }
+
+    }
+
+}
+");
             return this.GenerationEnvironment.ToString();
         }
     }

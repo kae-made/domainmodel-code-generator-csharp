@@ -1068,7 +1068,7 @@ namespace <#= nameSpace #>
         }
 
         // methods for storage
-        public void Restore(Dictionary<string, object> propertyValues)
+        public void Restore(IDictionary<string, object> propertyValues)
         {
 <#
     foreach (var implAttrDef in implAttrDefs)
@@ -1096,7 +1096,7 @@ namespace <#= nameSpace #>
 #>
         }
         
-        public Dictionary<string, object> ChangedProperties()
+        public IDictionary<string, object> ChangedProperties()
         {
             var results = new Dictionary<string, object>();
 <#
@@ -1131,7 +1131,7 @@ namespace <#= nameSpace #>
             return results;
         }
         
-        public Dictionary<string, object> GetProperties()
+        public IDictionary<string, object> GetProperties()
         {
             var results = new Dictionary<string, object>();
 

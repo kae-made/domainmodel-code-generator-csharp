@@ -82,13 +82,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             genFolder.WriteContentAsync(projectPath, fileName, projectFileCode).Wait();
             Console.WriteLine($"Generated - {fileName}");
 
-            var instanceRepository = new InstanceRepository(Version, ProjectName);
+            var modelRepository = this.modelResolver.ModelRepository;
+
+            var classObjDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "O_OBJ");
+            var instanceRepository = new InstanceRepository(Version, ProjectName, classObjDefs);
             var instanceRepositoryCode = instanceRepository.TransformText();
             fileName = "InstanceRepository.cs";
             genFolder.WriteContentAsync(projectPath, fileName, instanceRepositoryCode).Wait();
             Console.WriteLine($"Generated - {fileName}");
-
-            var modelRepository = this.modelResolver.ModelRepository;
 
             var classDtDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_DT");
             var domainDataTypeDefs = new DomainDataTypeDefs(Version, ProjectName, classDtDefs);
@@ -105,7 +106,6 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             genFolder.WriteContentAsync(projectPath, fileName, superTypeDefsCode).Wait();
             Console.WriteLine($"Generated - {fileName}");
 
-            var classObjDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "O_OBJ");
             var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs);
             //domainClassDefs.prototype();
             var domainClassDefsCode = domainClassDefs.TransformText();

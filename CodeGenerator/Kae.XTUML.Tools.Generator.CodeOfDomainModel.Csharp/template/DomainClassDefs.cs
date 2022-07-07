@@ -81,9 +81,9 @@ using Kae.StateMachine;
         bool Validate();
 
         // methods for storage
-        void Restore(Dictionary<string, object> propertyValues);
-        Dictionary<string, object> ChangedProperties();
-        Dictionary<string, object> GetProperties();
+        void Restore(IDictionary<string, object> propertyValues);
+        IDictionary<string, object> ChangedProperties();
+        IDictionary<string, object> GetProperties();
     }
 ");
             

@@ -23,8 +23,13 @@ namespace <#= nameSpace #>
 {
     public partial class <#= domainFacadeClassName #>
     {
-        protected InstanceRepository instanceRepository = new InstanceRepository();
+        protected InstanceRepository instanceRepository;
         public static readonly string DomainName = "<#= nameSpace #>";
+
+        public <#= domainFacadeClassName #>(InstanceRepository instanceRepository)
+        {
+            this.instanceRepository = instanceRepository;
+        }
 
         public Logger Logger { get; set; }
 

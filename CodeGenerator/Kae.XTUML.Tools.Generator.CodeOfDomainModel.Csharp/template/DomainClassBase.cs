@@ -2472,8 +2472,8 @@ namespace ");
             #line default
             #line hidden
             this.Write("\r\n            instanceRepository.Delete(this);\r\n        }\r\n\r\n        // methods f" +
-                    "or storage\r\n        public void Restore(Dictionary<string, object> propertyValue" +
-                    "s)\r\n        {\r\n");
+                    "or storage\r\n        public void Restore(IDictionary<string, object> propertyValu" +
+                    "es)\r\n        {\r\n");
             
             #line 1073 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 
@@ -2554,8 +2554,8 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("        }\r\n        \r\n        public Dictionary<string, object> ChangedProperties(" +
-                    ")\r\n        {\r\n            var results = new Dictionary<string, object>();\r\n");
+            this.Write("        }\r\n        \r\n        public IDictionary<string, object> ChangedProperties" +
+                    "()\r\n        {\r\n            var results = new Dictionary<string, object>();\r\n");
             
             #line 1102 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 
@@ -2636,9 +2636,9 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("\r\n            return results;\r\n        }\r\n        \r\n        public Dictionary<str" +
-                    "ing, object> GetProperties()\r\n        {\r\n            var results = new Dictionar" +
-                    "y<string, object>();\r\n\r\n");
+            this.Write("\r\n            return results;\r\n        }\r\n        \r\n        public IDictionary<st" +
+                    "ring, object> GetProperties()\r\n        {\r\n            var results = new Dictiona" +
+                    "ry<string, object>();\r\n\r\n");
             
             #line 1138 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 
