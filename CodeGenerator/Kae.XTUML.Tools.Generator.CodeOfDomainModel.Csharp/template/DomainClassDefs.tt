@@ -19,12 +19,19 @@ using Kae.StateMachine;
 
 <#
     var domainBaseInterfaceName = GeneratorNames.GetDomainClassBaseInterfaceName();
+
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
 #>
 namespace <#= nameSpace #>
 {
-    public interface <#= domainBaseInterfaceName #> : IDisposable
+    public interface <#= domainBaseInterfaceName #>
     {
         public string ClassName { get; }
+
+        void DeleteInstance(<#= changedStateClassName #> <#= changedStateVarName #>=null);
+
         /// <summary>
         /// Check attributes and links are valid or not.
         /// </summary>
@@ -34,8 +41,20 @@ namespace <#= nameSpace #>
         // methods for storage
         void Restore(IDictionary<string, object> propertyValues);
         IDictionary<string, object> ChangedProperties();
-        IDictionary<string, object> GetProperties();
+        IDictionary<string, object> GetProperties(bool onlyIdentity);
+        // IList<ChangedState> ChangedStates();
     }
+
+    public class LinkedInstance
+    {
+        public string RelationshipID { get; set; }
+        public string Phrase { get; set; }
+        public DomainClassDef Source { get; set; }
+        public DomainClassDef Destination { get; set; }
+        public bool Changed { get; set; } = true;
+        public T GetDestination<T>() where T : DomainClassDef { return (T)Destination; }
+    }
+
 <#
     foreach (var classObjDef in classObjDefs)
     {
@@ -142,8 +161,8 @@ namespace <#= nameSpace #>
                         string methodNameLink = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Link);
                         string methodNameUnLink = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Unlink);
 #>
-        bool <#= methodNameLink #>(<#= targetClassName #> instance);
-        bool <#= methodNameUnLink #>(<#= targetClassName #> instance);
+        bool <#= methodNameLink #>(<#= targetClassName #> instance, <#= changedStateClassName #> <#= changedStateVarName #>=null);
+        bool <#= methodNameUnLink #>(<#= targetClassName #> instance, <#= changedStateClassName #> <#= changedStateVarName #>=null);
 <#
                     }
                     else
@@ -169,8 +188,8 @@ namespace <#= nameSpace #>
                 string methodNameLinked = GeneratorNames.GetSuperTypeMethodName(rsubsupDef);
 #>
 //        <#= targetClassName #> <#= methodNameLinked #>();
-        bool <#= methodNameLink #>(<#= targetClassName #> instance);
-        bool <#= methodNameUnlink #>(<#= targetClassName #> instance);
+        bool <#= methodNameLink #>(<#= targetClassName #> instance, <#= changedStateClassName #> <#= changedStateVarName #>=null);
+        bool <#= methodNameUnlink #>(<#= targetClassName #> instance, <#= changedStateClassName #> <#= changedStateVarName #>=null);
 
 <#
             }
@@ -194,8 +213,8 @@ namespace <#= nameSpace #>
                 var otherObjTypeName = GeneratorNames.GetDomainClassName(otherObjDef);
                 var otherArgName = $"otherInstance{GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs)}";
 #>
-        bool <#= methodNameLink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>);
-        bool <#= methodNameUnlink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>);
+        bool <#= methodNameLink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null);
+        bool <#= methodNameUnlink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null);
         <#= oneObjTypeName #> <#= methodNameLinkedOne #>();
         <#= otherObjTypeName #> <#= methodNameLinkedOther #>();
 
@@ -322,6 +341,11 @@ namespace <#= nameSpace #>
                 }
                 args += $"{frag}";
             }
+            // if (!string.IsNullOrEmpty(args))
+            // {
+            //     args += ", ";
+            // }
+            // args += $"{changedStateClassName} {changedStateVarName}=null";
 #>
         <#= retTypeName #> <#= opName #>(<#= args #>);
 

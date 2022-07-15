@@ -32,6 +32,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return $"SubClassR{relDef.Attr_Numb}";
         }
 
+        public static string GetRelID(CIMClassR_REL relDef)
+        {
+            return $"R{relDef.Attr_Numb}";
+        }
+
         public static string GetSubRelClassMethodName(CIMClassR_REL relDef)
         {
             return $"GetSubR{relDef.Attr_Numb}";
@@ -91,6 +96,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return $"stateof_{attrDef.Attr_Name}";
         }
 
+        public static string GetLinkedInstanceClassName()
+        {
+            return "LinkedInstance";
+        }
         public static string ToProgramAvailableString(string content)
         {
             string result = "";
@@ -191,6 +200,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         public static string GetRelLocalVariableName(CIMClassR_REL relDef, CIMClassO_OBJ targetObjDef, string txtPhrase)
         {
             return $"relR{relDef.Attr_Numb}{targetObjDef.Attr_Key_Lett}{ToProgramAvailableString(txtPhrase)}";
+        }
+
+        public static void GetChangedStoreVariable(ref string className, ref string varName)
+        {
+            className = "IList<ChangedState>";
+            varName = "changedStates";
         }
     }
 }

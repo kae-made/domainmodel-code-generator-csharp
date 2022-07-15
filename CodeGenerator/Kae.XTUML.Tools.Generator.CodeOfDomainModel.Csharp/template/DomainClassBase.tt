@@ -27,10 +27,16 @@ namespace <#= nameSpace #>
     var subClassInterfaces = DomainClassDefs.GetSubClassInterfaces(objDef);
     var domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
     string stateMachineLocalVariableName = "stateMachine";
+    string linkedInstanceClassName = GeneratorNames.GetLinkedInstanceClassName();
+
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
+
 #>
     public partial class <#= domainClassBaseName #> : <#= domainClassName #>
     {
-        private static readonly string className = "<#= objDef.Attr_Key_Lett #>";
+        protected static readonly string className = "<#= objDef.Attr_Key_Lett #>";
         public string ClassName { get { return className; } }
 
         InstanceRepository instanceRepository;
@@ -99,11 +105,13 @@ namespace <#= nameSpace #>
     var logInstanceCreation = new logging.Logging("logger", "            ", objDef, "newInstance", logging.Logging.Mode.InstanceLifeCycle, "create");
     var logInstanceCreationGen = logInstanceCreation.TransformText();
 #>
-        public static <#= domainClassBaseName #> CreateInstance(InstanceRepository instanceRepository, Logger logger)
+        public static <#= domainClassBaseName #> CreateInstance(InstanceRepository instanceRepository, Logger logger=null, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             var newInstance = new <#= domainClassBaseName #>(instanceRepository, logger);
 <#= logInstanceCreationGen #>
             instanceRepository.Add(newInstance);
+
+            if (<#= changedStateVarName #> !=null) <#= changedStateVarName #>.Add(new CInstanceChagedState() { OP = ChangedState.Operation.Create, Target = newInstance, ChangedProperties = null });
 
             return newInstance;
         }
@@ -134,7 +142,7 @@ namespace <#= nameSpace #>
             {
                 string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
 #>
-            <#= stateMachineLocalVariableName #> = new <#= stateMachineClassName #>(this, logger);
+            <#= stateMachineLocalVariableName #> = new <#= stateMachineClassName #>(this, instanceRepository, logger);
 <#
             }
         }
@@ -159,18 +167,18 @@ namespace <#= nameSpace #>
             var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
             string localVarName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
 #>
-        <#= attrPropDataTypeName #> <#= localVarName #>;
+        protected <#= attrPropDataTypeName #> <#= localVarName #>;
 <#
         }
         else
         {
             string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
 #>
-        <#= stateMachineClassName #> <#= stateMachineLocalVariableName #>;
+        protected <#= stateMachineClassName #> <#= stateMachineLocalVariableName #>;
 <#
         }
 #>
-        bool <#= stateVarName #> = false;
+        protected bool <#= stateVarName #> = false;
 
 <#
     }
@@ -209,6 +217,50 @@ namespace <#= nameSpace #>
 <#
     }
 
+    if (implAttrDefs.Count()>0)
+    {
+#>
+
+<#
+    }
+#>
+        public static bool Compare(<#= domainClassName #> instance, IDictionary<string, object> conditionPropertyValues)
+        {
+            bool result = true;
+            foreach (var propertyName in conditionPropertyValues.Keys)
+            {
+                switch (propertyName)
+                {
+<#
+    foreach(var implAttrDef in implAttrDefs)
+    {
+        var dtDef = DomainDataTypeDefs.GetBaseDT(implAttrDef.AttrDef);
+        var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        string propName = GeneratorNames.GetAttrPropertyName(implAttrDef.AttrDef);
+        var attrDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        if (!implAttrDef.IsState)
+        {
+#>
+                    case "<#= implAttrDef.AttrDef.Attr_Name #>":
+                        if ((<#= attrPropDataTypeName #>)conditionPropertyValues[propertyName] != instance.<#= propName #>)
+                        {
+                            result = false;
+                        }
+                        break;
+<#
+        }
+    }
+#>                }
+                if (result== false)
+                {
+                    break;
+                }
+            }
+            return result;
+        }
+<#
+
+
     var joinedRgos = DomainClassDefs.GetJoinedRGOs(objDef);
     if (joinedRgos.Count()>0)
     {
@@ -238,7 +290,7 @@ namespace <#= nameSpace #>
                 {
                     string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, partDef.Attr_Txt_Phrs);
 #>
-        private <#= targetClassName #> <#= relVarName #>;
+        protected <#= linkedInstanceClassName #> <#= relVarName #>;
 <#
                 }
             }
@@ -252,7 +304,7 @@ namespace <#= nameSpace #>
             string targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
             string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, "");
 #>
-        private <#= targetClassName #> <#= relVarName #>;
+        protected <#= linkedInstanceClassName #> <#= relVarName #>;
 <#
         }
         else if (subRgo is CIMClassR_ASSR)
@@ -268,7 +320,8 @@ namespace <#= nameSpace #>
             var oneArgName = $"oneInstance{GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs)}";
             string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, oneObjDef, raoneDef.Attr_Txt_Phrs);
 #>
-        private <#= oneObjTypeName #> <#= relVarName #>;
+        protected <#= linkedInstanceClassName #> <#= relVarName #>;
+        // private <#= oneObjTypeName #> <#= relVarName #>;
 <#
 
             var otherObjDef = raothDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
@@ -276,7 +329,8 @@ namespace <#= nameSpace #>
             var otherArgName = $"otherInstance{GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs)}";
             relVarName = GeneratorNames.GetRelLocalVariableName(relDef, otherObjDef, raothDef.Attr_Txt_Phrs);
 #>
-        private <#= otherObjTypeName #> <#= relVarName #>;
+        protected <#= linkedInstanceClassName #> <#= relVarName #>;
+        // private <#= otherObjTypeName #> <#= relVarName #>;
 <#
         }
     }
@@ -319,18 +373,21 @@ namespace <#= nameSpace #>
                     string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, partDef.Attr_Txt_Phrs);
                     string thisLogArgs = GetIdentityPropertiesArgsInFormattedString(objDef, "this");
                     string targetLogArgs = GetIdentityPropertiesArgsInFormattedString(targetObjDef, condTargetVarName);
+                    string relId = GeneratorNames.GetRelID(relDef);
+                    string phrsForRelVarName = GeneratorNames.ToProgramAvailableString(partDef.Attr_Txt_Phrs);
 #>
         public <#= returnType #> <#= methodNameLinked #>()
         {
             if (<#= relVarName #> == null)
             {
                 var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
-                <#= relVarName #> = (<#= returnType #>)candidates.First();
+                <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForRelVarName #>" };
+
             }
-            return <#= relVarName #>;
+            return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
         }
 
-        public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>)
+        public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             bool result = false;
             if (<#= relVarName #> == null)
@@ -358,15 +415,22 @@ namespace <#= nameSpace #>
 #>
 
 <#= logLinkGen #>
-                result = true;
+                result = (<#= methodNameLinked #>()!=null);
+                if (result)
+                {
+                    if(<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relVarName #> });
+                }
             }
             return result;
         }
-        public bool <#= methodNameUnLink #>(<#= targetClassName #> <#= condTargetVarName #>)
+
+        public bool <#= methodNameUnLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             bool result = false;
             if (<#= relVarName #> != null && ( <#= unRelCondtion #> ))
             {
+                if (<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relVarName #> });
+
 <#
                     foreach(var orefDef in orefDefs)
                     {
@@ -435,17 +499,18 @@ namespace <#= nameSpace #>
             logUnlink.oneObjDef = targetObjDef;
             logUnlink.oneVarName = condTargetVarName;
             var logUnlinkGen = logUnlink.TransformText();
+            string relId = GeneratorNames.GetRelID(relDef);
 #>
         public <#= targetClassName #> <#= methodNameLinked #>()
         {
             if (<#= relVarName #> == null)
             {
                 var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst => (<#= condition #>));
-                <#= relVarName #> = (<#= targetClassName #>)candidates.First();
+                <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = null };
             }
-            return <#= relVarName #>;
+            return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
         }
-        public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>)
+        public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             bool result = false;
             if (<#= relVarName #> == null)
@@ -465,15 +530,21 @@ namespace <#= nameSpace #>
 #>
 
 <#= logLinkGen #>
-                result = true;
+                result = (<#= methodNameLinked #>()!=null);
+                if (result)
+                {
+                    if (<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relVarName #> });
+                }
             }
             return result;
         }
-        public bool <#= methodNameUnlink #>(<#= targetClassName #> <#= condTargetVarName #>)
+        public bool <#= methodNameUnlink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             bool result = false;
             if (<#= relVarName #> != null && ( <#= unRelCondtion #> ))
             {
+                if (<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relVarName #> });
+
 <#
                     foreach(var orefDef in orefDefs)
                     {
@@ -538,9 +609,13 @@ namespace <#= nameSpace #>
             logLink.otherVarName = otherArgName;
             var logUnlinkGen = logUnlink.TransformText();
 
+            string relId = GeneratorNames.GetRelID(relDef);
+            string phrsForOneRelVarName = GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs);
+            string phrsForOtherRelVarName = GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs);
+
             var orefDefs = rgo.LinkedOtherSideR111();
 #>
-        public bool <#= methodNameLink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>)
+        public bool <#= methodNameLink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             bool result = false;
             if (<#= relOneVarName #> == null && <#= relOtherVarName #> == null)
@@ -572,17 +647,30 @@ namespace <#= nameSpace #>
 #>
 
 <#= logLinkGen #>
-                result = true;
+                result = (<#= methodNameLinkedOne #>()!=null) && (<#= methodNameLinkedOther #>()!=null);
+                if (result)
+                {
+                    if (<#= changedStateVarName #> != null)
+                    {
+                        <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relOneVarName #> });
+                        <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relOtherVarName #> });
+                    }
+                }
             }
             return result;
         }
-        public bool <#= methodNameUnlink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>)
+        public bool <#= methodNameUnlink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
             bool result = false;
             if (<#= relOneVarName #> != null && <#= relOtherVarName #> != null)
             {
                 if ((<#= oneUnRelCondtion #>) && (<#= otherUnRelCondtion #>))
                 {
+                    if (<#= changedStateVarName #> != null)
+                    {
+                        <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relOneVarName #> });
+                        <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relOtherVarName #> });
+                    }
 
 <#
             foreach (var orefDef in orefDefs)
@@ -622,18 +710,20 @@ namespace <#= nameSpace #>
             if (<#= relOneVarName #> == null)
             {
                 var candidates = instanceRepository.GetDomainInstances("<#= oneObjDef.Attr_Key_Lett #>").Where(inst=>(<#= oneCondition #>));
-                <#= relOneVarName #> = (<#= oneObjTypeName #>)candidates.First();
+                <#= relOneVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOneRelVarName #>" };
+                // (<#= oneObjTypeName #>)candidates.First();
             }
-            return <#= relOneVarName #>;
+            return <#= relOneVarName #>.GetDestination<<#= oneObjTypeName #>>();
         }
         public <#= otherObjTypeName #> <#= methodNameLinkedOther #>()
         {
             if (<#= relOtherVarName #> == null)
             {
                 var candidates = instanceRepository.GetDomainInstances("<#= otherObjDef.Attr_Key_Lett #>").Where(inst=>(<#= otherCondition #>));
-                <#= relOtherVarName #> = (<#= otherObjTypeName #>)candidates.First();
+                <#= relOtherVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOtherRelVarName #>" };
+                // (<#= otherObjTypeName #>)candidates.First();
             }
-            return <#= relOtherVarName #>;
+            return <#= relOtherVarName #>.GetDestination<<#= otherObjTypeName #>>();
         }
 
 <#
@@ -1061,9 +1151,11 @@ namespace <#= nameSpace #>
             return isValid;
         }
 
-        public void Dispose()
+        public void DeleteInstance(<#= changedStateClassName #> <#= changedStateVarName #>=null)
         {
 <#= logInstanceDeleteGen #>
+            changedStates.Add(new CInstanceChagedState() { OP = ChangedState.Operation.Delete, Target = this, ChangedProperties = null });
+
             instanceRepository.Delete(this);
         }
 
@@ -1131,7 +1223,7 @@ namespace <#= nameSpace #>
             return results;
         }
         
-        public IDictionary<string, object> GetProperties()
+        public IDictionary<string, object> GetProperties(bool onlyIdentity)
         {
             var results = new Dictionary<string, object>();
 
@@ -1151,9 +1243,18 @@ namespace <#= nameSpace #>
         }
         else
         {
+            if (implAttrDef.IsIdentity)
+            {
 #>
             results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
 <#
+            }
+            else
+            {
+#>
+            if (!onlyIdentity) results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
+<#
+            }
         }
     }
 
@@ -1162,5 +1263,18 @@ namespace <#= nameSpace #>
             return results;
         }
 
+#if false
+        List<ChangedState> changedStates = new List<ChangedState>();
+
+        public IList<ChangedState> ChangedStates()
+        {
+            List<ChangedState> results = new List<ChangedState>();
+            results.AddRange(changedStates);
+            results.Add(new CInstanceChagedState() { OP = ChangedState.Operation.Update, Target = this, ChangedProperties = ChangedProperties() });
+            changedStates.Clear();
+
+            return results;
+        }
+#endif
     }
 }

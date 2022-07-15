@@ -20,6 +20,11 @@ namespace <#= nameSpace #>
 {
 <#
     string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
+
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
+
 #>
     partial class <#= stateMachineClassName #>
     {
@@ -60,6 +65,11 @@ namespace <#= nameSpace #>
             }
             args += $"{argTypeName} {argName}";
         }
+        // if (!string.IsNullOrEmpty(args))
+        // {
+        //    args += ", ";
+        // }
+        // args += $"{changedStateClassName} {changedStateVarName}=null";
 #>
         protected void <#= actionMethodName #>(<#= args #>)
         {
@@ -67,7 +77,11 @@ namespace <#= nameSpace #>
             // Action Description on Model as a reference.
 <#= descrip #>
 
+
+            // Please record changing states by using changedStates;
+            
             throw new NotImplementedException();
+            // Please delete above throw exception statement after implement this method.
         }
 
 <#

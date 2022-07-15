@@ -592,6 +592,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 
         public void prototypeForStorage()
         {
+            string changedStateClassName = "";
+            string changedStateVarName = "";
+            GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
             var storageAttrDefs = objDef.LinkedFromR102();
             foreach (var attrDef in storageAttrDefs)
             {

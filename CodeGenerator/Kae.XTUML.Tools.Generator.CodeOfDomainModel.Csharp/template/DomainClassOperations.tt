@@ -19,6 +19,11 @@ namespace <#= nameSpace #>
 {
 <#
     string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
+    
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
+
 #>
     partial class <#= domainClassBaseName #>
     {
@@ -49,8 +54,13 @@ namespace <#= nameSpace #>
             var parmDtDef = tparamDef.LinkedToR118();
             var parmDtTypeName = DomainDataTypeDefs.GetDataTypeName(parmDtDef);
             opArgs += $"{parmDtTypeName} {tparamDef.Attr_Name}";
-            // throw new NotImplementedException();
         }
+        // if (!string.IsNullOrEmpty(opArgs))
+        // {
+        //     opArgs += ", ";
+        // }
+        // opArgs += $"{changedStateClassName} {changedStateVarName}=null";
+
 #>
         public <#= retDtTypeName #> <#= opName #>(<#= opArgs #>)
         {
@@ -65,7 +75,13 @@ namespace <#= nameSpace #>
         }
 #>
 
+
+            var changedStates = new List<ChangedState>();
+            // Please record changing states by using changedStates;
+
+            instanceRepository.SyncChangedStates(changedStates);
             throw new NotImplementedException();
+            // Please delete above throw exception statement after implement this method.
         }
 
 <#

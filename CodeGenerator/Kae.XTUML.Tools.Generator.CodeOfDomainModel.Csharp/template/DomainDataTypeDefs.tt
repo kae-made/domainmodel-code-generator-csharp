@@ -82,16 +82,32 @@ namespace <#= nameSpace #>
     {
 <#
             var mbrDefs = sdtDef.LinkedFromR44();
+            string compare = "";
             foreach(var mbrDef in mbrDefs)
             {
                 var mbrDtDef = mbrDef.LinkedToR45();
                 string mbrDtName = GetDataTypeName(mbrDtDef);
                 string mbrName = mbrDef.Attr_Name;
 #>
-        <#= mbrDtName #> <#= mbrName #> { get; set; }
+        public <#= mbrDtName #> <#= mbrName #> { get; set; }
 <#
+                if (!string.IsNullOrEmpty(compare))
+                {
+                    compare += " && ";
+                }
+                compare = $"one.{mbrName} == other.{mbrName}";
             }
 #>
+
+        public static bool operator ==(<#= dtName #> one, <#= dtName #> other)
+        {
+            return (<#= compare #>);
+        }
+
+        public static bool operator !=(<#= dtName #> one, <#= dtName #> other)
+        {
+            return !(one == other);
+        }
     }
 
 <#

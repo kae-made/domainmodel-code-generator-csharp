@@ -25,6 +25,10 @@ namespace <#= nameSpace #>
     string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
     string domainClassName = GeneratorNames.GetDomainClassName(objDef);
     // string logThisArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(objDef, "target");
+
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
 #>
     public partial class <#= stateMachineClassName #> : StateMachineBase, ITransition
     {
@@ -174,7 +178,7 @@ namespace <#= nameSpace #>
         }
         string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
 #>
-            <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #><# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
+            public static <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #><# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
             {
                 var newEvent = new <#= evtClassName #>()<#= constructorCallArgs #>;
 <#
@@ -209,17 +213,19 @@ namespace <#= nameSpace #>
 #>
         protected <#= domainClassName #> target;
 
+        protected InstanceRepository instanceRepository;
+
 <#
     if (hasCreationEvent)
     {
 #>
-        public <#= stateMachineClassName #>(<#= domainClassName #> target, Logger logger) : base(0, logger)
+        public <#= stateMachineClassName #>(<#= domainClassName #> target, InstanceRepository instanceRepository, Logger logger) : base(0, logger)
 <#
     }
     else
     {
 #>
-        public <#= stateMachineClassName #>(<#= domainClassName #> target, Logger logger) : base(1, logger)
+        public <#= stateMachineClassName #>(<#= domainClassName #> target, InstanceRepository instanceRepository, Logger logger) : base(1, logger)
 <#
     }
 #>
@@ -227,6 +233,7 @@ namespace <#= nameSpace #>
             this.target = target;
             this.stateTransition = this;
             this.logger = logger;
+            this.instanceRepository = instanceRepository;
         }
 
 <#
@@ -315,9 +322,14 @@ namespace <#= nameSpace #>
             return stateTransitionTable[currentState, eventNumber];
         }
 
+        private List<ChangedState> changedStates;
+
         protected override void RunEntryAction(int nextState, EventData eventData)
         {
 <#= logSttTxnE0Gen #>
+
+            changedStates = new List<ChangedState>();
+
             switch (nextState)
             {
 <#
@@ -355,6 +367,8 @@ namespace <#= nameSpace #>
 #>
             }
 <#= logSttTxnE1Gen #>
+
+            instanceRepository.SyncChangedStates(changedStates);
         }
     }
 }

@@ -23,6 +23,10 @@ namespace <#= nameSpace #>
     public partial class <#= domainFacadeClassName #>
     {
 <#
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
+
     foreach(var syncClassDef in syncClassDefs)
     {
         var syncDef = (CIMClassS_SYNC)syncClassDef;
@@ -42,6 +46,11 @@ namespace <#= nameSpace #>
             }
             args += $"{pDTName} {sparmDef.Attr_Name}";
         }
+        // if (!string.IsNullOrEmpty(args))
+        // {
+        //    args += ", ";
+        // }
+        // args += $"{changedStateClassName} {changedStateVarName}=null";
 #>
         public <#= retDTName #> <#= methodName #>(<#= args #>)
         {
@@ -50,7 +59,13 @@ namespace <#= nameSpace #>
 
 <#= actionSemantics #>
 
+
+            var changedStates = new List<ChangedState>();
+            // Please record changing states by using changedStates;
+
+            instanceRepository.SyncChangedStates(changedStates);
             throw new NotImplementedException();
+            // Please delete above throw exception statement after implement this method.
         }
 <#
     }
