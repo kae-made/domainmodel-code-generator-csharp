@@ -1,4 +1,6 @@
-﻿using Kae.Tools.Generator.Context;
+﻿// Copyright (c) Knowledge & Experience. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using Kae.Tools.Generator.Context;
 using Kae.Utility.Logging;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp;
 using System;
@@ -31,7 +33,8 @@ namespace ConsoleAppCsharpGenerator
             generator.ResolveContext();
             generator.LoadMetaModel();
             generator.LoadDomainModels();
-            generator.Generate();
+            generator.GenerateEnvironment();
+            generator.GenerateContents();
         }
 
         private string colorsFileName;
@@ -44,7 +47,7 @@ namespace ConsoleAppCsharpGenerator
                 return false;
             }
 
-            var options = new List<string>() { "--metamodel", "--base-datatype", "--domainmodel", "--project", "--dotnetver", "--gen-folder" };
+            var options = new List<string>() { "--metamodel", "--base-datatype", "--domainmodel", "--project", "--dotnetver", "--gen-folder", "--overwrite" };
             int index = 0;
             while (index < args.Length)
             {
@@ -93,6 +96,12 @@ namespace ConsoleAppCsharpGenerator
                 else if (args[index] == "--colors")
                 {
                     colorsFileName = args[++index];
+                }
+                else if (args[index] == "--overwrite")
+                {
+                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyOverWrite).First();
+                    options.Remove(args[index]);
+                    ((BooleanParam)cp).Value=Boolean.Parse(args[++index]);
                 }
                 else
                 {

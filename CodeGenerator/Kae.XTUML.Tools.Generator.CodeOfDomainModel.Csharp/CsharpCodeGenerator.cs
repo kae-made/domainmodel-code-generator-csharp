@@ -1,4 +1,6 @@
-﻿using Kae.CIM.MetaModel.CIMofCIM;
+﻿// Copyright (c) Knowledge & Experience. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator;
 using Kae.Tools.Generator.Context;
 using Kae.Tools.Generator.utility;
@@ -15,6 +17,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         public static readonly string CPKeyProjectName = "project-name";
         public static readonly string CPKeyDotNetVersion = "dotnet-ver";
+        public static readonly string CPKeyOverWrite = "overwrite";
 
         public CsharpCodeGenerator(Logger logger, string version) : base(logger, version)
         {
@@ -23,12 +26,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         private string ProjectName;
         private string DotNetVersion;
+        private bool IsOverWriteActionFile = false;
+
         protected override void CreateAdditionalContext()
         {
             var cpProjItem = new StringParam(CPKeyProjectName);
             ContextParams.Add(cpProjItem);
             var cpDNetVItem = new StringParam(CPKeyDotNetVersion);
             ContextParams.Add(cpDNetVItem);
+            var cpOverWriteItem = new BooleanParam(CPKeyOverWrite);
         }
 
         protected override bool AdditionalWorkForResloveContext()
@@ -45,6 +51,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 {
                     DotNetVersion = ((StringParam)cp).Value;
                     index++;
+                }
+                else if (cp.ParamName == CPKeyOverWrite)
+                {
+                    IsOverWriteActionFile = ((BooleanParam)cp).Value;
                 }
                 if (index >= 2)
                 {
@@ -76,7 +86,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             genFolder.CreateFolder(projectPath);
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.1.2" },
-              new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"} });
+              new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
+              new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.0.0"},
+            });
             var projectFileCode = projectFile.TransformText();
             string fileName = $"{ProjectName}.csproj";
             genFolder.WriteContentAsync(projectPath, fileName, projectFileCode).Wait();
@@ -88,13 +100,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         protected override void GenerateContentsYourOwn()
         {
             string projectPath = ProjectName;
+            bool overwriteHandCodingFiles = IsOverWriteActionFile;
 
             var modelRepository = this.modelResolver.ModelRepository;
 
             var classObjDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "O_OBJ");
             var instanceRepository = new InstanceRepository(Version, ProjectName, classObjDefs);
             var instanceRepositoryCode = instanceRepository.TransformText();
-            string fileName = "InstanceRepository.cs";
+            string fileName = "InstanceRepositoryInMemory.cs";
             genFolder.WriteContentAsync(projectPath, fileName, instanceRepositoryCode).Wait();
             Console.WriteLine($"Generated - {fileName}");
 
@@ -142,7 +155,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     //domainClassOperations.prototype();
                     var domainClassOperationsCode = domainClassOperations.TransformText();
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}BaseOperations.cs";
-                    genFolder.WriteContentAsync(projectPath, fileName, domainClassOperationsCode, false).Wait();
+                    genFolder.WriteContentAsync(projectPath, fileName, domainClassOperationsCode, overwriteHandCodingFiles).Wait();
                     Console.WriteLine($"Generated - {fileName}");
                 }
 
@@ -160,7 +173,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     // domainClassActions.prototype();
                     var domainClassActionsCode = domainClassActions.TransformText();
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}StateMachineActions.cs";
-                    genFolder.WriteContentAsync(projectPath, fileName, domainClassActionsCode, false).Wait();
+                    genFolder.WriteContentAsync(projectPath, fileName, domainClassActionsCode, overwriteHandCodingFiles).Wait();
                     Console.WriteLine($"Generated - {fileName}");
                 }
             }
@@ -175,7 +188,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs);
             var domainOperationsCode = domainOperations.TransformText();
             fileName = $"{domainFacadeClassName}Operations.cs";
-            genFolder.WriteContentAsync(projectPath, fileName, domainOperationsCode).Wait();
+            genFolder.WriteContentAsync(projectPath, fileName, domainOperationsCode, overwriteHandCodingFiles).Wait();
             Console.WriteLine($"Generated - {fileName}");
         }
 

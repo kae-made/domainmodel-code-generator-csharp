@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kae.Tools.Generator" Version="3.0.0" />
+    <PackageReference Include="Kae.Tools.Generator" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
