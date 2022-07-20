@@ -210,9 +210,16 @@ namespace <#= nameSpace #>
         string takeEventMethodName = GeneratorNames.GetTakeEventMethodName();
         string takeEventLogArgs = GetIdentityPropertiesArgsInFormattedString(objDef, "this");
 #>
-        public void <#= takeEventMethodName #>(EventData domainEvent)
+        public void <#= takeEventMethodName #>(EventData domainEvent, bool selfEvent=false)
         {
-            <#= stateMachineLocalVariableName #>.ReceivedEvent(domainEvent).Wait();
+            if (selfEvent)
+            {
+                <#= stateMachineLocalVariableName #>.ReceivedSelfEvent(domainEvent).Wait();
+            }
+            else
+            {
+                <#= stateMachineLocalVariableName #>.ReceivedEvent(domainEvent).Wait();
+            }
             if (logger != null) logger.LogInfo($"@{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}:<#= objDef.Attr_Key_Lett #>(<#= takeEventLogArgs #>):takeEvent({domainEvent.EventNumber})");
         }
 

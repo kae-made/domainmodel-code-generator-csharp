@@ -51,7 +51,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 
             }
         }
-            public void prototype()
+        public void prototype()
         {
             foreach (var classObjDef in classObjDefs)
             {
@@ -68,7 +68,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
 
                 var attrDefs = objDef.LinkedFromR102();
-                foreach(var attrDef in attrDefs)
+                foreach (var attrDef in attrDefs)
                 {
                     var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
                     var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
@@ -78,7 +78,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                     {
                         if (dtDef.Attr_Name == "state<State_Model>")
                         {
-                            generate= false;
+                            generate = false;
                         }
                     }
 
@@ -90,7 +90,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         {
                             bool isIdentity = false;
                             var oidaDefs = attrDef.LinkedOneSideR105();
-                            foreach(var oidaDef in oidaDefs)
+                            foreach (var oidaDef in oidaDefs)
                             {
                                 var oidDef = oidaDef.LinkedOneSideR105();
                                 isIdentity = true;
@@ -106,7 +106,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
 
                 var joinedRgos = GetJoinedRGOs(objDef);
-                foreach(var rgo in joinedRgos)
+                foreach (var rgo in joinedRgos)
                 {
                     var subRgo = rgo.SubClassR205();
                     if (subRgo is CIMClassR_FORM)
@@ -172,7 +172,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
 
                 var joinedRtos = GetJoinedRTOs(objDef);
-                foreach(var rto in joinedRtos)
+                foreach (var rto in joinedRtos)
                 {
                     var subRto = rto.SubClassR204();
                     if (subRto is CIMClassR_PART)
@@ -205,7 +205,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
                         var raothDef = rassocDef.LinkedFromR210();
                         string targetTypeName = GeneratorNames.GetDomainClassName(targetObjDef);
-                        string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef,"One",raothDef.Attr_Txt_Phrs,GeneratorNames.RelLinkMethodType.Linked);
+                        string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "One", raothDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                         if (raothDef.Attr_Mult == 0)
                         {
                             string returnType = targetTypeName;
@@ -241,7 +241,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         var subClassGetMethodName = GeneratorNames.GetSubRelClassMethodName(subsupRelDef);
 
                         var subDefs = superDef.LinkedToR212().LinkedFromR213();
-                        foreach(var subDef in subDefs)
+                        foreach (var subDef in subDefs)
                         {
                             var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
                             string methodNameLinked = GeneratorNames.GetRelationshipMethodName(subsupRelDef, "", "", GeneratorNames.RelLinkMethodType.Linked) + subObjDef.Attr_Key_Lett;
@@ -259,7 +259,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                     var retTypeName = DomainDataTypeDefs.GetDataTypeName(retDtDef);
                     var tparmDefs = tfrDef.LinkedFromR117();
                     string args = "";
-                    foreach(var tparmDef in tparmDefs)
+                    foreach (var tparmDef in tparmDefs)
                     {
                         var paramTypeDef = tparmDef.LinkedToR118();
                         string paramTypeName = DomainDataTypeDefs.GetDataTypeName(paramTypeDef);
@@ -277,19 +277,19 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         {
             string result = "";
             var attrDefs = objDef.LinkedFromR102();
-            foreach(var attrDef in attrDefs)
+            foreach (var attrDef in attrDefs)
             {
                 var subAttrDef = attrDef.SubClassR106();
                 if (subAttrDef is CIMClassO_RATTR)
                 {
                     var refDefs = ((CIMClassO_RATTR)subAttrDef).LinkedFromR108();
-                    foreach(var refDef in refDefs)
+                    foreach (var refDef in refDefs)
                     {
                         var rgoDef = refDef.LinkedOneSideR111();
                         var subRgoDef = rgoDef.SubClassR205();
                         if (subRgoDef is CIMClassR_SUB)
                         {
-                            var subDef =(CIMClassR_SUB)subRgoDef;
+                            var subDef = (CIMClassR_SUB)subRgoDef;
                             var relDef = subDef.LinkedToR213().CIMSuperClassR_REL();
                             if (!string.IsNullOrEmpty(result))
                             {
@@ -315,7 +315,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 if (subAttrDef is CIMClassO_RATTR)
                 {
                     var orefDefs = ((CIMClassO_RATTR)(subAttrDef)).LinkedFromR108();
-                    foreach(var orefDef in orefDefs)
+                    foreach (var orefDef in orefDefs)
                     {
                         CIMClassR_REL relDef = null;
                         var rgoDef = orefDef.LinkedOneSideR111();
@@ -351,13 +351,13 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             var joinedRels = new List<string>();
 
             var attrDefs = objDef.LinkedFromR102();
-            foreach(var attrDef in attrDefs)
+            foreach (var attrDef in attrDefs)
             {
                 var oidaDefs = attrDef.LinkedOneSideR105();
-                foreach(var oidaDef in oidaDefs)
+                foreach (var oidaDef in oidaDefs)
                 {
                     var rtidaDefs = oidaDef.LinkedOneSideR110();
-                    foreach(var rtidaDef in rtidaDefs)
+                    foreach (var rtidaDef in rtidaDefs)
                     {
                         var rtoDef = rtidaDef.LinkedOneSideR110();
                         string relName = null;
@@ -369,7 +369,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         }
                         else if (subRtoDef is CIMClassR_SUPER)
                         {
-                            var relDef  =((CIMClassR_SUPER)subRtoDef).LinkedToR212().CIMSuperClassR_REL();
+                            var relDef = ((CIMClassR_SUPER)subRtoDef).LinkedToR212().CIMSuperClassR_REL();
                             relName = $"R{relDef.Attr_Numb}";
                         }
                         else if (subRtoDef is CIMClassR_AONE)
@@ -394,3 +394,4 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         }
     }
 }
+

@@ -170,7 +170,7 @@ using Kae.DomainModel.Csharp.Framework;
             
             #line default
             #line hidden
-            this.Write("(EventData domainEvent);\r\n\r\n");
+            this.Write("(EventData domainEvent, bool selfEvent=false);\r\n\r\n");
             
             #line 73 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassDefs.tt"
 

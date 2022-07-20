@@ -68,7 +68,7 @@ namespace <#= nameSpace #>
 #>
         // State Machine
 
-        void <#= takeEventMethodName #>(EventData domainEvent);
+        void <#= takeEventMethodName #>(EventData domainEvent, bool selfEvent=false);
 
 <#
         }

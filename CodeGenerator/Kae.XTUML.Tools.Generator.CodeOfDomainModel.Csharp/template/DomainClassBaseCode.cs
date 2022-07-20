@@ -632,33 +632,6 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             return condition;
         }
 
-        public static string GetPropertyValueDomainRegexPattern(string descrip)
-        {
-            string pattern = null;
-            using (var reader = new StringReader(descrip))
-            {
-                string coloring = "@domain:";
-                string line = null;
-                while((line=reader.ReadLine()) != null)
-                {
-                    if (line.StartsWith(coloring))
-                    {
-                        string patternDef = line.Substring(coloring.Length);
-                        string[] frags = patternDef.Split(new char[] { '=' });
-                        if (frags.Length == 2)
-                        {
-                            if (frags[0] == "pattern")
-                            {
-                                pattern = frags[1];
-                                pattern = pattern.Substring(1, pattern.Length - 2);
-                            }
-                        }
-                    }
-                }
-            }
-            return pattern;
-        }
-
         public static string GetIdentityPropertiesArgsInFormattedString(CIMClassO_OBJ objDef, string varName)
         {
             string result = "";
@@ -691,40 +664,6 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             return result;
         }
 
-        public static string GetLinkIdentitiePropertiesArgsInFormattedString(string varName, IEnumerable<CIMClassO_ATTR> idAttrDefs)
-        {
-            string result = "";
-            foreach (var attrDef in idAttrDefs)
-            {
-                string propName = GeneratorNames.GetAttrPropertyName(attrDef);
-                if (!string.IsNullOrEmpty(result))
-                {
-                    result += ",";
-                    result += "{" + $"{varName}.{propName}:{attrDef.Attr_Name}" + "}";
-                }
-            }
-            return result;
-        }
-
-        public static bool IsIdentityAttribute(CIMClassO_ATTR attrDef)
-        {
-            bool isIdentity = false;
-            var oidDefs = attrDef.LinkedToR102().LinkedFromR104();
-            foreach(var oidDef in oidDefs)
-            {
-                var oidaDefs = oidDef.LinkedOtherSideR105();
-                foreach(var oidaDef in oidaDefs)
-                {
-                    var idAttrDef = oidaDef.LinkedOtherSideR105();
-                    if (attrDef.Attr_Attr_ID == idAttrDef.Attr_Attr_ID)
-                    {
-                        isIdentity = true;
-                        break;
-                    }
-                }
-            }
-            return isIdentity;
-        } 
         public class AttributeDef
         {
             public CIMClassO_ATTR AttrDef { get; set; }

@@ -19,6 +19,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         public static readonly string CPKeyDotNetVersion = "dotnet-ver";
         public static readonly string CPKeyOverWrite = "overwrite";
 
+
         public CsharpCodeGenerator(Logger logger, string version) : base(logger, version)
         {
 
@@ -85,7 +86,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string projectPath = ProjectName;
             genFolder.CreateFolder(projectPath);
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
-            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.1.2" },
+            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.2.0" },
               new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
               new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.0.0"},
             });
