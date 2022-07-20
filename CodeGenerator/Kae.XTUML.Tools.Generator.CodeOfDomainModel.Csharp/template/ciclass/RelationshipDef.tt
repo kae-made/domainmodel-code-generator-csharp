@@ -1,0 +1,814 @@
+﻿<#
+  // Copyright (c) Knowledge & Experience. All rights reserved.
+  // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+#>
+<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Kae.CIM.MetaModel.CIMofCIM" #>
+<#
+    string linkedInstanceClassName = GeneratorNames.GetLinkedInstanceClassName();
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
+    var domainClassName = GeneratorNames.GetDomainClassName(objDef);
+
+    var joinedRgos = DomainClassDefs.GetJoinedRGOs(objDef);
+
+    if (genImplCode)
+    {
+        foreach (var rgo in joinedRgos)
+        {
+            var subRgo = rgo.SubClassR205();
+            if (subRgo is CIMClassR_FORM)
+            {
+                var rformDef = (CIMClassR_FORM)subRgo;
+                var rsimpDef = rformDef.LinkedToR208();
+                var relDef = rsimpDef.CIMSuperClassR_REL();
+                var partDefs = rsimpDef.LinkedFromR207();
+                if (partDefs.Count() > 0)
+                {
+                    if (partDefs.Count() > 1)
+                    {
+                        // TODO: ???
+                    }
+                    var partDef = partDefs.First();
+                    var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+                    var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+                    if (partDef.Attr_Mult == 0)
+                    {
+                        string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, partDef.Attr_Txt_Phrs);
+#>
+<#= indent #>protected <#= linkedInstanceClassName #> <#= relVarName #>;
+<#
+                    }
+                }
+            }
+            else if (subRgo is CIMClassR_SUB)
+            {
+                var rsupDef = (CIMClassR_SUB)subRgo;
+                var rsubsupDef = rsupDef.LinkedToR213();
+                var relDef = rsubsupDef.CIMSuperClassR_REL();
+                var targetObjDef = rsubsupDef.LinkedFromR212().CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+                string targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+                string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, "");
+#>
+<#= indent #>protected <#= linkedInstanceClassName #> <#= relVarName #>;
+<#
+            }
+            else if (subRgo is CIMClassR_ASSR)
+            {
+                var rassrDef = (CIMClassR_ASSR)subRgo;
+                var rassocDef = rassrDef.LinkedToR211();
+                var relDef = rassocDef.CIMSuperClassR_REL();
+                var raoneDef = rassocDef.LinkedFromR209();
+                var raothDef = rassocDef.LinkedFromR210();
+    
+                var oneObjDef = raoneDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+                var oneObjTypeName = GeneratorNames.GetDomainClassName(oneObjDef);
+                var oneArgName = $"oneInstance{GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs)}";
+                string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, oneObjDef, raoneDef.Attr_Txt_Phrs);
+#>
+<#= indent #>protected <#= linkedInstanceClassName #> <#= relVarName #>;
+<#= indent #>// private <#= oneObjTypeName #> <#= relVarName #>;
+<#
+    
+                var otherObjDef = raothDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+                var otherObjTypeName = GeneratorNames.GetDomainClassName(otherObjDef);
+                var otherArgName = $"otherInstance{GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs)}";
+                relVarName = GeneratorNames.GetRelLocalVariableName(relDef, otherObjDef, raothDef.Attr_Txt_Phrs);
+#>
+<#= indent #>protected <#= linkedInstanceClassName #> <#= relVarName #>;
+<#= indent #>// private <#= otherObjTypeName #> <#= relVarName #>;
+<#
+            }
+        }
+    }
+
+    bool written = false;
+    foreach(var rgo in joinedRgos)
+    {
+        var subRgo = rgo.SubClassR205();
+        if (subRgo is CIMClassR_FORM)
+        {
+            var rformDef = (CIMClassR_FORM)subRgo;
+            var rsimpDef = rformDef.LinkedToR208();
+            var relDef = rsimpDef.CIMSuperClassR_REL();
+            var partDefs = rsimpDef.LinkedFromR207();
+            if (partDefs.Count() > 0)
+            {
+                if (partDefs.Count() > 1)
+                {
+                    // TODO: ???
+                }
+                var partDef = partDefs.First();
+                string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+                var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+                var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+                string returnType = "";
+                string condTargetVarName = "instance";
+                string condition = GetRelCondition(rgo, targetClassName);
+                string unRelCondtion = GetUnrelCondition(rgo, targetClassName, condTargetVarName);
+                if (partDef.Attr_Mult == 0)
+                {
+                    returnType = targetClassName;
+                    string methodNameLink = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Link);
+                    string methodNameUnLink = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Unlink);
+                    string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, partDef.Attr_Txt_Phrs);
+                    string thisLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(objDef, "this");
+                    string targetLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(targetObjDef, condTargetVarName);
+                    string relId = GeneratorNames.GetRelID(relDef);
+                    string phrsForRelVarName = GeneratorNames.ToProgramAvailableString(partDef.Attr_Txt_Phrs);
+#>
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                    if (genImplCode)
+                    {
+#>
+<#= indent #>{
+<#= indent #>    if (<#= relVarName #> == null)
+<#= indent #>    {
+<#= indent #>   var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>   <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForRelVarName #>" };
+
+<#= indent #>    }
+<#= indent #>    return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
+<#= indent #>}
+<#
+                    }
+#>
+
+<#= indent #>public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } #>
+<#
+                    if (genImplCode)
+                    {
+#>
+<#= indent #>{
+<#= indent #>    bool result = false;
+<#= indent #>    if (<#= relVarName #> == null)
+<#= indent #>    {
+<#
+                    }
+                    var orefDefs = rgo.LinkedOtherSideR111();
+                    foreach(var orefDef in orefDefs)
+                    {
+                        var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
+                        var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
+                        string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                        string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
+#>
+<#
+                        if (genImplCode)
+                        {
+#>
+<#= indent #>        this.<#= thisAttrName #> = <#= condTargetVarName #>.<#= tgtAttrName #>;
+<#
+                        }
+                    }
+                    var logLink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+                    logLink.oneObjDef = targetObjDef;
+                    logLink.oneVarName = "instance";
+                    var logLinkGen = logLink.TransformText();
+                    var logUnlink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "unlink");
+                    logUnlink.oneObjDef = targetObjDef;
+                    logUnlink.oneVarName = "instance";
+                    var logUnlinkGen = logUnlink.TransformText();
+                    if (genImplCode)
+                    {
+#>
+
+<#= logLinkGen #>
+<#= indent #>        result = (<#= methodNameLinked #>()!=null);
+<#= indent #>        if (result)
+<#= indent #>        {
+<#= indent #>            if(<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relVarName #> });
+<#= indent #>        }
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+<#
+                    }
+#>
+
+<#= indent #>public bool <#= methodNameUnLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } #>
+<#
+                    if (genImplCode)
+                    {
+#>
+<#= indent #>{
+<#= indent #>    bool result = false;
+<#= indent #>    if (<#= relVarName #> != null && ( <#= unRelCondtion #> ))
+<#= indent #>    {
+<#= indent #>        if (<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relVarName #> });
+<#= indent #>
+<#
+                        foreach(var orefDef in orefDefs)
+                        {
+                            var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
+                            var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
+                            string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+#>
+<#= indent #>        this.<#= thisAttrName #> = null;
+<#
+                        }
+#>
+<#= indent #>        <#= relVarName #> = null;
+
+<#= logUnlinkGen #>
+
+<#= indent #>        result = true;
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+<#
+                    }
+                }
+                else
+                {
+                    returnType = $"IEnumerable<{targetClassName}>";
+#>
+<#= indent #><#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                    if (genImplCode)
+                    {
+#>
+<#= indent #>{
+<#= indent #>    <#= returnType #> result = List<<#= targetClassName #>>();
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>
+<#= indent #>    foreach (var inst in candidates)
+<#= indent #>    {
+<#= indent #>        result.Add((<#= targetClassName #>)inst);
+<#= indent #>    }
+<#= indent #>
+<#= indent #>    return result;
+<#= indent #>}
+
+<#
+                    }
+                }
+                written = true;
+            }
+        }
+        else if (subRgo is CIMClassR_SUB)
+        {
+            var rsupDef = (CIMClassR_SUB)subRgo;
+            var rsubsupDef = rsupDef.LinkedToR213();
+            var relDef = rsubsupDef.CIMSuperClassR_REL();
+            string methodNameLink = GeneratorNames.GetRelationshipMethodName(relDef, "", "", GeneratorNames.RelLinkMethodType.Link);
+            string methodNameUnlink = GeneratorNames.GetRelationshipMethodName(relDef, "", "", GeneratorNames.RelLinkMethodType.Unlink);
+            var targetObjDef = rsubsupDef.LinkedFromR212().CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+            string targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+            string methodNameLinked = GeneratorNames.GetGetSuperClassMethodName(relDef, objDef);
+            string condTargetVarName = "instance";
+            string condition = GetRelCondition(rgo, targetClassName);
+            string unRelCondtion = GetUnrelCondition(rgo, targetClassName, condTargetVarName);
+            string relVarName = GeneratorNames.GetRelLocalVariableName(relDef, targetObjDef, "");
+            string thisLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(objDef, "this");
+            string targetLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(targetObjDef, condTargetVarName);
+
+            var logLink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+            logLink.oneObjDef = targetObjDef;
+            logLink.oneVarName = condTargetVarName;
+            var logLinkGen = logLink.TransformText();
+            var logUnlink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "unlink");
+            logUnlink.oneObjDef = targetObjDef;
+            logUnlink.oneVarName = condTargetVarName;
+            var logUnlinkGen = logUnlink.TransformText();
+            string relId = GeneratorNames.GetRelID(relDef);
+#>
+<#= indent #>public <#= targetClassName #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    if (<#= relVarName #> == null)
+<#= indent #>    {
+<#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst => (<#= condition #>));
+<#= indent #>        <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = null };
+<#= indent #>    }
+<#= indent #>    return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
+<#= indent #>}
+
+<#
+            }
+#>
+<#= indent #>public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    bool result = false;
+<#= indent #>    if (<#= relVarName #> == null)
+<#= indent #>    {
+<#
+            }
+            var orefDefs = rgo.LinkedOtherSideR111();
+            foreach(var orefDef in orefDefs)
+            {
+                var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
+                var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
+                string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
+                if (genImplCode)
+                {
+#>
+<#= indent #>        this.<#= thisAttrName #> = <#= condTargetVarName #>.<#= tgtAttrName #>;
+<#
+                }
+            }
+            if (genImplCode)
+            {
+#>
+
+<#= logLinkGen #>
+<#= indent #>        result = (<#= methodNameLinked #>()!=null);
+<#= indent #>        if (result)
+<#= indent #>        {
+<#= indent #>            if (<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relVarName #> });
+<#= indent #>        }
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+<#= indent #>
+<#
+            }
+#>
+<#= indent #>public bool <#= methodNameUnlink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    bool result = false;
+<#= indent #>    if (<#= relVarName #> != null && ( <#= unRelCondtion #> ))
+<#= indent #>    {
+<#= indent #>        if (<#= changedStateVarName #> != null) <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relVarName #> });
+<#= indent #>
+<#
+                    foreach(var orefDef in orefDefs)
+                    {
+                        var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
+                        var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
+                        string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+#>
+<#= indent #>        this.<#= thisAttrName #> = null;
+<#
+                    }
+#>
+<#= indent #>        <#= relVarName #> = null;
+
+<#= logUnlinkGen #>
+<#= indent #>        result = true;
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+
+<#
+            }
+        }
+        else if (subRgo is CIMClassR_ASSR)
+        {
+            var rassrDef = (CIMClassR_ASSR)subRgo;
+            var rassocDef = rassrDef.LinkedToR211();
+            var relDef = rassocDef.CIMSuperClassR_REL();
+            var raoneDef = rassocDef.LinkedFromR209();
+            var raothDef = rassocDef.LinkedFromR210();
+            string methodNameLink = GeneratorNames.GetRelationshipMethodName(relDef, "", "", GeneratorNames.RelLinkMethodType.Link);
+            string methodNameUnlink = GeneratorNames.GetRelationshipMethodName(relDef, "", "", GeneratorNames.RelLinkMethodType.Unlink);
+
+            string methodNameLinkedOne = GeneratorNames.GetRelationshipMethodName(relDef, "One", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+            var oneObjDef = raoneDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+            var oneObjTypeName = GeneratorNames.GetDomainClassName(oneObjDef);
+            var oneArgName = $"oneInstance{GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs)}";
+            string oneCondition = GetRelCondition(rgo, oneObjTypeName);
+            string oneUnRelCondtion = GetUnrelCondition(rgo, oneObjTypeName, oneArgName);
+            string relOneVarName = GeneratorNames.GetRelLocalVariableName(relDef, oneObjDef, raoneDef.Attr_Txt_Phrs);
+
+            string methodNameLinkedOther = GeneratorNames.GetRelationshipMethodName(relDef, "Other", raothDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+            var otherObjDef = raothDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+            var otherObjTypeName = GeneratorNames.GetDomainClassName(otherObjDef);
+            var otherArgName = $"otherInstance{GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs)}";
+            string otherCondition = GetRelCondition(rgo, otherObjTypeName);
+            string otherUnRelCondtion = GetUnrelCondition(rgo, otherObjTypeName, otherArgName);
+            string relOtherVarName = GeneratorNames.GetRelLocalVariableName(relDef, otherObjDef, raothDef.Attr_Txt_Phrs);
+
+            string thisLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(objDef, "this");
+            string oneLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(oneObjDef, relOneVarName);
+            string otherLogArgs = DomainClassBase.GetIdentityPropertiesArgsInFormattedString(otherObjDef, relOtherVarName);
+
+            var logLink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "link");
+            logLink.oneObjDef = oneObjDef;
+            logLink.oneVarName = oneArgName;
+            logLink.otherObjDef = otherObjDef;
+            logLink.otherVarName = otherArgName;
+            var logLinkGen = logLink.TransformText();
+            var logUnlink = new logging.Logging("logger", "                ", objDef, "this", logging.Logging.Mode.LinkLifeCycle, "unlink");
+            logUnlink.oneObjDef = oneObjDef;
+            logUnlink.oneVarName = oneArgName;
+            logLink.otherObjDef = otherObjDef;
+            logLink.otherVarName = otherArgName;
+            var logUnlinkGen = logUnlink.TransformText();
+
+            string relId = GeneratorNames.GetRelID(relDef);
+            string phrsForOneRelVarName = GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs);
+            string phrsForOtherRelVarName = GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs);
+
+            var orefDefs = rgo.LinkedOtherSideR111();
+#>
+<#= indent #>public bool <#= methodNameLink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    bool result = false;
+<#= indent #>    if (<#= relOneVarName #> == null && <#= relOtherVarName #> == null)
+<#= indent #>    {
+<#
+                foreach (var orefDef in orefDefs)
+                {
+                    var thisRefAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
+                    var tgtRtdaDef = orefDef.LinkedOtherSideR111();
+                    var tgtAttrDef = tgtRtdaDef.LinkedOtherSideR110().LinkedOtherSideR105();
+                    var tgtObjDef = tgtAttrDef.LinkedToR102();
+                    var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
+                    var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
+                    var tgtAttrPropName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
+                    var subRtoDef = tgtRtdaDef.LinkedOneSideR110().SubClassR204();
+                    if (subRtoDef is CIMClassR_AONE)
+                    {
+#>
+<#= indent #>        this.<#= thisAttrPropLocalName #> = <#= oneArgName #>.<#=tgtAttrPropName  #>;
+<#
+                    }
+                    else if (subRtoDef is CIMClassR_AOTH)
+                    {
+#>
+<#= indent #>        this.<#= thisAttrPropLocalName #> = <#= otherArgName #>.<#=tgtAttrPropName  #>;
+<#
+                    }
+                }
+#>
+
+<#= logLinkGen #>
+<#= indent #>        result = (<#= methodNameLinkedOne #>()!=null) && (<#= methodNameLinkedOther #>()!=null);
+<#= indent #>        if (result)
+<#= indent #>        {
+<#= indent #>            if (<#= changedStateVarName #> != null)
+<#= indent #>            {
+<#= indent #>                <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relOneVarName #> });
+<#= indent #>                <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = <#= relOtherVarName #> });
+<#= indent #>            }
+<#= indent #>        }
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+<#= indent #>
+<#
+            }
+#>
+<#= indent #>public bool <#= methodNameUnlink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    bool result = false;
+<#= indent #>    if (<#= relOneVarName #> != null && <#= relOtherVarName #> != null)
+<#= indent #>    {
+<#= indent #>        if ((<#= oneUnRelCondtion #>) && (<#= otherUnRelCondtion #>))
+<#= indent #>        {
+<#= indent #>            if (<#= changedStateVarName #> != null)
+<#= indent #>            {
+<#= indent #>                <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relOneVarName #> });
+<#= indent #>                <#= changedStateVarName #>.Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = <#= relOtherVarName #> });
+<#= indent #>            }
+<#= indent #>
+<#
+                foreach (var orefDef in orefDefs)
+                {
+                    var thisRefAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
+                    var tgtRtdaDef = orefDef.LinkedOtherSideR111();
+                    var tgtAttrDef = tgtRtdaDef.LinkedOtherSideR110().LinkedOtherSideR105();
+                    var tgtObjDef = tgtAttrDef.LinkedToR102();
+                    var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
+                    var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
+                    var subRtoDef = tgtRtdaDef.LinkedOneSideR110().SubClassR204();
+                    if (subRtoDef is CIMClassR_AONE)
+                    {
+#>
+<#= indent #>            this.<#= thisAttrPropLocalName #> = null;
+<#
+                    }
+                    else if (subRtoDef is CIMClassR_AOTH)
+                    {
+    #>
+<#= indent #>            this.<#= thisAttrPropLocalName #> = null;
+<#
+                    }
+                }
+#>
+<#= indent #>            <#= relOneVarName #> = null;
+<#= indent #>            <#= relOtherVarName #> = null;
+
+<#= logUnlinkGen #>
+<#= indent #>            result = true;
+<#= indent #>        }
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+<#= indent #>
+<#
+            }
+#>
+<#= indent #>public <#= oneObjTypeName #> <#= methodNameLinkedOne #>()<# if (!genImplCode) { #>;<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    if (<#= relOneVarName #> == null)
+<#= indent #>    {
+<#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= oneObjDef.Attr_Key_Lett #>").Where(inst=>(<#= oneCondition #>));
+<#= indent #>        <#= relOneVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOneRelVarName #>" };
+<#= indent #>        // (<#= oneObjTypeName #>)candidates.First();
+<#= indent #>    }
+<#= indent #>    return <#= relOneVarName #>.GetDestination<<#= oneObjTypeName #>>();
+<#= indent #>}
+<#= indent #>
+<#
+            }
+#>
+<#= indent #>public <#= otherObjTypeName #> <#= methodNameLinkedOther #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    if (<#= relOtherVarName #> == null)
+<#= indent #>    {
+<#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= otherObjDef.Attr_Key_Lett #>").Where(inst=>(<#= otherCondition #>));
+<#= indent #>        <#= relOtherVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOtherRelVarName #>" };
+<#= indent #>        // (<#= otherObjTypeName #>)candidates.First();
+<#= indent #>    }
+<#= indent #>    return <#= relOtherVarName #>.GetDestination<<#= otherObjTypeName #>>();
+<#= indent #>}
+
+<#
+            }
+        }
+    }
+
+    var joinedRtos = DomainClassDefs.GetJoinedRTOs(objDef);
+    foreach(var rto in joinedRtos)
+    {
+        var subRto = rto.SubClassR204();
+        if (subRto is CIMClassR_PART)
+        {
+            var rpartDef = (CIMClassR_PART)subRto;
+            var rsimpDef = rpartDef.LinkedToR207();
+            var relDef = rsimpDef.CIMSuperClassR_REL();
+            var rformDef = rsimpDef.LinkedFromR208();
+            if (rformDef != null)
+            {
+                var targetObjDef = rformDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                string targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+                string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "", rformDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+                string condition = GetRelCondition(rformDef.CIMSuperClassR_RGO(), domainClassName, false);
+                string returnType = "";
+                if (rformDef.Attr_Mult == 0)
+                {
+                    returnType = targetClassName;
+#>
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                if (genImplCode)
+                {
+#>
+<#= indent #>{
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    return (<#= targetClassName #>)candidates.First();
+<#= indent #>}
+<#
+                }
+#>
+<#
+                }
+                else
+                {
+                    returnType = $"IEnumerable<{targetClassName}>";
+#>
+
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                    if (genImplCode)
+                    {
+#>
+<#= indent #>{
+<#= indent #>    var result = new List<<#= targetClassName #>>();
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    foreach (var c in candidates)
+<#= indent #>    {
+<#= indent #>        result.Add((<#= targetClassName #>)c);
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+
+<#
+                    }
+                }
+            }
+        }
+        else if (subRto is CIMClassR_AONE)
+        {
+            var raoneDef = (CIMClassR_AONE)subRto;
+            var rassocDef = raoneDef.LinkedToR209();
+            var relDef = rassocDef.CIMSuperClassR_REL();
+            var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+            var raothDef = rassocDef.LinkedFromR210();
+            string targetTypeName = GeneratorNames.GetDomainClassName(targetObjDef);
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef,"One",raothDef.Attr_Txt_Phrs,GeneratorNames.RelLinkMethodType.Linked);
+            string condition = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), domainClassName, false);
+            string returnType = "";
+            if (raothDef.Attr_Mult == 0)
+            {
+                returnType = targetTypeName;
+#>
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                if (genImplCode)
+                {
+#>
+<#= indent #>{
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    return (<#= targetTypeName #>)candidates.First();
+<#= indent #>}
+
+<#
+                }
+            }
+            else
+            {
+                returnType = $"IEnumerable<{targetTypeName}>";
+#>
+
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                if (genImplCode)
+                {
+#>
+<#= indent #>{
+<#= indent #>    var result = new List<<#= targetTypeName #>>();
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    foreach (var c in candidates)
+<#= indent #>    {
+<#= indent #>        result.Add((<#= targetTypeName #>)c);
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+
+<#
+                }
+            }
+        }
+        else if (subRto is CIMClassR_AOTH)
+        {
+            var raothDef = (CIMClassR_AOTH)subRto;
+            var rassocDef = raothDef.LinkedToR210();
+            var relDef = rassocDef.CIMSuperClassR_REL();
+            var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+            string targetType = GeneratorNames.GetDomainClassName(targetObjDef);
+            var raoneDef = rassocDef.LinkedFromR209();
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "Other", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+            string condition = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), domainClassName, false);
+            string returnType = "";
+            if (raoneDef.Attr_Mult == 0)
+            {
+                returnType = targetType;
+#>
+
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                if (genImplCode)
+                {
+#>
+<#= indent #>{
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    return (<#= targetType #>)candidates.First();
+<#= indent #>}
+
+<#
+                }
+            }
+            else
+            {
+                returnType = $"IEnumerable<{targetType}>";
+#>
+
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                if (genImplCode)
+                {
+#>
+<#= indent #>{
+<#= indent #>    var result = new List<<#= targetType #>>();
+<#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    foreach (var c in candidates)
+<#= indent #>    {
+<#= indent #>        result.Add((<#= targetType #>)c);
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+
+<#
+                }
+            }
+        }
+        else if (subRto is CIMClassR_SUPER)
+        {
+            var superDef = (CIMClassR_SUPER)subRto;
+            var subsupDef = superDef.LinkedToR212();
+            var subsupRelDef = subsupDef.CIMSuperClassR_REL();
+            var subClassIFName = GeneratorNames.GetSubRelInterfaceName(subsupRelDef);
+            var subClassGetMethodName = GeneratorNames.GetSubRelClassMethodName(subsupRelDef);
+            var subDefs = subsupDef.LinkedFromR213();
+            string subClassKeys = "";
+            foreach (var subDef in subDefs)
+            {
+                if (!string.IsNullOrEmpty(subClassKeys))
+                {
+                    subClassKeys += ", ";
+                }
+                var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                subClassKeys += $"\"{subObjDef.Attr_Key_Lett}\"";
+            }
+            string superGetMethodName = GeneratorNames.GetGetSuperClassMethodName(subsupRelDef,objDef);
+#>
+
+<#= indent #>public <#= subClassIFName #> <#= subClassGetMethodName #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+            if (genImplCode)
+            {
+#>
+<#= indent #>{
+<#= indent #>    <#= subClassIFName #> result = null;
+<#= indent #>    var subClassKeys = new List<string>() { <#= subClassKeys #> };
+<#= indent #>    foreach (var key in subClassKeys)
+<#= indent #>    {
+<#= indent #>        var candidates = instanceRepository.GetDomainInstances(key).Where(inst=>((this == ((<#= subClassIFName #>)inst).<#= superGetMethodName #>())));
+<#= indent #>        if (candidates.Count()>0)
+<#= indent #>        {
+<#= indent #>            result = (<#= subClassIFName #>)candidates.First();
+<#= indent #>            break;
+<#= indent #>        }
+<#= indent #>    }
+<#= indent #>    return result;
+<#= indent #>}
+
+<#
+            }
+            foreach(var subDef in subDefs)
+            {
+                var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                string methodNameLinked = GeneratorNames.GetRelationshipMethodName(subsupRelDef, "", "", GeneratorNames.RelLinkMethodType.Linked) + subObjDef.Attr_Key_Lett;
+                string returnType = GeneratorNames.GetDomainClassName(subObjDef);
+#>
+
+<#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } #>
+<#
+                if (genImplCode)
+                {
+#>
+<#= indent #>{
+<#= indent #>    return (<#= returnType #>)<#= subClassGetMethodName #>();
+<#= indent #>}
+
+<#
+                }
+            }
+        }
+    }
+#>

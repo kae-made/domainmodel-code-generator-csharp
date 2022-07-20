@@ -1,0 +1,160 @@
+﻿<#
+  // Copyright (c) Knowledge & Experience. All rights reserved.
+  // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+#>
+<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Kae.CIM.MetaModel.CIMofCIM" #>
+<#
+    string stateMachineLocalVariableName = "stateMachine";
+
+    bool hasStateMachine = false;
+    var ismDef = objDef.LinkedFromR518();
+    if (ismDef != null)
+    {
+        hasStateMachine = true;
+    }
+
+    var implAttrDefs = new List<AttributeDef>();
+    var attrDefs = objDef.LinkedFromR102();
+    foreach (var attrDef in attrDefs)
+    {
+        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false };
+        var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
+        var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+        var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        implAttrDef.DataTypeName = attrPropDataTypeName;
+        bool generate = true;
+        if (hasStateMachine)
+        {
+            if (dtDef.Attr_Name == "state<State_Model>")
+            {
+                implAttrDef.IsState = true;
+            }
+        }
+
+        var subAttrDef = attrDef.SubClassR106();
+        if (subAttrDef is not CIMClassO_RATTR)
+        {
+            var oidaDefs = attrDef.LinkedOneSideR105();
+            foreach (var oidaDef in oidaDefs)
+            {
+                var oidDef = oidaDef.LinkedOneSideR105();
+                implAttrDef.IsIdentity = true;
+                if (dtDef.Attr_Name == "unique_id")
+                {
+                    implAttrDef.IsUniqueId = true;
+                }
+            }
+        }
+        else
+        {
+            implAttrDef.IsReferential = true;
+        }
+        implAttrDefs.Add(implAttrDef);
+    }
+    if (genImplCode)
+    {
+        foreach(var implAttrDef in implAttrDefs)
+        {
+            string stateVarName = GeneratorNames.GetPropertyStateVariableName(implAttrDef.AttrDef);
+            if (!implAttrDef.IsState)
+            {
+                var dtDef = DomainDataTypeDefs.GetBaseDT(implAttrDef.AttrDef);
+                var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+                string localVarName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
+#>
+<#= indent #>protected <#= attrPropDataTypeName #> <#= localVarName #>;
+<#
+            }
+            else
+            {
+                string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
+#>
+<#= indent #>protected <#= stateMachineClassName #> <#= stateMachineLocalVariableName #>;
+<#
+            }
+#>
+<#= indent #>protected bool <#= stateVarName #> = false;
+
+<#
+        }
+
+        // property implementation for DomainClassClassNameBase
+        foreach(var implAttrDef in implAttrDefs)
+        {
+            var dtDef = DomainDataTypeDefs.GetBaseDT(implAttrDef.AttrDef);
+            var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+            string localVarName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
+            string propName = GeneratorNames.GetAttrPropertyName(implAttrDef.AttrDef);
+            string stateVarName = GeneratorNames.GetPropertyStateVariableName(implAttrDef.AttrDef);
+            string accessorImple = "";
+            if (implAttrDef.IsState)
+            {
+                accessorImple = "get { " + $"return {stateMachineLocalVariableName}.CurrentState;" + " }";
+            }
+            else
+            {
+                accessorImple = "get { " + $"return {localVarName}" + "; }";
+            }
+            if (!implAttrDef.IsReferential)
+            {
+                if (!implAttrDef.IsState)
+                {
+                    accessorImple += " set { " + $"{localVarName} = value; {stateVarName} = true;" + " }";
+                }
+            }
+#>
+<#= indent #>public <#= attrPropDataTypeName #> <#= propName #> { <#= accessorImple #> }
+<#
+        }
+    }
+    else
+    {
+        // property decralation for DomainClassClassNameBase
+        foreach(var attrDef in attrDefs)
+        {
+            var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
+            var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+            var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+            bool generate = true;
+            bool isStateAttr = false;
+            if (hasStateMachine)
+            {
+                if (dtDef.Attr_Name == "state<State_Model>")
+                {
+                    isStateAttr = true;
+                }
+            }
+
+            if (generate)
+            {
+                string accessors = "get;";
+                var subAttrDef = attrDef.SubClassR106();
+                if (subAttrDef is not CIMClassO_RATTR)
+                {
+                    bool isIdentity = false;
+                    var oidaDefs = attrDef.LinkedOneSideR105();
+                    foreach(var oidaDef in oidaDefs)
+                    {
+                        var oidDef = oidaDef.LinkedOneSideR105();
+                        isIdentity = true;
+                    }
+                    if (isIdentity == false && isStateAttr == false)
+                    {
+                        accessors += " set;";
+                    }
+                }
+#>
+<#= indent #><#= attrPropDataTypeName #> <#= attrPropName #> { <#= accessors #> }
+<#
+
+            }
+
+        }
+
+    }
+#>

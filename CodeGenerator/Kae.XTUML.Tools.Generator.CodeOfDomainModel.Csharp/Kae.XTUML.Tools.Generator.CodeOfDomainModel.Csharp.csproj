@@ -19,10 +19,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kae.Tools.Generator" Version="3.0.1" />
+    <PackageReference Include="Kae.Tools.Generator" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="template\ciclass\ClassOperationDef.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ClassOperationDef.cs</LastGenOutput>
+    </None>
+    <None Update="template\ciclass\PropertyDef.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PropertyDef.cs</LastGenOutput>
+    </None>
+    <None Update="template\ciclass\RelationshipDef.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>RelationshipDef.cs</LastGenOutput>
+    </None>
     <None Update="template\DomainClassActions.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DomainClassActions.cs</LastGenOutput>
@@ -78,6 +90,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="template\ciclass\ClassOperationDef.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ClassOperationDef.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\ciclass\PropertyDef.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PropertyDef.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\ciclass\RelationshipDef.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RelationshipDef.tt</DependentUpon>
+    </Compile>
     <Compile Update="template\DomainClassActions.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -33,64 +33,9 @@ namespace <#= nameSpace #>
     partial class <#= domainClassBaseName #>
     {
 <#
-    var tfrDefs = objDef.LinkedFromR115();
-    foreach (var tfrDef in tfrDefs)
-    {
-        string opName = GeneratorNames.GetTfrOpName(tfrDef);
-        var retDtDef = tfrDef.LinkedToR116();
-        var retDtTypeName = DomainDataTypeDefs.GetDataTypeName(retDtDef);
-        var tparmDefs = tfrDef.LinkedFromR117();
-        string descrip = "";
-        if (!string.IsNullOrEmpty(tfrDef.Attr_Action_Semantics))
-        {
-            descrip = GeneratorNames.DescripToCodeComment("            ", tfrDef.Attr_Action_Semantics);
-            if (descrip.EndsWith(Environment.NewLine))
-            {
-                descrip=descrip.Substring(0, descrip.Length - Environment.NewLine.Length);
-            }
-        }
-        string opArgs = "";
-        foreach(var tparamDef in tparmDefs)
-        {
-            if (!string.IsNullOrEmpty(opArgs))
-            {
-                opArgs += ", ";
-            }
-            var parmDtDef = tparamDef.LinkedToR118();
-            var parmDtTypeName = DomainDataTypeDefs.GetDataTypeName(parmDtDef);
-            opArgs += $"{parmDtTypeName} {tparamDef.Attr_Name}";
-        }
-        // if (!string.IsNullOrEmpty(opArgs))
-        // {
-        //     opArgs += ", ";
-        // }
-        // opArgs += $"{changedStateClassName} {changedStateVarName}=null";
-
+    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true);
+    string operationGenCode = operationsGen.TransformText();
 #>
-        public <#= retDtTypeName #> <#= opName #>(<#= opArgs #>)
-        {
-            // TODO : Let's write code!
-            // Action Description on Model as a reference
-<#
-        if (!string.IsNullOrEmpty(descrip))
-        {
-#>
-<#= descrip #>
-<#
-        }
-#>
-
-
-            var changedStates = new List<ChangedState>();
-            // Please record changing states by using changedStates;
-
-            instanceRepository.SyncChangedStates(changedStates);
-            throw new NotImplementedException();
-            // Please delete above throw exception statement after implement this method.
-        }
-
-<#
-    }
-#>
+<#= operationGenCode #>
     }
 }

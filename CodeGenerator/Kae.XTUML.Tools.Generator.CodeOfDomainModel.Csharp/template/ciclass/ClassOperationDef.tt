@@ -1,0 +1,79 @@
+﻿<#
+  // Copyright (c) Knowledge & Experience. All rights reserved.
+  // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+#>
+<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
+    
+    string changedStateClassName = "";
+    string changedStateVarName = "";
+    GeneratorNames.GetChangedStoreVariable(ref changedStateClassName, ref changedStateVarName);
+
+    var tfrDefs = objDef.LinkedFromR115();
+    foreach (var tfrDef in tfrDefs)
+    {
+        string opName = GeneratorNames.GetTfrOpName(tfrDef);
+        var retDtDef = tfrDef.LinkedToR116();
+        var retDtTypeName = DomainDataTypeDefs.GetDataTypeName(retDtDef);
+        var tparmDefs = tfrDef.LinkedFromR117();
+        string descrip = "";
+        if (!string.IsNullOrEmpty(tfrDef.Attr_Action_Semantics))
+        {
+            descrip = GeneratorNames.DescripToCodeComment("    " + indent, tfrDef.Attr_Action_Semantics);
+            if (descrip.EndsWith(Environment.NewLine))
+            {
+                descrip=descrip.Substring(0, descrip.Length - Environment.NewLine.Length);
+            }
+        }
+        string opArgs = "";
+        foreach(var tparamDef in tparmDefs)
+        {
+            if (!string.IsNullOrEmpty(opArgs))
+            {
+                opArgs += ", ";
+            }
+            var parmDtDef = tparamDef.LinkedToR118();
+            var parmDtTypeName = DomainDataTypeDefs.GetDataTypeName(parmDtDef);
+            opArgs += $"{parmDtTypeName} {tparamDef.Attr_Name}";
+        }
+        // if (!string.IsNullOrEmpty(opArgs))
+        // {
+        //     opArgs += ", ";
+        // }
+        // opArgs += $"{changedStateClassName} {changedStateVarName}=null";
+
+#>
+<#= indent #>public <#= retDtTypeName #> <#= opName #>(<#= opArgs #>)<# if (!genLogicCode) #>;
+<#
+        if (genLogicCode)
+        {
+#>
+<#= indent #>{
+<#= indent #>    // TODO : Let's write code!
+<#= indent #>    // Action Description on Model as a reference
+<#
+            if (!string.IsNullOrEmpty(descrip))
+            {
+#>
+<#= descrip #>
+<#
+            }
+#>
+
+<#= indent #>    var changedStates = new List<ChangedState>();
+<#= indent #>    // Please record changing states by using changedStates;
+<#= indent #>
+<#= indent #>    instanceRepository.SyncChangedStates(changedStates);
+<#= indent #>    throw new NotImplementedException();
+<#= indent #>    // Please delete above throw exception statement after implement this method.
+<#= indent #>}
+
+<#
+        }
+    }
+#>
