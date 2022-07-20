@@ -56,6 +56,8 @@ namespace <#= nameSpace #>
         var propertiesGen = new ciclass.PropertyDef("        ", objDef, false);
         string propertiesGenCode = propertiesGen.TransformText();
 #>
+        // Conceptual Information Class's Properties
+
 <#= propertiesGenCode #>
 
 <#
@@ -64,6 +66,8 @@ namespace <#= nameSpace #>
         {
             string takeEventMethodName = GeneratorNames.GetTakeEventMethodName();
 #>
+        // State Machine
+
         void <#= takeEventMethodName #>(EventData domainEvent);
 
 <#
@@ -73,13 +77,16 @@ namespace <#= nameSpace #>
         string relationshipDef = relationshipGenf.TransformText();
 
 #>
+        // Relationships 
+
 <#= relationshipDef #>
 
 <#
-        // Class Operations
         var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false);
         string operationGenCode = operationsGen.TransformText();
 #>
+        // Conceptual Information Class's Operations
+
 <#= operationGenCode #>
 
     }

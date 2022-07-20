@@ -123,6 +123,8 @@
                     string phrsForRelVarName = GeneratorNames.ToProgramAvailableString(partDef.Attr_Txt_Phrs);
 #>
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                     if (genImplCode)
@@ -142,6 +144,8 @@
 #>
 
 <#= indent #>public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                     if (genImplCode)
@@ -195,6 +199,8 @@
 #>
 
 <#= indent #>public bool <#= methodNameUnLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                     if (genImplCode)
@@ -233,6 +239,8 @@
                     returnType = $"IEnumerable<{targetClassName}>";
 #>
 <#= indent #><#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                     if (genImplCode)
@@ -284,6 +292,8 @@
             string relId = GeneratorNames.GetRelID(relDef);
 #>
 <#= indent #>public <#= targetClassName #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -302,6 +312,8 @@
             }
 #>
 <#= indent #>public bool <#= methodNameLink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -345,6 +357,8 @@
             }
 #>
 <#= indent #>public bool <#= methodNameUnlink #>(<#= targetClassName #> <#= condTargetVarName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -428,6 +442,8 @@
             var orefDefs = rgo.LinkedOtherSideR111();
 #>
 <#= indent #>public bool <#= methodNameLink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -481,6 +497,8 @@
             }
 #>
 <#= indent #>public bool <#= methodNameUnlink #>(<#= oneObjTypeName #> <#= oneArgName #>, <#= otherObjTypeName #> <#= otherArgName #>, <#= changedStateClassName #> <#= changedStateVarName #>=null)<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -535,7 +553,10 @@
 <#
             }
 #>
-<#= indent #>public <#= oneObjTypeName #> <#= methodNameLinkedOne #>()<# if (!genImplCode) { #>;<# } #>
+<#= indent #>public <#= oneObjTypeName #> <#= methodNameLinkedOne #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
+<# } #>
 <#
             if (genImplCode)
             {
@@ -554,6 +575,8 @@
             }
 #>
 <#= indent #>public <#= otherObjTypeName #> <#= methodNameLinkedOther #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -596,6 +619,8 @@
                     returnType = targetClassName;
 #>
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                 if (genImplCode)
@@ -616,6 +641,8 @@
 #>
 
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                     if (genImplCode)
@@ -652,6 +679,8 @@
                 returnType = targetTypeName;
 #>
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                 if (genImplCode)
@@ -671,6 +700,8 @@
 #>
 
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                 if (genImplCode)
@@ -707,6 +738,8 @@
 #>
 
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                 if (genImplCode)
@@ -726,6 +759,8 @@
 #>
 
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                 if (genImplCode)
@@ -767,6 +802,8 @@
 #>
 
 <#= indent #>public <#= subClassIFName #> <#= subClassGetMethodName #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
             if (genImplCode)
@@ -797,6 +834,8 @@
 #>
 
 <#= indent #>public <#= returnType #> <#= methodNameLinked #>()<# if (!genImplCode) { #>;
+<# } else { #>
+
 <# } #>
 <#
                 if (genImplCode)

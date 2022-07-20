@@ -48,7 +48,10 @@
         // opArgs += $"{changedStateClassName} {changedStateVarName}=null";
 
 #>
-<#= indent #>public <#= retDtTypeName #> <#= opName #>(<#= opArgs #>)<# if (!genLogicCode) #>;
+<#= indent #>public <#= retDtTypeName #> <#= opName #>(<#= opArgs #>)<# if (!genLogicCode) { #>;
+<# } else { #>
+<# } #>
+
 <#
         if (genLogicCode)
         {
