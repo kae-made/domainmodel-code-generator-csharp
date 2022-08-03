@@ -996,6 +996,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
+            this.Write("public ");
             
             #line 241 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
@@ -1052,14 +1053,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write("    ");
-            
-            #line 250 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
-            
-            #line default
-            #line hidden
-            this.Write(" result = List<");
+            this.Write("    var result = new List<");
             
             #line 250 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
@@ -3344,7 +3338,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
             var raothDef = rassocDef.LinkedFromR210();
             string targetTypeName = GeneratorNames.GetDomainClassName(targetObjDef);
-            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef,"One",raothDef.Attr_Txt_Phrs,GeneratorNames.RelLinkMethodType.Linked);
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef,"Other" ,raothDef.Attr_Txt_Phrs,GeneratorNames.RelLinkMethodType.Linked);
             string condition = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), domainClassName, false);
             string returnType = "";
             if (raothDef.Attr_Mult == 0)
@@ -3621,7 +3615,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
             string targetType = GeneratorNames.GetDomainClassName(targetObjDef);
             var raoneDef = rassocDef.LinkedFromR209();
-            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "Other", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "One", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
             string condition = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), domainClassName, false);
             string returnType = "";
             if (raoneDef.Attr_Mult == 0)

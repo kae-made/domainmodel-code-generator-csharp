@@ -56,6 +56,7 @@ namespace <#= nameSpace #>
         //    args += ", ";
         // }
         // args += $"{changedStateClassName} {changedStateVarName}=null";
+
 #>
         public <#= retDTName #> <#= methodName #>(<#= args #>)
         {
@@ -64,13 +65,38 @@ namespace <#= nameSpace #>
 
 <#= actionSemantics #>
 
-
             var changedStates = new List<ChangedState>();
-            // Please record changing states by using changedStates;
-
+            
+<#
+        bool genSyncState = true;
+        var fnbDef = syncDef.LinkedFromR695();
+        if (fnbDef != null)
+        {
+            Console.WriteLine($"Generating {syncDef.Attr_Name}...");
+            var actDef = fnbDef.CIMSuperClassACT_ACT();
+            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ");
+            string code = actDescripGen.Generate();
+#>
+            // Generated from action description
+<#= code #>
+<#
+        }
+        // var retDtDef = syncDef.LinkedToR25();
+        if (retDtDef.Attr_Name != "void") genSyncState = false;
+        if (genSyncState)
+        {
+#>
             instanceRepository.SyncChangedStates(changedStates);
+<#
+        }
+        if (fnbDef == null)
+        {
+#>
             throw new NotImplementedException();
             // Please delete above throw exception statement after implement this method.
+<#
+        }
+#>
         }
 <#
     }

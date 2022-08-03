@@ -124,9 +124,16 @@ namespace <#= nameSpace #>
         public class <#= evtClassName #> : EventData<# if (existArgIF) { #>, <#= argIFName #><# } #>
 
         {
-            public <#= evtClassName #>() : base((int)Events.<#= evtName #>)
+            <#= domainClassName #> reciever;
+
+            public <#= evtClassName #>(<#= domainClassName #> reciever) : base((int)Events.<#= evtName #>)
             {
-                ;
+                this.reciever = reciever;
+            }
+
+            public override void Send()
+            {
+                reciever.TakeEvent(this);
             }
 
 <#
@@ -183,9 +190,9 @@ namespace <#= nameSpace #>
         }
         string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
 #>
-            public static <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #><# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
+            public static <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #>, bool sendNow<# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
             {
-                var newEvent = new <#= evtClassName #>()<#= constructorCallArgs #>;
+                var newEvent = new <#= evtClassName #>(receiver)<#= constructorCallArgs #>;
 <#
         if (isCreationEvent)
         {
@@ -194,7 +201,10 @@ namespace <#= nameSpace #>
                 {
                     receiver = <#= domainClassBaseName #>.CreateInstance(instanceRepository, logger);
                 }
-                receiver.TakeEvent(newEvent);
+                if (sendNow)
+                {
+                    receiver.TakeEvent(newEvent);
+                }
 <#
         }
         else
@@ -202,7 +212,10 @@ namespace <#= nameSpace #>
 #>
                 if (receiver != null)
                 {
-                    receiver.TakeEvent(newEvent);
+                    if (sendNow)
+                    {
+                        receiver.TakeEvent(newEvent);
+                    }
                 }
 <#
         }

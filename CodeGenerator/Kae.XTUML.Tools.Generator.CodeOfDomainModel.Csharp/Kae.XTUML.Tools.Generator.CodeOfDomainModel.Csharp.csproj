@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.3.2</Version>
+    <Version>0.4.1</Version>
     <Authors>Hiroshi Ota</Authors>
     <Company>Knowledge &amp; Experience</Company>
     <PackageProjectUrl>https://github.com/kae-made/domainmodel-code-generator-csharp</PackageProjectUrl>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kae.Tools.Generator" Version="3.2.0" />
+    <PackageReference Include="Kae.Tools.Generator" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +66,10 @@
     <None Update="template\DomainOperations.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DomainOperations.cs</LastGenOutput>
+    </None>
+    <None Update="template\ExternalEntityDef.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ExternalEntityDef.cs</LastGenOutput>
     </None>
     <None Update="template\InstanceRepository.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -144,6 +148,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DomainOperations.tt</DependentUpon>
+    </Compile>
+    <Compile Update="template\ExternalEntityDef.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExternalEntityDef.tt</DependentUpon>
     </Compile>
     <Compile Update="template\InstanceRepository.cs">
       <DesignTime>True</DesignTime>

@@ -8,6 +8,7 @@ using Kae.Utility.Logging;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 {
@@ -27,7 +28,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         private string ProjectName;
         private string DotNetVersion;
-        private bool IsOverWriteActionFile = false;
+        private bool IsOverWriteActionFile = true;
+        private bool IsGenCode = true;
 
         protected override void CreateAdditionalContext()
         {
@@ -86,9 +88,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string projectPath = ProjectName;
             genFolder.CreateFolder(projectPath);
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
-            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.2.0" },
+            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
               new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.0.0"},
+              new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.2.2"},
             });
             var projectFileCode = projectFile.TransformText();
             string fileName = $"{ProjectName}.csproj";
@@ -154,24 +156,34 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 {
                     var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef);
                     //domainClassOperations.prototype();
+                    //domainClassOperations.prototypeAct();
                     var domainClassOperationsCode = domainClassOperations.TransformText();
+
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}BaseOperations.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassOperationsCode, overwriteHandCodingFiles).Wait();
                     Console.WriteLine($"Generated - {fileName}");
                 }
 
+                CIMClassSM_SM smDef = null;
                 var ismDef = objDef.LinkedFromR518();
                 if (ismDef != null)
                 {
-                    var domainClassStateMachine = new DomainClassStateMachine(Version, ProjectName, objDef, ismDef.CIMSuperClassSM_SM());
+                    smDef = ismDef.CIMSuperClassSM_SM();
+                }
+                // To support Class State Machine,
+                // use asmDef by objDef.LinkedFromR519();
+                if (smDef != null)
+                {
+                    var domainClassStateMachine = new DomainClassStateMachine(Version, ProjectName, objDef, smDef);
                     var domainClassStateMachineCode = domainClassStateMachine.TransformText();
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}StateMachine.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassStateMachineCode).Wait();
                     // domainClassStateMachine.prototype();
                     Console.WriteLine($"Generated - {fileName}");
 
-                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, ismDef.CIMSuperClassSM_SM());
+                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode);
                     // domainClassActions.prototype();
+                    domainClassActions.prototypeAction();
                     var domainClassActionsCode = domainClassActions.TransformText();
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}StateMachineActions.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassActionsCode, overwriteHandCodingFiles).Wait();
@@ -188,9 +200,42 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var syncDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_SYNC");
             var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs);
             var domainOperationsCode = domainOperations.TransformText();
+            // domainOperations.prototypeAction();
             fileName = $"{domainFacadeClassName}Operations.cs";
             genFolder.WriteContentAsync(projectPath, fileName, domainOperationsCode, overwriteHandCodingFiles).Wait();
             Console.WriteLine($"Generated - {fileName}");
+
+            string eeDefFolderName = Path.Join(projectPath, ExternalEntityDef.GetFolderName());
+            genFolder.CreateFolder(eeDefFolderName);
+            var eeDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_EE");
+            foreach (var eeCIDef in eeDefs)
+            {
+                var eeDef = (CIMClassS_EE)eeCIDef;
+                if (!(eeDef.Attr_Key_Lett == "TIM" && eeDef.Attr_Name == "Time"))
+                {
+                    var eeDefGen = new ExternalEntityDef(Version, ProjectName, eeDef);
+                    //eeDefGen.prototype();
+                    string eeDefGenCode = eeDefGen.TransformText();
+                    fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";
+                    genFolder.WriteContentAsync(eeDefFolderName, fileName,eeDefGenCode).Wait();
+                }
+#if false
+                var brgDefs = eeDef.LinkedFromR19();
+                foreach(var brgDef in brgDefs)
+                {
+                    string brgName = brgDef.Attr_Name;
+                    var bparmDefs = brgDef.LinkedFromR21();
+                    var brgRetDtDef = brgDef.LinkedToR20();
+                    string brgRetDtName = DomainDataTypeDefs.GetDataTypeName(brgRetDtDef);
+                    foreach(var bparmDef in bparmDefs)
+                    {
+                        string bparmName = bparmDef.Attr_Name;
+                        var parmDtDef = bparmDef.LinkedToR22();
+                        string parmDtName = DomainDataTypeDefs.GetDataTypeName(parmDtDef);
+                    }
+                }
+#endif
+            }
         }
 
     }

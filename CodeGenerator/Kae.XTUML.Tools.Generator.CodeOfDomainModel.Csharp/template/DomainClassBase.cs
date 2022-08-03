@@ -649,7 +649,7 @@ namespace ");
             var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
             var raothDef = rassocDef.LinkedFromR210();
             string targetTypeName = GeneratorNames.GetDomainClassName(targetObjDef);
-            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "One", raothDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "Other", raothDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
             string condtion = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), targetTypeName, false);
             if (raothDef.Attr_Mult == 0)
             {
@@ -703,7 +703,7 @@ namespace ");
             var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
             string targetType = GeneratorNames.GetDomainClassName(targetObjDef);
             var raoneDef = rassocDef.LinkedFromR209();
-            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "Other", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "One", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
             string condtion = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), targetType, false);
             if (raoneDef.Attr_Mult == 0)
             {

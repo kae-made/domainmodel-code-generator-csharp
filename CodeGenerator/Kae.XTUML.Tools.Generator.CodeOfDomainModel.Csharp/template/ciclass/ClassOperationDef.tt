@@ -69,11 +69,42 @@
 #>
 
 <#= indent #>    var changedStates = new List<ChangedState>();
+<#
+            bool genSyncState = true;
+            var opbDef = tfrDef.LinkedFromR696();
+            if (opbDef != null)
+            {
+                Console.WriteLine($"Generating {tfrDef.Attr_Name}...");
+                var actDef = opbDef.CIMSuperClassACT_ACT();
+                var actDescripGen = new ActDescripGenerator(actDef, "this", "    ", "        ");
+                var descripCode = actDescripGen.Generate();
+#>
+<#= indent #>   // Generated from action description
+<#= descripCode #>
+<#
+            }
+            else
+            {
+#>
 <#= indent #>    // Please record changing states by using changedStates;
+<#
+            }
+            if (retDtDef.Attr_Name != "void") genSyncState = false;
+            if (genSyncState)
+            {
+#>
 <#= indent #>
 <#= indent #>    instanceRepository.SyncChangedStates(changedStates);
+<#
+            }
+            if (opbDef == null)
+            {
+#>
 <#= indent #>    throw new NotImplementedException();
 <#= indent #>    // Please delete above throw exception statement after implement this method.
+<#
+            }
+#>
 <#= indent #>}
 
 <#

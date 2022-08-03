@@ -25,6 +25,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.syncClassDefs = syncDefs;
         }
 
+        public void prototypeAction()
+        {
+            foreach (var syncClassDef in syncClassDefs)
+            {
+                var syncDef = (CIMClassS_SYNC)syncClassDef;
+                var fnbDef = syncDef.LinkedFromR695();
+                var actDef = fnbDef.CIMSuperClassACT_ACT();
+                var retDtDef = syncDef.LinkedToR25();
+                if (retDtDef.Attr_Name == "void") ;
+                string syncName = syncDef.Attr_Name;
+                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ");
+                string code = actDescripGen.Generate();
+            }
+        }
+
         public void prototype()
         {
             foreach(var syncClassDef in syncClassDefs)

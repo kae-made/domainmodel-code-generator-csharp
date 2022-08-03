@@ -15,13 +15,34 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string nameSpace;
         CIMClassO_OBJ objDef;
         CIMClassSM_SM smDef;
+        bool generateCode;
 
-        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef)
+        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.objDef = objDef;
             this.smDef = smDef;
+            this.generateCode = generateCode;
+        }
+
+        public void prototypeAction()
+        {
+            var stateDefs = smDef.LinkedFromR501();
+            foreach (var stateDef in stateDefs)
+            {
+                var moahDef = stateDef.LinkedOneSideR511();
+                var smActDef = moahDef.CIMSuperClassSM_AH().LinkedToR514();
+                string smActDescip = smActDef.Attr_Action_Semantics;
+                var sabDef = smActDef.LinkedFromR691();
+                if (sabDef != null)
+                {
+                    Console.WriteLine($"Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
+                    var actDef = sabDef.CIMSuperClassACT_ACT();
+                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ");
+                    string code = actionGen.Generate();
+                }
+            }
         }
 
         public void prototype()

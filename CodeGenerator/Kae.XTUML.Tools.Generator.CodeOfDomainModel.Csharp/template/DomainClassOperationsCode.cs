@@ -22,6 +22,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.objDef = objDef;
         }
 
+        public void prototypeAct()
+        {
+            var tfrDefs = objDef.LinkedFromR115();
+            foreach (var tfrDef in tfrDefs)
+            {
+                var opbDef = tfrDef.LinkedFromR696();
+                var actDef = opbDef.CIMSuperClassACT_ACT();
+                var actDescripGen = new ActDescripGenerator(actDef, "this","", "");
+                actDescripGen.Generate();
+            }
+        }
+
         public void prototype()
         {
             string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);

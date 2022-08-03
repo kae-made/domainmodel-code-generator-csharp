@@ -21,9 +21,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             { "integer", "int" },
             { "real", "double" },
             { "timestamp", "DateTime" },
+            { "date", "DateTime" },
             { "string", "string" },
             { "state<State_Model>", "int" },
-            { "inst_ref<Timer>", "string" },
+            { "inst_ref<Timer>", "Kae.DomainModel.Csharp.Framework.ExternalEntities.TIM.Timer" },
+            { "inst<Mapping>", "string" },
+            {"inst<Event>", "EventData" },
             { "void", "void" } };
 
 

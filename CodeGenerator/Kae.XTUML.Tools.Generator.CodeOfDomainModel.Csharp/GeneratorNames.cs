@@ -209,5 +209,24 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             className = "IList<ChangedState>";
             varName = "changedStates";
         }
+
+        public static string GetExternalEntityWrappterClassName(CIMClassS_EE eeDef, bool fullName = true)
+        {
+            string name = $"{eeDef.Attr_Key_Lett}Wrapper";
+            if (fullName)
+            {
+                name = "ExternalEntities." + name;
+            }
+            if (eeDef.Attr_Name == "Time" && eeDef.Attr_Key_Lett == "TIM")
+            {
+                name = "Kae.DomainModel.Csharp.Framework.ExternalEntities.TIM.TIMWrapper";
+            }
+            return name;
+        }
+
+        public static string GetExternalEntityWrapperRefVarName(CIMClassS_EE eeDef)
+        {
+            return $"_ee{eeDef.Attr_Key_Lett}Ref_";
+        }
     }
 }
