@@ -1,0 +1,254 @@
+-- BP 7.1.6 content: ModelClass syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO O_OBJ
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	'RAF',
+	12,
+	'RAF',
+	'',
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO O_REF
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"d9327dc2-dba7-4538-a7a3-5051f0fa07bc",
+	0,
+	"19c834c6-c3fb-403a-92bd-5f9515c66f44",
+	"878087d4-07e5-4eac-9dca-706bd9f68538",
+	"5e118ee0-f9e4-4691-aaf6-748f3d84aa3e",
+	"ba4e6df1-80f0-4093-9e18-79a635a9594b",
+	"341643e2-b237-44d3-93eb-3d256577f8aa",
+	"54559da0-e6a2-4bbe-a60a-2f82569b1aa6",
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	'',
+	'A',
+	'A_ID',
+	'R11');
+INSERT INTO R_RGO_PROXY
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"878087d4-07e5-4eac-9dca-706bd9f68538",
+	"5e118ee0-f9e4-4691-aaf6-748f3d84aa3e",
+	'../Test.xtuml');
+INSERT INTO O_RTIDA_PROXY
+	VALUES ("19c834c6-c3fb-403a-92bd-5f9515c66f44",
+	"d9327dc2-dba7-4538-a7a3-5051f0fa07bc",
+	0,
+	"878087d4-07e5-4eac-9dca-706bd9f68538",
+	"ba4e6df1-80f0-4093-9e18-79a635a9594b",
+	'../Test.xtuml');
+INSERT INTO O_RATTR
+	VALUES ("341643e2-b237-44d3-93eb-3d256577f8aa",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"19c834c6-c3fb-403a-92bd-5f9515c66f44",
+	"d9327dc2-dba7-4538-a7a3-5051f0fa07bc",
+	1,
+	'A_ID');
+INSERT INTO O_BATTR_PROXY
+	VALUES ("19c834c6-c3fb-403a-92bd-5f9515c66f44",
+	"d9327dc2-dba7-4538-a7a3-5051f0fa07bc",
+	'../A/A.xtuml');
+INSERT INTO O_ATTR
+	VALUES ("341643e2-b237-44d3-93eb-3d256577f8aa",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"00000000-0000-0000-0000-000000000000",
+	'A_ID',
+	'',
+	'',
+	'A_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000007",
+	'',
+	'');
+INSERT INTO O_REF
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"b8fd271f-55b1-4666-96eb-151c1070587f",
+	0,
+	"570b25a8-8491-4560-950d-afd87e820608",
+	"878087d4-07e5-4eac-9dca-706bd9f68538",
+	"5e118ee0-f9e4-4691-aaf6-748f3d84aa3e",
+	"5fe19d9b-c75c-4ec1-bd3d-681d08d02bca",
+	"bf7a1b13-b540-457d-a687-a4a7e4c28e82",
+	"71e3453f-21d3-49aa-af13-fc3ec32ae455",
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	'',
+	'F',
+	'F_ID',
+	'R11');
+INSERT INTO O_RTIDA_PROXY
+	VALUES ("570b25a8-8491-4560-950d-afd87e820608",
+	"b8fd271f-55b1-4666-96eb-151c1070587f",
+	0,
+	"878087d4-07e5-4eac-9dca-706bd9f68538",
+	"5fe19d9b-c75c-4ec1-bd3d-681d08d02bca",
+	'../Test.xtuml');
+INSERT INTO O_RATTR
+	VALUES ("bf7a1b13-b540-457d-a687-a4a7e4c28e82",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"570b25a8-8491-4560-950d-afd87e820608",
+	"b8fd271f-55b1-4666-96eb-151c1070587f",
+	1,
+	'F_ID');
+INSERT INTO O_BATTR_PROXY
+	VALUES ("570b25a8-8491-4560-950d-afd87e820608",
+	"b8fd271f-55b1-4666-96eb-151c1070587f",
+	'../F/F.xtuml');
+INSERT INTO O_ATTR
+	VALUES ("bf7a1b13-b540-457d-a687-a4a7e4c28e82",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"341643e2-b237-44d3-93eb-3d256577f8aa",
+	'F_ID',
+	'',
+	'',
+	'F_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000007",
+	'',
+	'');
+INSERT INTO O_REF
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"b6bc916e-0d35-4e3a-b230-44d96cd1fc7b",
+	0,
+	"c42249bf-98d4-4431-874e-166145b03eef",
+	"0893d0b2-5cf3-4f43-b420-414b052e205f",
+	"6fec6bfd-f88e-49be-aad8-56d77a817a4d",
+	"fc589ee1-2bcb-4cb6-924a-327295a5d0d8",
+	"71e26e6c-eaff-4478-8ff6-dbbb8f1d9ed6",
+	"559ab6b8-eb5f-48c1-9c83-9af5a864a67b",
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	'',
+	'RBC',
+	'B_ID',
+	'R15');
+INSERT INTO R_RGO_PROXY
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"0893d0b2-5cf3-4f43-b420-414b052e205f",
+	"6fec6bfd-f88e-49be-aad8-56d77a817a4d",
+	'../Test.xtuml');
+INSERT INTO O_RTIDA_PROXY
+	VALUES ("c42249bf-98d4-4431-874e-166145b03eef",
+	"b6bc916e-0d35-4e3a-b230-44d96cd1fc7b",
+	0,
+	"0893d0b2-5cf3-4f43-b420-414b052e205f",
+	"fc589ee1-2bcb-4cb6-924a-327295a5d0d8",
+	'../Test.xtuml');
+INSERT INTO O_RATTR
+	VALUES ("71e26e6c-eaff-4478-8ff6-dbbb8f1d9ed6",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"b344b456-8cd2-4a03-b3d0-cf8eb2ddacc2",
+	"e32ade76-a4eb-4e61-999a-8735a8255849",
+	1,
+	'B_ID');
+INSERT INTO O_BATTR_PROXY
+	VALUES ("b344b456-8cd2-4a03-b3d0-cf8eb2ddacc2",
+	"e32ade76-a4eb-4e61-999a-8735a8255849",
+	'../B/B.xtuml');
+INSERT INTO O_ATTR
+	VALUES ("71e26e6c-eaff-4478-8ff6-dbbb8f1d9ed6",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"bf7a1b13-b540-457d-a687-a4a7e4c28e82",
+	'B_ID',
+	'',
+	'',
+	'B_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000007",
+	'',
+	'');
+INSERT INTO O_REF
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"b6bc916e-0d35-4e3a-b230-44d96cd1fc7b",
+	0,
+	"ad00e82f-3a23-4210-b7c1-5c1035c78b76",
+	"0893d0b2-5cf3-4f43-b420-414b052e205f",
+	"6fec6bfd-f88e-49be-aad8-56d77a817a4d",
+	"fc589ee1-2bcb-4cb6-924a-327295a5d0d8",
+	"73198e8a-c201-4af7-a20a-1aac6112b169",
+	"16aad872-13ad-4623-90c5-db2c6e6c6889",
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	'',
+	'RBC',
+	'C_ID',
+	'R15');
+INSERT INTO O_RTIDA_PROXY
+	VALUES ("ad00e82f-3a23-4210-b7c1-5c1035c78b76",
+	"b6bc916e-0d35-4e3a-b230-44d96cd1fc7b",
+	0,
+	"0893d0b2-5cf3-4f43-b420-414b052e205f",
+	"fc589ee1-2bcb-4cb6-924a-327295a5d0d8",
+	'../Test.xtuml');
+INSERT INTO O_RATTR
+	VALUES ("73198e8a-c201-4af7-a20a-1aac6112b169",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"8f461d42-3843-4980-bd66-ba6372a056a8",
+	"fc1b2d04-c28f-4e4c-a609-d8890b44450f",
+	1,
+	'C_ID');
+INSERT INTO O_BATTR_PROXY
+	VALUES ("8f461d42-3843-4980-bd66-ba6372a056a8",
+	"fc1b2d04-c28f-4e4c-a609-d8890b44450f",
+	'../C/C.xtuml');
+INSERT INTO O_ATTR
+	VALUES ("73198e8a-c201-4af7-a20a-1aac6112b169",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"71e26e6c-eaff-4478-8ff6-dbbb8f1d9ed6",
+	'C_ID',
+	'',
+	'',
+	'C_ID',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000007",
+	'',
+	'');
+INSERT INTO O_NBATTR
+	VALUES ("94c955bb-4678-426a-9be0-0a9344c8989a",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b");
+INSERT INTO O_BATTR
+	VALUES ("94c955bb-4678-426a-9be0-0a9344c8989a",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b");
+INSERT INTO O_ATTR
+	VALUES ("94c955bb-4678-426a-9be0-0a9344c8989a",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	"73198e8a-c201-4af7-a20a-1aac6112b169",
+	'Number',
+	'',
+	'',
+	'Number',
+	0,
+	"ba5eda7a-def5-0000-0000-000000000002",
+	'',
+	'');
+INSERT INTO O_ID
+	VALUES (0,
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b");
+INSERT INTO O_OIDA
+	VALUES ("341643e2-b237-44d3-93eb-3d256577f8aa",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	0,
+	'A_ID');
+INSERT INTO O_OIDA
+	VALUES ("bf7a1b13-b540-457d-a687-a4a7e4c28e82",
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	0,
+	'F_ID');
+INSERT INTO O_ID
+	VALUES (1,
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b");
+INSERT INTO O_ID
+	VALUES (2,
+	"eb0c5b3b-a024-4689-85d8-3e9c99a37f4b");
+INSERT INTO PE_PE
+	VALUES ("eb0c5b3b-a024-4689-85d8-3e9c99a37f4b",
+	1,
+	"8bd2a8c8-3dab-4554-80e9-3ff60b08f577",
+	"00000000-0000-0000-0000-000000000000",
+	4);
+INSERT INTO EP_PKG_PROXY
+	VALUES ("8bd2a8c8-3dab-4554-80e9-3ff60b08f577",
+	"00000000-0000-0000-0000-000000000000",
+	"5f54794c-75ce-470c-b6c0-b9e2b8b535bf",
+	'Test',
+	'',
+	0,
+	'../Test.xtuml');
