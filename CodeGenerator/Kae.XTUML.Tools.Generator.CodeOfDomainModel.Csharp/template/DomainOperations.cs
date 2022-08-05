@@ -147,7 +147,7 @@ namespace ");
         var fnbDef = syncDef.LinkedFromR695();
         if (fnbDef != null)
         {
-            Console.WriteLine($"Generating {syncDef.Attr_Name}...");
+            Console.WriteLine($"  - Generating {syncDef.Attr_Name}...");
             var actDef = fnbDef.CIMSuperClassACT_ACT();
             var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ");
             string code = actDescripGen.Generate();

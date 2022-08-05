@@ -200,7 +200,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             var opbDef = tfrDef.LinkedFromR696();
             if (opbDef != null)
             {
-                Console.WriteLine($"Generating {tfrDef.Attr_Name}...");
+                Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
                 var actDef = opbDef.CIMSuperClassACT_ACT();
                 var actDescripGen = new ActDescripGenerator(actDef, "this", "    ", "        ");
                 var descripCode = actDescripGen.Generate();

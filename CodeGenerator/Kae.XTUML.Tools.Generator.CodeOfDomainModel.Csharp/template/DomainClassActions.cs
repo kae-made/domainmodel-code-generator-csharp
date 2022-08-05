@@ -112,7 +112,7 @@ namespace ");
                 var sabDef = actDef.LinkedFromR691();
                 if (sabDef != null)
                 {
-                    Console.WriteLine($"Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
+                    Console.WriteLine($"  - Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var smActDef = sabDef.CIMSuperClassACT_ACT();
                     var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ");
                     genCodeFromDescrip = actionGen.Generate();

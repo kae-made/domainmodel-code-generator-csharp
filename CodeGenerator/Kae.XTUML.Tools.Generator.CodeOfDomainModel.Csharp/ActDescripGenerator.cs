@@ -30,6 +30,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         Dictionary<string, string> eeReferDefs = new Dictionary<string, string>();
         public string Generate()
         {
+            var gen = GenCode();
+            if (gen == false)
+            {
+                return $"{indent}// mark - no generation";
+            }
             string code = "";
 
             var blkDef = actDef.LinkedToR666();
@@ -44,10 +49,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             var currentScopeBlkDef = actDef.LinkedToR699();
 
+            indent += baseIndent;
+
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
             if (eeReferDefs.Count > 0) {
-                indent += baseIndent;
                 writer.WriteLine($"{indent}// External Entities Reference Declarations.");
                 foreach (var eeKey in eeReferDefs.Keys)
                 {
@@ -55,9 +61,60 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     writer.WriteLine("");
                 }
             }
+            if (hasUsedSelectedVar)
+            {
+                writer.WriteLine($"{indent}DomainClassDef selected = null;");
+                writer.WriteLine("");
+            }
             writer.Write(code);
 
             return sb.ToString();
+        }
+
+        public bool GenCode()
+        {
+            bool result = true;
+            string actionDescrip = "";
+            var subActDef = actDef.SubClassR698();
+            if (subActDef is CIMClassACT_FNB)
+            {
+                var syncDef = ((CIMClassACT_FNB)subActDef).LinkedToR695();
+                actionDescrip = syncDef.Attr_Action_Semantics;
+            }
+            else if (subActDef is CIMClassACT_OPB)
+            {
+                var tfrDef = ((CIMClassACT_OPB)subActDef).LinkedToR696();
+                actionDescrip = tfrDef.Attr_Action_Semantics;
+            }
+            else if (subActDef is CIMClassACT_SAB)
+            {
+                var smActDef = ((CIMClassACT_SAB)subActDef).LinkedToR691();
+                actionDescrip = smActDef.Attr_Action_Semantics;
+            }
+            if (!string.IsNullOrEmpty(actionDescrip))
+            {
+                using (var reader = new StringReader(actionDescrip))
+                {
+                    string line = reader.ReadLine();
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        if (line.StartsWith("//"))
+                        {
+                            string genColor = "@gen:";
+                            int index = line.IndexOf(genColor);
+                            if (index > 0)
+                            {
+                                if (line.Substring(index + genColor.Length).StartsWith("false"))
+                                {
+                                    result = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
         protected int relatedByCodeIndex = 0;
@@ -104,6 +161,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
                 }
                 // writer.WriteLine($"{indent}{dataTypeName} {varDef.Attr_Name};");
+            }
+            var selectedVarDef = HasDeclaredVariable("selected");
+            if (selectedVarDef == null)
+            {
+                selectedVarDef = new VariableDef() { Declared = false, Name = "selected", Set = false };
+                declaredVariables[declaredVariables.Count-1].Add(selectedVarDef.Name, selectedVarDef);
             }
 
             var valDefs = blkDef.LinkedFromR826();
@@ -365,11 +428,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 tmpVarPostfix = "_";
             }
             writer.WriteLine($"{indent}foreach (var {varLoopDef.Attr_Name}{tmpVarPostfix} in {varSetDef.Attr_Name})");
+            writer.WriteLine($"{indent}" + "{");
             if (!string.IsNullOrEmpty(tmpVarPostfix))
             {
-                writer.WriteLine($"{indent}{varLoopDef.Attr_Name} = {varLoopDef.Attr_Name}{tmpVarPostfix};");
+                writer.WriteLine($"{indent}{baseIndent}{varLoopDef.Attr_Name} = {varLoopDef.Attr_Name}{tmpVarPostfix};");
             }
-            writer.WriteLine($"{indent}" + "{");
             writer.Write(bodyCode);
             writer.WriteLine($"{indent}" + "}");
 
@@ -615,7 +678,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 whereCode = GenerateV_VAL(whereValDef, out whereVarName);
             }
 
-            code = GenerateRelatedCode(lnkDef, valSourceDef, varDestDef, whereCode);
+            code = GenerateRelatedCode(actSelDef.Attr_cardinality, lnkDef, valSourceDef, varDestDef, whereCode);
             while (lnkDef != null)
             {
                 destObjDef = lnkDef.LinkedToR678();
@@ -649,7 +712,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return code;
         }
 
-        protected string GenerateRelatedCode(CIMClassACT_LNK lnkDef, CIMClassV_VAL srcValDef, CIMClassV_VAR dstVarDef, string whereCode)
+       bool  hasUsedSelectedVar= false;
+
+        protected string GenerateRelatedCode(string cardinality, CIMClassACT_LNK lnkDef, CIMClassV_VAL srcValDef, CIMClassV_VAR dstVarDef, string whereCode)
         {
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
@@ -672,7 +737,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 var relDef = currentLinkDef.LinkedToR681();
                 var dstObjDef = currentLinkDef.LinkedToR678();
-                var linkUnit = new RelatedByLinkUnit() { Target=currentLinkDef, SetSource = srcIsSet, ObjDefOfDestination = dstObjDef, ObjDefOfSource = srcObjDef };
+                var linkUnit = new RelatedByLinkUnit() { Target = currentLinkDef, SetSource = srcIsSet, ObjDefOfDestination = dstObjDef, ObjDefOfSource = srcObjDef };
                 string linkPhrase = currentLinkDef.Attr_Rel_Phrase;
                 if (linkPhrase.StartsWith("'") && linkPhrase.EndsWith("'"))
                 {
@@ -693,7 +758,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         if (linkPhrase == rFormDef.Attr_Txt_Phrs)
                         {
                             linkUnit.SetDestination = (rFormDef.Attr_Mult == 1);
-                            linkUnit.CondDestination=(rFormDef.Attr_Cond == 1);
+                            linkUnit.CondDestination = (rFormDef.Attr_Cond == 1);
                             phrase = rFormDef.Attr_Txt_Phrs;
                         }
                         else
@@ -714,7 +779,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         else
                         {
                             linkUnit.SetDestination = (rFormDef.Attr_Mult == 1);
-                            linkUnit.CondDestination=(rFormDef.Attr_Cond== 1);
+                            linkUnit.CondDestination = (rFormDef.Attr_Cond == 1);
                             phrase = rFormDef.Attr_Txt_Phrs;
                         }
                     }
@@ -802,16 +867,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                                 side = "One";
                                 phrase = rAoneDef.Attr_Txt_Phrs;
                             }
+                            linkUnit.MethodName = GeneratorNames.GetRelationshipMethodName(relDef, side, phrase, GeneratorNames.RelLinkMethodType.Linked);
                             if (assrObjDef.Attr_Key_Lett == dstObjDef.Attr_Key_Lett)
                             {
-                                linkUnit.MethodName = GeneratorNames.GetRelationshipMethodName(relDef, side, phrase, GeneratorNames.RelLinkMethodType.Linked);
                                 linkList.Add(linkUnit);
                             }
                             else
                             {
                                 linkUnit.ObjDefOfDestination = assrObjDef;
                                 linkList.Add(linkUnit);
-                                var nextLinkUnit = new RelatedByLinkUnit() { SetSource = false, SetDestination = false, ObjDefOfSource = assrObjDef, ObjDefOfDestination = dstObjDef, CondDestination=false };
+                                var nextLinkUnit = new RelatedByLinkUnit() { SetSource = false, SetDestination = false, ObjDefOfSource = assrObjDef, ObjDefOfDestination = dstObjDef, CondDestination = false };
                                 nextLinkUnit.MethodName = linkUnit.MethodName;
                                 linkList.Add(nextLinkUnit);
                             }
@@ -846,7 +911,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                             {
                                 linkUnit.ObjDefOfDestination = assrObjDef;
                                 linkList.Add(linkUnit);
-                                var nextLinkUnit = new RelatedByLinkUnit() { SetSource = false, SetDestination = false, ObjDefOfSource = assrObjDef, ObjDefOfDestination = dstObjDef, CondDestination=false };
+                                var nextLinkUnit = new RelatedByLinkUnit() { SetSource = false, SetDestination = false, ObjDefOfSource = assrObjDef, ObjDefOfDestination = dstObjDef, CondDestination = false };
                                 nextLinkUnit.MethodName = linkUnit.MethodName;
                                 linkList.Add(nextLinkUnit);
 
@@ -874,7 +939,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 {
                     if (dstVariableDef.Declared == false)
                     {
-                        declCode = "var ";
+                        declCode = $"List<{dstDomainClassName}> ";
                         DeclaredVariable(dstVariableDef);
                     }
                     writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = new List<{dstDomainClassName}>();");
@@ -893,7 +958,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                
+
             }
             if (linkList.Count > 1)
             {
@@ -913,7 +978,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         numOfSets++;
                     }
                 }
-                if ((hasCondWhile || numOfSets > 1) && hasDeclaredDstVar == false)
+                if ((hasCondWhile || numOfSets > 0 || !string.IsNullOrEmpty(whereCode)) && hasDeclaredDstVar == false)
                 {
                     if (dstVariableDef.Set)
                     {
@@ -921,7 +986,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         string declCode = "";
                         if (dstVariableDef.Declared == false)
                         {
-                            declCode = "var ";
+                            declCode = $"List<{dstVarDomainClassName}> ";
                             DeclaredVariable(dstVariableDef);
                         }
                         writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = new List<{dstVarDomainClassName}>();");
@@ -936,7 +1001,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                             DeclaredVariable(dstVariableDef);
                         }
                         writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = null;");
-                        hasDeclaredDstVar = true;                    
+                        hasDeclaredDstVar = true;
                     }
                 }
             }
@@ -963,7 +1028,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     string declCode = "";
                     if (dstVariableDef.Declared == false)
                     {
-                        declCode = "var ";
+                        declCode = $"List<{dstVarDomainClassName}> ";
                         DeclaredVariable(dstVariableDef);
                     }
                     writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = new List<{dstVarDomainClassName}>();");
@@ -974,11 +1039,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 bool hasCondWhile = false;
                 int numOfSets = 0;
-                for(var i = 0; i < linkList.Count; i++)
+                for (var i = 0; i < linkList.Count; i++)
                 {
                     if (linkList[i].CondDestination)
                     {
-                        if (i<linkList.Count - 1)
+                        if (i < linkList.Count - 1)
                         {
                             hasCondWhile = true;
                         }
@@ -988,7 +1053,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         numOfSets++;
                     }
                 }
-                if ((hasCondWhile||numOfSets>1)&&hasDeclaredDstVar== false)
+                if ((hasCondWhile || numOfSets > 1) && hasDeclaredDstVar == false)
                 {
                     string declCode = "";
                     if (dstVariableDef.Declared == false)
@@ -997,13 +1062,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         DeclaredVariable(dstVariableDef);
                     }
                     writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = null;");
-                    hasDeclaredDstVar= true; 
+                    hasDeclaredDstVar = true;
                 }
             }
 
             int logicDepth = 0;
             int linkIndex = 0;
+            int loopDepth = 0;
             bool setOfCurrentVal = false;
+            // when logic is condition check then true
+            var logicSteps = new List<bool>();
             while (linkIndex < linkList.Count)
             {
                 string tmpVarName = $"{srcVarName}In{logicDepth}RL{relatedByCodeIndex}";
@@ -1014,7 +1082,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     {
                         if (linkIndex == 1)
                         {
-                            if (dstVariableDef.Set &&hasDeclaredDstVar==false)
+                            if (dstVariableDef.Set && hasDeclaredDstVar == false)
                             {
                                 if (dstVariableDef.Declared)
                                 {
@@ -1022,7 +1090,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                                 }
                                 else
                                 {
-                                    writer.WriteLine($"{indent}var {dstVariableDef.Name} = new List<{dstDomainClassName}>();");
+                                    writer.WriteLine($"{indent}List<{dstDomainClassName}> {dstVariableDef.Name} = new List<{dstDomainClassName}>();");
                                     DeclaredVariable(dstVariableDef);
                                 }
                             }
@@ -1039,6 +1107,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         currentSrcCode = $"{tmpVarName}Set";
                         setOfCurrentVal = true;
                     }
+                    loopDepth++;
                     writer.WriteLine($"{indent}foreach (var {tmpVarName} in {currentSrcCode})");
                     writer.WriteLine($"{indent}" + "{");
                     currentSrcCode = $"{tmpVarName}.{linkList[linkIndex].MethodName}()";
@@ -1052,6 +1121,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         setOfCurrentVal = false;
                     }
                     logicDepth++;
+                    logicSteps.Add(false);
                     indent += baseIndent;
                 }
                 else
@@ -1066,21 +1136,31 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         writer.WriteLine($"{indent}if ({currentSrcCode} != null)");
                         writer.WriteLine($"{indent}" + "{");
                         logicDepth++;
+                        logicSteps.Add(true);
                         indent += baseIndent;
                     }
                     currentSrcCode += $".{linkList[linkIndex].MethodName}()";
                 }
-                if (linkIndex == linkList.Count-1)
+                if (linkIndex == linkList.Count - 1)
                 {
                     string condCode = "";
                     if (!string.IsNullOrEmpty(whereCode))
                     {
-                        condCode =$".Where(selected =>({whereCode}))";
+                        condCode = $".Where(selected =>({whereCode}))";
                     }
+                    string castCode = "";
                     string declCode = "";
                     if (dstVariableDef.Declared == false)
                     {
-                        declCode = "var ";
+                        if (dstVariableDef.Set)
+                        {
+                            declCode = $"List<{dstDomainClassName}> ";
+                            castCode = $"(List<{dstDomainClassName}>)";
+                        }
+                        else
+                        {
+                            declCode = "var ";
+                        }
                     }
                     if (dstVariableDef.Set)
                     {
@@ -1092,9 +1172,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                                 {
                                     string srcTmpVar = $"{dstVariableDef.Name}In{logicDepth}RL{relatedByCodeIndex}";
                                     writer.WriteLine($"{indent}var {srcTmpVar}Set = {currentSrcCode}{condCode};");
+                                    loopDepth++;
                                     writer.WriteLine($"{indent}foreach (var {srcTmpVar} in {srcTmpVar}Set) // test");
                                     writer.WriteLine(indent + "{");
                                     logicDepth++;
+                                    logicSteps.Add(false);
                                     indent += baseIndent;
                                     currentSrcCode = srcTmpVar;
                                 }
@@ -1102,7 +1184,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
                             if (dstVariableDef.Declared == false)
                             {
-                                writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = {currentSrcCode}{condCode};");
+                                writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = {castCode}{currentSrcCode}{condCode};");
                                 DeclaredVariable(dstVariableDef);
                             }
                             else
@@ -1114,18 +1196,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                                     writer.WriteLine($"{indent}if ({srcTmpVar} != null)");
                                     writer.WriteLine(indent + "{");
                                     logicDepth++;
+                                    logicSteps.Add(true);
                                     indent += baseIndent;
                                     currentSrcCode = srcTmpVar;
                                 }
-                                if (linkList[linkIndex].SetDestination && setOfCurrentVal==false)
+                                if (linkList[linkIndex].SetDestination && setOfCurrentVal == false)
                                 {
                                     string srcTmpVar = $"{dstVariableDef.Name}In{logicDepth}RL{relatedByCodeIndex}";
                                     writer.WriteLine($"{indent}var {srcTmpVar}Set = {currentSrcCode};");
+                                    loopDepth++;
                                     writer.WriteLine($"{indent}foreach (var {srcTmpVar} in {srcTmpVar}Set)");
                                     writer.WriteLine(indent + "{");
                                     logicDepth++;
+                                    logicSteps.Add(false);
                                     indent += baseIndent;
-                                    currentSrcCode=srcTmpVar;
+                                    currentSrcCode = srcTmpVar;
                                 }
                                 writer.WriteLine($"{indent}{dstVariableDef.Name}.Add({currentSrcCode});");
                             }
@@ -1136,9 +1221,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                             {
                                 string tmpSetVarName = $"{dstVariableDef.Name}In{logicDepth}RL{relatedByCodeIndex}";
                                 writer.WriteLine($"{indent}var {tmpSetVarName}Set = {currentSrcCode};");
+                                loopDepth++;
                                 writer.WriteLine($"{indent}foreach (var {tmpSetVarName} in {tmpSetVarName}Set)");
                                 writer.WriteLine($"{indent}" + "{");
                                 logicDepth++;
+                                logicSteps.Add(false);
                                 indent += baseIndent;
                                 writer.WriteLine($"{indent}{dstVariableDef.Name}.Add({tmpSetVarName});");
                             }
@@ -1150,14 +1237,27 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                                 }
                                 else
                                 {
-                                    writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = {currentSrcCode};");
+                                    if (dstVariableDef.Set)
+                                    {
+                                        castCode = $" as List<{dstDomainClassName}>";
+                                        if (dstVariableDef.Declared == false)
+                                        {
+                                            declCode = "var ";
+                                        }
+                                    }
+                                    writer.WriteLine($"{indent}{declCode}{dstVariableDef.Name} = {currentSrcCode}{castCode};");
+                                    DeclaredVariable(dstVariableDef);
+                                    if (loopDepth > 0)
+                                    {
+                                        writer.WriteLine($"{indent}break;");
+                                    }
                                 }
                             }
                         }
                     }
                     else
                     {
-                        string setCode = $"{dstVariableDef.Name} = {currentSrcCode}";
+                        string setCode = $"{dstVariableDef.Name} = {castCode}{currentSrcCode}";
                         if (linkList[linkIndex].SetDestination)
                         {
                             setCode += condCode;
@@ -1167,23 +1267,38 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                             if (linkList[linkIndex].SetDestination)
                             {
                                 writer.WriteLine($"{indent}{declCode}{setCode}.First();");
-                                writer.WriteLine($"{indent}break;");
+                                if (loopDepth > 0)
+                                {
+                                    writer.WriteLine($"{indent}break;");
+                                }
                             }
                             else
                             {
                                 if (!string.IsNullOrEmpty(whereCode))
                                 {
-                                    writer.WriteLine($"{indent}var selected = {currentSrcCode};");
+                                    //string tmpSelectVarName = $"{dstVariableDef.Name}In{logicDepth}RL{relatedByCodeIndex}";
+                                    hasUsedSelectedVar = true;
+                                    string tmpSelectVarName = "selected";
+                                    writer.WriteLine($"{indent}{tmpSelectVarName} = {currentSrcCode};");
+                                    hasDeclaredDstVar = true;
                                     writer.WriteLine($"{indent}if {whereCode}");
                                     writer.WriteLine(indent + "{");
                                     logicDepth++;
+                                    logicSteps.Add(true);
                                     indent += baseIndent;
-                                    writer.WriteLine($"{indent}{dstVariableDef.Name} = selected;");
-                                    writer.WriteLine($"{indent}break;");
+                                    writer.WriteLine($"{indent}{dstVariableDef.Name} = ({dstDomainClassName}){tmpSelectVarName};");
+                                    if (loopDepth > 0)
+                                    {
+                                        writer.WriteLine($"{indent}break;");
+                                    }
                                 }
                                 else
                                 {
                                     writer.WriteLine($"{indent}{declCode}{setCode};");
+                                    if (loopDepth > 0 && dstVariableDef.Set == false)
+                                    {
+                                        writer.WriteLine($"{indent}break;");
+                                    }
                                 }
                             }
                         }
@@ -1195,7 +1310,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                             }
                             writer.WriteLine($"{indent}{declCode}{setCode};");
                             // if (linkList[linkIndex].SetDestination && currentSrcSet)
-                            if (logicDepth > 0)
+                            if (loopDepth > 0)
                             {
                                 writer.WriteLine($"{indent}break;");
                             }
@@ -1206,10 +1321,47 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 currentSrcCond = linkList[linkIndex].CondDestination;
                 linkIndex++;
             }
+
+            bool shoudBreak = false;
+            if (cardinality == "any")
+            {
+                shoudBreak = true;
+            }
             for (int i = 0; i < logicDepth; i++)
             {
                 indent = indent.Substring(baseIndent.Length);
                 writer.WriteLine($"{indent}" + "}");
+                if (shoudBreak && dstVariableDef.Set == false && i < logicSteps.Count - 1 && logicSteps[logicSteps.Count-i-1] == false)
+                {
+                    bool addBreak = true;
+                    if (logicSteps.Count - i - 2 >= 0)
+                    {
+                        if (logicSteps[logicSteps.Count-i-2] == true)
+                        {
+                            addBreak = false;
+                        }
+                        if (addBreak == false)
+                        {
+                            int depthIndex = logicSteps.Count - i - 1;
+                            while (--depthIndex >= 0)
+                            {
+                                if (logicSteps[depthIndex] == false)
+                                {
+                                    addBreak = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (addBreak)
+                    {
+                        writer.WriteLine($"{indent}if ({dstVariableDef.Name} != null) break;");
+                    }
+                }
+                if (logicSteps[logicSteps.Count - i - 1])
+                {
+                    shoudBreak = true;
+                }
             }
 
             relatedByCodeIndex++;

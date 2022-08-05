@@ -183,7 +183,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
                     var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode);
                     // domainClassActions.prototype();
-                    domainClassActions.prototypeAction();
+                    // domainClassActions.prototypeAction();
                     var domainClassActionsCode = domainClassActions.TransformText();
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}StateMachineActions.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassActionsCode, overwriteHandCodingFiles).Wait();

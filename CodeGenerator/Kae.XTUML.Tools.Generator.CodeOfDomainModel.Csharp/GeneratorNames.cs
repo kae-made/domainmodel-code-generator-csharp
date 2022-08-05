@@ -173,19 +173,39 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string result = "";
             if (!string.IsNullOrEmpty(descrip))
             {
+                int numOfDigit = 1;
+                int lineOfDescrip = 0;
+                using (var reader = new StringReader(descrip))
+                {
+                    string line = "";
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        lineOfDescrip++;
+                    }
+                }
+                while (lineOfDescrip > 0)
+                {
+                    lineOfDescrip /= 10;
+                    numOfDigit++;
+                }
+
                 using (var writer = new StringWriter())
                 {
                     using (var reader = new StringReader(descrip))
                     {
+                        lineOfDescrip = 1;
                         string line = "";
                         while ((line = reader.ReadLine()) != null)
                         {
-                            string xformed = line;
-                            if (!line.StartsWith("//"))
+                            string lineIndex = $"{lineOfDescrip}";
+                            while (lineIndex.Length < numOfDigit)
                             {
-                                xformed = $"// {line}";
+                                lineIndex = $" {lineIndex}";
                             }
+                            string xformed = line;
+                            xformed = $"// {lineIndex} : {line}";
                             writer.WriteLine($"{indent}{xformed}");
+                            lineOfDescrip++;
                         }
                     }
                     result = writer.ToString();
