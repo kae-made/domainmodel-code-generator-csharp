@@ -47,14 +47,14 @@ namespace ConsoleAppCsharpGenerator
                 return false;
             }
 
-            var options = new List<string>() { "--metamodel", "--base-datatype", "--domainmodel", "--project", "--dotnetver", "--gen-folder", "--overwrite" };
+            var requiredOptions = new List<string>() { "--metamodel", "--base-datatype", "--domainmodel", "--project", "--dotnetver", "--gen-folder" };
             int index = 0;
             while (index < args.Length)
             {
                 if (args[index] == "--metamodel")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyOOAofOOAModelFilePath).First();
-                    options.Remove(args[index]);
+                    requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--meta-datatype")
@@ -65,43 +65,47 @@ namespace ConsoleAppCsharpGenerator
                 else if (args[index] == "--base-datatype")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyBaseDataTypeDefFilePaht).First();
-                    options.Remove(args[index]);
+                    requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--domainmodel")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyDomainModelFilePath).First();
-                    options.Remove(args[index]);
+                    requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                     // domainModelFilePath = args[index];
                 }
                 else if (args[index] == "--project")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyProjectName).First();
-                    options.Remove(args[index]);
+                    requiredOptions.Remove(args[index]);
                     ((StringParam)cp).Value = args[++index];
                 }
                 else if (args[index] == "--dotnetver")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyDotNetVersion).First();
-                    options.Remove(args[index]);
+                    requiredOptions.Remove(args[index]);
                     ((StringParam)cp).Value = args[++index];
                 }
                 else if (args[index] == "--gen-folder")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyGenFolderPath).First();
-                    options.Remove(args[index]);
+                    requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--colors")
                 {
                     colorsFileName = args[++index];
                 }
+                else if (args[index] == "--action-gen")
+                {
+                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyActionGen).First();
+                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
+                }
                 else if (args[index] == "--overwrite")
                 {
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyOverWrite).First();
-                    options.Remove(args[index]);
-                    ((BooleanParam)cp).Value=Boolean.Parse(args[++index]);
+                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
                 }
                 else
                 {
@@ -109,7 +113,7 @@ namespace ConsoleAppCsharpGenerator
                 }
                 index++;
             }
-            if (options.Count() == 0)
+            if (requiredOptions.Count() == 0)
             {
                 return true;
             }
