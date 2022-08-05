@@ -589,7 +589,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 }
                 paramCode += $"{vparDef.Attr_Name}:{valCode}";
             }
-            return $"{indent}{varDef.Attr_Name}.{tfrDef.Attr_Name}({paramCode});";
+            string instVarName = varDef.Attr_Name;
+            if (instVarName.ToLower() == "self")
+            {
+                instVarName = this.selfVarNameOnCode;
+            }
+            return $"{indent}{instVarName}.{tfrDef.Attr_Name}({paramCode});";
         }
         protected string GenerateACT_Assign(CIMClassACT_AI actAiDef)
         {
@@ -648,7 +653,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 //                instVarDef.Declared = true;
                 DeclaredVariable(instVarDef);
             }
-            code += $"{varDef.Attr_Name} = {domainClassImplName}.CreateInstance(instanceRepository, Logger, changedStates);";
+            code += $"{varDef.Attr_Name} = {domainClassImplName}.CreateInstance(instanceRepository, logger, changedStates);";
 
             return code;
         }
@@ -1827,7 +1832,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     // Generate ... to instance
                     var genDef = (CIMClassE_GEN)subGsmeDef;
                     var destVarDef = genDef.LinkedToR712();
-                    string createParamCode = $"receiver:{destVarDef.Attr_Name}";
+                    string pVarName = destVarDef.Attr_Name;
+                    if (destVarDef.Attr_Name.ToLower() == "self")
+                    {
+                        pVarName = this.selfVarNameOnCode;
+                    }
+                    string createParamCode = $"receiver:{pVarName}";
                     if (!string.IsNullOrEmpty(eventParamsCode))
                     {
                         createParamCode += ", " + eventParamsCode;
@@ -2214,6 +2224,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 code = $"-{oprdCode}";
             }
+            else if (unyDef.Attr_Operator.ToLower() == "not")
+            {
+                code = $"! {oprdCode}";
+            }
             else
             {
                 Console.WriteLine($"Unknown Operator : {unyDef.Attr_Operator}");
@@ -2300,7 +2314,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         }
         protected string GenerateVAL_LBO(CIMClassV_LBO lboDef)
         {
-            if (lboDef.Attr_Value == "TRUE")
+            if (lboDef.Attr_Value.ToLower() == "true")
             {
                 return "true";
             }

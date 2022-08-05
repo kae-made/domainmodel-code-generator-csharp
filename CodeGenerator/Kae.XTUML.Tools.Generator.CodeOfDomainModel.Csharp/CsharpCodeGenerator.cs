@@ -90,7 +90,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
               new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.2.2"},
+              new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.3.0"},
             });
             var projectFileCode = projectFile.TransformText();
             string fileName = $"{ProjectName}.csproj";
