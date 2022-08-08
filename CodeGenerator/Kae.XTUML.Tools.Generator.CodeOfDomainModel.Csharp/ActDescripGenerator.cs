@@ -91,6 +91,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 var smActDef = ((CIMClassACT_SAB)subActDef).LinkedToR691();
                 actionDescrip = smActDef.Attr_Action_Semantics;
             }
+            else if (subActDef is CIMClassACT_DAB)
+            {
+                var dbattrDef = ((CIMClassACT_DAB)subActDef).LinkedToR693();
+                actionDescrip= dbattrDef.Attr_Action_Semantics;
+            }
             if (!string.IsNullOrEmpty(actionDescrip))
             {
                 using (var reader = new StringReader(actionDescrip))
@@ -400,6 +405,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             else if (subSmtDef is CIMClassACT_SGN)
             {
                 code = GenerateACT_SGN((CIMClassACT_SGN)subSmtDef);
+            }
+            else
+            {
+                code = $"// {subSmtDef.GetType().Name} is not supported.";
             }
 
             writer.Write(code);
@@ -1422,7 +1431,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             string domainClassImplClassName = GeneratorNames.GetDomainClassImplName(objDef);
             string domainClassName = GeneratorNames.GetDomainClassName(objDef);
-            string candVarName = $"candidatesOf{varDef.Attr_Name}";
+            string candSetVarName = $"candidatesOf{varDef.Attr_Name}";
+            string candVarName = $"candidateOf{varDef.Attr_Name}";
 
             var declaredVarDef = HasDeclaredVariable(varDef.Attr_Name);
             if (declaredVarDef == null)
@@ -1449,11 +1459,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             if (declaredVarDef.Set)
             {
-                writer.WriteLine($"{indent}{declCode}{candVarName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
+                writer.WriteLine($"{indent}{declCode}{candSetVarName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = new List<{domainClassName}>();");
-                writer.WriteLine($"{indent}foreach (var instance in {candVarName})");
+                writer.WriteLine($"{indent}foreach (var {candVarName} in {candSetVarName})");
                 writer.WriteLine($"{indent}" + "{");
-                writer.WriteLine($"{indent}{baseIndent}{varDef.Attr_Name}.Add(({domainClassName})instance);");
+                writer.WriteLine($"{indent}{baseIndent}{varDef.Attr_Name}.Add(({domainClassName}){candVarName});");
                 writer.WriteLine($"{indent}" + "}");
             }
             else
@@ -1873,9 +1883,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         }
         protected string GenerateACT_GPR(CIMClassE_GPR eGprDef)
         {
-            var valDef= eGprDef.LinkedToR714();
-            
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+            var valDef = eGprDef.LinkedToR714();
+            string varName;
+            string code = GenerateV_VAL(valDef,out varName);
+            writer.WriteLine($"{indent}{code}.Send();");
+
+            return sb.ToString();
         }
         protected string GenerateACT_IOP(CIMClassACT_IOP actIopDef)
         {

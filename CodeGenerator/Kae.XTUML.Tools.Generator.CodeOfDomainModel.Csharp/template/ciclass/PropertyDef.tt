@@ -37,6 +37,21 @@
         }
 
         var subAttrDef = attrDef.SubClassR106();
+        if (subAttrDef is CIMClassO_BATTR)
+        {
+            var subBattrDef = ((CIMClassO_BATTR)subAttrDef).SubClassR107();
+            if (subBattrDef is CIMClassO_DBATTR)
+            {
+                var dbattrDef = (CIMClassO_DBATTR)subBattrDef;
+                var dabDef = dbattrDef.LinkedFromR693();
+                if (dabDef != null)
+                {
+                    var actDef = dabDef.CIMSuperClassACT_ACT();
+                    implAttrDef.ActDef = actDef;
+                    implAttrDef.ActionSemantics = dbattrDef.Attr_Action_Semantics;
+                }
+            }
+        }
         if (subAttrDef is not CIMClassO_RATTR)
         {
             var oidaDefs = attrDef.LinkedOneSideR105();
@@ -91,6 +106,7 @@
             string localVarName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
             string propName = GeneratorNames.GetAttrPropertyName(implAttrDef.AttrDef);
             string stateVarName = GeneratorNames.GetPropertyStateVariableName(implAttrDef.AttrDef);
+            string genActionCode = "";
             string accessorImple = "";
             if (implAttrDef.IsState)
             {
@@ -98,18 +114,44 @@
             }
             else
             {
-                accessorImple = "get { " + $"return {localVarName}" + "; }";
+                if (implAttrDef.ActDef == null)
+                {
+                    accessorImple = "get { " + $"return {localVarName}" + "; }";
+                }
             }
             if (!implAttrDef.IsReferential)
             {
-                if (!implAttrDef.IsState)
+                if (implAttrDef.ActDef != null)
+                {
+                    accessorImple += " protected";
+                }
+                if (implAttrDef.IsState == false)
                 {
                     accessorImple += " set { " + $"{localVarName} = value; {stateVarName} = true;" + " }";
                 }
             }
+            if (implAttrDef.ActDef == null)
+            {
 #>
 <#= indent #>public <#= attrPropDataTypeName #> <#= propName #> { <#= accessorImple #> }
 <#
+            }
+            else
+            {
+                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ");
+                string actGenCode = actGen.Generate();
+#>
+<#= indent #>public <#= attrPropDataTypeName #> <#= propName #>
+<#= indent #>{
+<#= indent #>    protected set { <#= localVarName #> = value; <#= stateVarName #> = true; }
+<#= indent #>    get
+<#= indent #>    {
+<#= actGenCode #>
+<#= indent #>        return <#= localVarName #>;
+<#= indent #>    }
+<#= indent #>}
+<#
+            }
         }
     }
     else
@@ -122,6 +164,7 @@
             var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
             bool generate = true;
             bool isStateAttr = false;
+            bool isMethematical = false;
             if (hasStateMachine)
             {
                 if (dtDef.Attr_Name == "state<State_Model>")
@@ -134,6 +177,19 @@
             {
                 string accessors = "get;";
                 var subAttrDef = attrDef.SubClassR106();
+                if (subAttrDef is CIMClassO_BATTR)
+                {
+                    var subBattrDef = ((CIMClassO_BATTR)subAttrDef).SubClassR107();
+                    if (subBattrDef is CIMClassO_DBATTR)
+                    {
+                        var dbattrDef = (CIMClassO_DBATTR)subBattrDef;
+                        var dabDef = dbattrDef.LinkedFromR693();
+                        if (dabDef != null)
+                        {
+                            isMethematical = true;
+                        }
+                    }
+                }
                 if (subAttrDef is not CIMClassO_RATTR)
                 {
                     bool isIdentity = false;
@@ -143,7 +199,7 @@
                         var oidDef = oidaDef.LinkedOneSideR105();
                         isIdentity = true;
                     }
-                    if (isIdentity == false && isStateAttr == false)
+                    if (isIdentity == false && isStateAttr == false && isMethematical == false)
                     {
                         accessors += " set;";
                     }
