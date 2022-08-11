@@ -16,6 +16,7 @@
 //  
 // </auto-generated>
 // ------------------------------------------------------------------------------
+using Kae.DomainModel.Csharp.Framework;
 using Kae.DomainModel.Csharp.Framework.Adaptor;
 using Kae.Utility.Logging;
 using System;
@@ -494,7 +495,10 @@ namespace <#= nameSpace #>.Adaptor
                     }              
                 }
             }
-
+            if (updated)
+            {
+                domainModel.InstanceRepository.SyncChangedStates(new List<ChangedState>());
+            }
             var result = new { updated = updated };
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
