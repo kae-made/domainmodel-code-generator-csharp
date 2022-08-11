@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="template\adaptor\AdaptorDef.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AdaptorDef.cs</LastGenOutput>
+    </None>
     <None Update="template\ciclass\ClassOperationDef.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ClassOperationDef.cs</LastGenOutput>
@@ -94,6 +98,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="template\adaptor\AdaptorDef.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AdaptorDef.tt</DependentUpon>
+    </Compile>
     <Compile Update="template\ciclass\ClassOperationDef.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

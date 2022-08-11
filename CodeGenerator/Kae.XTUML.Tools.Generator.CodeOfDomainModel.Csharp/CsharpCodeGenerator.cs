@@ -6,6 +6,7 @@ using Kae.Tools.Generator.Context;
 using Kae.Tools.Generator.utility;
 using Kae.Utility.Logging;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
+using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         public static readonly string CPKeyOverWrite = "overwrite";
         public static readonly string CPKeyActionGen = "action-gen";
         public static readonly string CPKeyBackup = "backup";
+        public static readonly string CPKeyAdaptorGen = "adoptor-gen";
 
 
         public CsharpCodeGenerator(Logger logger, string version) : base(logger, version)
@@ -33,6 +35,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         private bool IsOverWriteActionFile = true;
         private bool IsGenCode = true;
         private bool IsBackup = true;
+        private bool isAdaptorGen = false;
         private GenFolder.WriteMode behaviorFileWriteMode = GenFolder.WriteMode.Overwrite;
 
         protected override void CreateAdditionalContext()
@@ -47,6 +50,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             ContextParams.Add(cpActionGen);
             var cpBackup = new BooleanParam(CPKeyBackup);
             ContextParams.Add(cpBackup);
+            var cpAdaptorGen = new BooleanParam(CPKeyAdaptorGen);
+            contextParams.Add(cpAdaptorGen);
         }
 
         protected override bool AdditionalWorkForResloveContext()
@@ -75,6 +80,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 else if (cp.ParamName == CPKeyBackup)
                 {
                     IsBackup = ((BooleanParam)cp).Value;
+                }
+                else if (cp.ParamName == CPKeyAdaptorGen)
+                {
+                    isAdaptorGen = ((BooleanParam)cp).Value;
                 }
             }
             if (IsGenCode)
@@ -115,7 +124,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
               new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name= "Kae.DomainModel.Csharp.Framework", Version="1.3.0"},
+              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="2.0.1"},
+              new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.1" }
             });
             var projectFileCode = projectFile.TransformText();
             string fileName = $"{ProjectName}.csproj";
@@ -243,6 +253,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     string eeDefGenCode = eeDefGen.TransformText();
                     fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";
                     genFolder.WriteContentAsync(eeDefFolderName, fileName, eeDefGenCode, GenFolder.WriteMode.Overwrite).Wait();
+                    Console.WriteLine($"Generated - {fileName}");
                 }
 #if false
                 var brgDefs = eeDef.LinkedFromR19();
@@ -256,10 +267,22 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     {
                         string bparmName = bparmDef.Attr_Name;
                         var parmDtDef = bparmDef.LinkedToR22();
-                        string parmDtName = DomainDataTypeDefs.GetDataTypeName(parmDtDef);
+                        string parmDtName = DomainDataTypeDefs.GetDataTypeName}(parmDtDef);
                     }
                 }
 #endif
+            }
+
+            if (isAdaptorGen)
+            {
+                var adaptorGen = new AdaptorDef(Version, ProjectName, "    ", syncDefs, classObjDefs);
+                string adaptorGenCode = adaptorGen.TransformText();
+                string adaptorFolderName = "Adaptor";
+                genFolder.CreateFolder(adaptorFolderName);
+                string adaptorFileName = $"{ProjectName}Adaptor.cs";
+                string adaptorFolderPath = Path.Join(projectPath, adaptorFolderName);
+                genFolder.WriteContentAsync(adaptorFolderPath, adaptorFileName, adaptorGenCode, GenFolder.WriteMode.Overwrite).Wait();
+                Console.WriteLine($"Generated - {adaptorFileName}");
             }
         }
 

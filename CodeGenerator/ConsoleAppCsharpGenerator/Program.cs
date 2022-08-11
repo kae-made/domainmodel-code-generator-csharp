@@ -112,6 +112,11 @@ namespace ConsoleAppCsharpGenerator
                     var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyBackup).First();
                     ((BooleanParam)cp).Value = bool.Parse(args[++index]);
                 }
+                else if (args[index]== "--adoptor-gen")
+                {
+                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyAdaptorGen).First();
+                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
+                }
                 else
                 {
                     // ShowCommandline();
