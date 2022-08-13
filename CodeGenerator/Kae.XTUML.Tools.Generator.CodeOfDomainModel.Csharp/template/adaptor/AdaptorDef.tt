@@ -37,6 +37,20 @@ namespace <#= nameSpace #>.Adaptor
     {
         <#= domainFacadeClassName #> domainModel;
 
+        public static DomainModelAdaptor adapterInstance = null;
+
+        public static DomainModelAdaptor GetInstance(Logger logger)
+        {
+            if (adapterInstance == null)
+            {
+                var instanceRepository = new InstanceRepositoryInMemory(logger);
+                var cimLib = new CIMProcessManagementLib(instanceRepository);
+                adapterInstance = new <#= adaptorName #>(cimLib, logger);
+            }
+            return adapterInstance;
+        }
+
+
         public <#= adaptorName #>(<#= domainFacadeClassName#> domainModel, Logger logger) : base(logger)
         {
             this.domainModel = domainModel;
