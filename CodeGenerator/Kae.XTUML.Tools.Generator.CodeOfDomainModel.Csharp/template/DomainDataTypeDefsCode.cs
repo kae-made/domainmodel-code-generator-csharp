@@ -137,9 +137,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             else if (subAttrDef is CIMClassO_RATTR)
             {
                 var rattrDef = (CIMClassO_RATTR)subAttrDef;
-                var referedAttrDef = rattrDef.LinkedToR113().CIMSuperClassO_ATTR();
-                var dtDef = referedAttrDef.LinkedToR114();
-                return dtDef;
+                var battrDef = rattrDef.LinkedToR113();
+                if (battrDef == null)
+                {
+                    var dtDef = attrDef.LinkedToR114();
+                    return dtDef;
+                }
+                else
+                {
+                    var referedAttrDef = rattrDef.LinkedToR113().CIMSuperClassO_ATTR();
+                    var dtDef = referedAttrDef.LinkedToR114();
+                    return dtDef;
+                }
             }
             else
             {

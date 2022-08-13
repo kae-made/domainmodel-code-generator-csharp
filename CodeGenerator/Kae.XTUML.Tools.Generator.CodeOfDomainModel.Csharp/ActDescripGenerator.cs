@@ -163,7 +163,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     var vTrnDef = (CIMClassV_TRN)subVarDef;
                     var sDimDef = vTrnDef.LinkedFromR844();
                     var trnDtDef = vTrnDef.LinkedToR821();
-                    dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+                    if (trnDtDef != null)
+                    {
+                        dataTypeName = DomainDataTypeDefs.GetDataTypeName(trnDtDef);
+                    }
                 }
                 // writer.WriteLine($"{indent}{dataTypeName} {varDef.Attr_Name};");
             }
@@ -762,6 +765,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 {
                     var rSimpDef = (CIMClassR_SIMP)subRelDef;
                     var rFormDef = rSimpDef.LinkedFromR208();
+                    if (rFormDef == null)
+                    {
+                        throw new ArgumentOutOfRangeException($"It seems that R{relDef.Attr_Numb} has not been formalized. Please check your model");
+                    }
                     var rFormObjDef = rFormDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
                     var rPartDefs = rSimpDef.LinkedFromR207();
                     var rPartDef = rPartDefs.First();
@@ -1638,7 +1645,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     methodName = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, methodType);
                     break;
                 }
-                code = $"{formVar.Name}.{methodName}({partVar.Name}, changedStates);";
+
+                code = $"{GetSelfVarNameOnCode(formVar)}.{methodName}({GetSelfVarNameOnCode(partVar)}, changedStates);";
             }
             else if (subRelDef is CIMClassR_COMP)
             {
@@ -1675,7 +1683,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     }
                 }
                 string methodName = GeneratorNames.GetRelationshipMethodName(relDef, "", "", methodType);
-                code = $"{assocVar.Attr_Name}.{methodName}({aoneVar.Name},{aothVar.Name})";
+                code = $"{GetSelfVarNameOnCode(assocVariableDef)}.{methodName}({GetSelfVarNameOnCode(aoneVar)},{GetSelfVarNameOnCode(aothVar)})";
             }
             else if (subRelDef is CIMClassR_SUBSUP)
             {
@@ -1703,11 +1711,22 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         break;
                     }
                 }
-                code = $"{subVar.Name}.{methodName}({superVar.Name}, changedStates);";
+                code = $"{GetSelfVarNameOnCode(subVar)}.{methodName}({GetSelfVarNameOnCode(superVar)}, changedStates);";
             }
 
             return code;
         }
+
+        private string  GetSelfVarNameOnCode(VariableDef varDef)
+        {
+            string varName = varDef.Name;
+            if (varName.ToLower() == "self")
+            {
+                varName = this.selfVarNameOnCode;
+            }
+            return varName;
+        }
+
         protected string GenerateACT_CTL(CIMClassACT_CTL actCtlDef)
         {
             throw new NotImplementedException();

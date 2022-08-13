@@ -277,11 +277,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 var adaptorGen = new AdaptorDef(Version, ProjectName, "    ", syncDefs, classObjDefs);
                 string adaptorGenCode = adaptorGen.TransformText();
-                string adaptorFolderName = "Adaptor";
+                string adaptorFolderName = Path.Join(projectPath,AdaptorDef.GetFolderName());
                 genFolder.CreateFolder(adaptorFolderName);
                 string adaptorFileName = $"{ProjectName}Adaptor.cs";
-                string adaptorFolderPath = Path.Join(projectPath, adaptorFolderName);
-                genFolder.WriteContentAsync(adaptorFolderPath, adaptorFileName, adaptorGenCode, GenFolder.WriteMode.Overwrite).Wait();
+                genFolder.WriteContentAsync(adaptorFolderName, adaptorFileName, adaptorGenCode, GenFolder.WriteMode.Overwrite).Wait();
                 Console.WriteLine($"Generated - {adaptorFileName}");
             }
         }

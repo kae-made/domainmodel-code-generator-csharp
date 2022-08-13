@@ -65,19 +65,22 @@ namespace <#= nameSpace #>
             }
         }
 
-        var triggerEvtDef = DomainClassStateMachine.GetTriggerEvent(stateDef);
-        var evtDtiDefs = triggerEvtDef.LinkedFromR532();
         string args = "";
-        foreach(var evtDtiDef in evtDtiDefs)
+        var triggerEvtDef = DomainClassStateMachine.GetTriggerEvent(stateDef);
+        if (triggerEvtDef != null)
         {
-            string argName = evtDtiDef.Attr_Name;
-            var argDtDef = evtDtiDef.LinkedToR524();
-            string argTypeName = DomainDataTypeDefs.GetDataTypeName(argDtDef);
-            if (!string.IsNullOrEmpty(args))
+            var evtDtiDefs = triggerEvtDef.LinkedFromR532();
+            foreach(var evtDtiDef in evtDtiDefs)
             {
-                args += ", ";
+                string argName = evtDtiDef.Attr_Name;
+                var argDtDef = evtDtiDef.LinkedToR524();
+                string argTypeName = DomainDataTypeDefs.GetDataTypeName(argDtDef);
+                if (!string.IsNullOrEmpty(args))
+                {
+                    args += ", ";
+                }
+                args += $"{argTypeName} {argName}";
             }
-            args += $"{argTypeName} {argName}";
         }
         // if (!string.IsNullOrEmpty(args))
         // {

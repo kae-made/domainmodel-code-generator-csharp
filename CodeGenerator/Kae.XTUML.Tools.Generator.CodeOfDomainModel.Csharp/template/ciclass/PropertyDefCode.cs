@@ -58,6 +58,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         public bool IsState { get; set; }
         public CIMClassACT_ACT ActDef { get; set; }
         public string ActionSemantics { get; set; }
+        public bool Writable { get; set; } = true;
     }
 
 }

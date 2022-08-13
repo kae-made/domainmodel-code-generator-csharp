@@ -33,6 +33,7 @@
             if (dtDef.Attr_Name == "state<State_Model>")
             {
                 implAttrDef.IsState = true;
+                implAttrDef.Writable = false;
             }
         }
 
@@ -49,6 +50,7 @@
                     var actDef = dabDef.CIMSuperClassACT_ACT();
                     implAttrDef.ActDef = actDef;
                     implAttrDef.ActionSemantics = dbattrDef.Attr_Action_Semantics;
+                    implAttrDef.Writable = false;
                 }
             }
         }
@@ -61,13 +63,14 @@
                 implAttrDef.IsIdentity = true;
                 if (dtDef.Attr_Name == "unique_id")
                 {
-                    implAttrDef.IsUniqueId = true;
+                    implAttrDef.Writable = false;
                 }
             }
         }
         else
         {
             implAttrDef.IsReferential = true;
+            implAttrDef.Writable = false;
         }
         implAttrDefs.Add(implAttrDef);
     }
@@ -119,9 +122,9 @@
                     accessorImple = "get { " + $"return {localVarName}" + "; }";
                 }
             }
-            if (!implAttrDef.IsReferential)
+            if ((!implAttrDef.IsReferential) || implAttrDef.Writable )
             {
-                if (implAttrDef.ActDef != null)
+                if ((implAttrDef.ActDef != null) && implAttrDef.Writable == false )
                 {
                     accessorImple += " protected";
                 }
@@ -197,7 +200,10 @@
                     foreach(var oidaDef in oidaDefs)
                     {
                         var oidDef = oidaDef.LinkedOneSideR105();
-                        isIdentity = true;
+                        if (dtDef.Attr_Name == "unique_id")
+                        {
+                            isIdentity = true;
+                        }
                     }
                     if (isIdentity == false && isStateAttr == false && isMethematical == false)
                     {

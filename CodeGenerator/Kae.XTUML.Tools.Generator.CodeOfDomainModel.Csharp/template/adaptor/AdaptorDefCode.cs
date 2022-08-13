@@ -16,6 +16,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
         string indent ="";
         string baseIndent;
 
+        static readonly string folderName = "Adaptor";
+
         List<CIMClassS_SYNC> syncDefs = new List<CIMClassS_SYNC>();
         List<CIMClassO_OBJ> objDefs = new List<CIMClassO_OBJ>();
 
@@ -48,6 +50,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                 objDefs.Add((CIMClassO_OBJ)ciObjDef);
             }
         }
+
+        public static string GetFolderName() { return folderName; }
 
         public void Prototype()
         {
