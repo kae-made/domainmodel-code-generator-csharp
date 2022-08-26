@@ -33,13 +33,9 @@ namespace <#= nameSpace #>
             this.logger = logger;
         }
 
-        public override void UpdateState(DomainClassDef instance, IDictionary<string, object> chnaged)
+        public override void LoadState(string domainName, IDictionary<string, IList<IDictionary<string, object>>> instances)
         {
-            // Do nothing.
-        }
-
-        public override void LoadState(IDictionary<string, IList<IDictionary<string, object>>> instances)
-        {
+            // current edition doesn't support multi domain feature.
             foreach (var className in instances.Keys)
             {
                 foreach (var states in instances[className])
@@ -73,12 +69,17 @@ namespace <#= nameSpace #>
 
         public override void UpdateCInstance(CInstanceChagedState instanceState)
         {
-            // Do nothing
+            NotifyClassStateChanged(instanceState.OP, instanceState.Target, instanceState.ChangedProperties);
+        }
+
+        public override void UpdateState(DomainClassDef instance, IDictionary<string, object> chnaged)
+        {
+            NotifyClassStateChanged(ChangedState.Operation.Update,instance, chnaged);
         }
 
         public override void UpdateCLink(CLinkChangedState linkState)
         {
-            // To nothing
+            NotifyRelationshipStateChanged(linkState.OP, linkState.Target.RelationshipID, linkState.Target.Phrase, linkState.Target.Source, linkState.Target.Destination);
         }
 
         public override IEnumerable<T> SelectInstances<T>(string className, IDictionary<string, object> conditionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)

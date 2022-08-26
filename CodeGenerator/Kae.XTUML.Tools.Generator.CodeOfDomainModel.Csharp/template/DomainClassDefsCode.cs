@@ -23,6 +23,33 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.classObjDefs = classObjDef;
         }
 
+        public void prototype_get_identities()
+        {
+            foreach (var classObjDef in classObjDefs)
+            {
+                string identities = "";
+                var objDef = (CIMClassO_OBJ)classObjDef;
+                var oidDefs = objDef.LinkedFromR104();
+                foreach(var oidDef in oidDefs)
+                {
+                    if (oidDef.Attr_Oid_ID == 0)
+                    {
+                        var oidaDefs = oidDef.LinkedOtherSideR105();
+                        foreach (var oidaDef in oidaDefs)
+                        {
+                            var attrDef = oidaDef.LinkedOtherSideR105();
+                            string propName = GeneratorNames.GetAttrPropertyName(attrDef);
+                            if (!string.IsNullOrEmpty(identities))
+                            {
+                                identities += ",";
+                            }
+                            identities += $"{attrDef.Attr_Name}=this.{propName}";
+                        }
+                    }
+                }
+
+            }
+        }
         public void prototype_properties()
         {
             foreach (var classObjDef in classObjDefs)

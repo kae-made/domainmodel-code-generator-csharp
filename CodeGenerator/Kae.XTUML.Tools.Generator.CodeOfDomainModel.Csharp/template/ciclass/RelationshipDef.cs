@@ -66,7 +66,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                     {
                         // TODO: ???
                     }
-                    var partDef = partDefs.First();
+                    var partDef = partDefs.FirstOrDefault();
                     var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
                     var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
                     if (partDef.Attr_Mult == 0)
@@ -275,7 +275,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                 {
                     // TODO: ???
                 }
-                var partDef = partDefs.First();
+                var partDef = partDefs.FirstOrDefault();
                 string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                 var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
                 var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
@@ -409,8 +409,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.First(), Relati" +
-                    "onshipID = \"");
+            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
+                    "), RelationshipID = \"");
             
             #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relId));
@@ -1295,8 +1295,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.First(), Relati" +
-                    "onshipID = \"");
+            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
+                    "), RelationshipID = \"");
             
             #line 306 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relId));
@@ -2775,8 +2775,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.First(), Relati" +
-                    "onshipID = \"");
+            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
+                    "), RelationshipID = \"");
             
             #line 568 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relId));
@@ -2804,7 +2804,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(")candidates.First();\r\n");
+            this.Write(")candidates.FirstOrDefault();\r\n");
             
             #line 570 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
@@ -2967,8 +2967,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.First(), Relati" +
-                    "onshipID = \"");
+            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
+                    "), RelationshipID = \"");
             
             #line 589 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relId));
@@ -2996,7 +2996,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(")candidates.First();\r\n");
+            this.Write(")candidates.FirstOrDefault();\r\n");
             
             #line 591 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
@@ -3154,7 +3154,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(")candidates.First();\r\n");
+            this.Write(")candidates.FirstOrDefault();\r\n");
             
             #line 632 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
@@ -3439,7 +3439,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(")candidates.First();\r\n");
+            this.Write(")candidates.FirstOrDefault();\r\n");
             
             #line 692 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
@@ -3717,7 +3717,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(")candidates.First();\r\n");
+            this.Write(")candidates.FirstOrDefault();\r\n");
             
             #line 751 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
@@ -4057,7 +4057,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write(")candidates.First();\r\n");
+            this.Write(")candidates.FirstOrDefault();\r\n");
             
             #line 821 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));

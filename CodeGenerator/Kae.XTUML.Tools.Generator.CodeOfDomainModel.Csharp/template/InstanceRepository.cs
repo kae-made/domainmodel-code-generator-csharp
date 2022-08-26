@@ -76,13 +76,9 @@ namespace ");
             this.logger = logger;
         }
 
-        public override void UpdateState(DomainClassDef instance, IDictionary<string, object> chnaged)
+        public override void LoadState(string domainName, IDictionary<string, IList<IDictionary<string, object>>> instances)
         {
-            // Do nothing.
-        }
-
-        public override void LoadState(IDictionary<string, IList<IDictionary<string, object>>> instances)
-        {
+            // current edition doesn't support multi domain feature.
             foreach (var className in instances.Keys)
             {
                 foreach (var states in instances[className])
@@ -92,7 +88,7 @@ namespace ");
                     {
 ");
             
-            #line 50 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 46 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
 
     foreach(var objDef in objDefs)
     {
@@ -104,64 +100,48 @@ namespace ");
             #line hidden
             this.Write("                        case \"");
             
-            #line 56 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 52 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write("\":\r\n                            newInstance = ");
             
-            #line 57 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 53 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassBaseName));
             
             #line default
             #line hidden
             this.Write(".CreateInstance(this, logger);\r\n                            break;\r\n");
             
-            #line 59 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 55 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
 
     }
 
             
             #line default
             #line hidden
-            this.Write(@"                        default:
-                            if (logger != null) logger.LogError($""{className} is not right domain class."");
-                            break;
-                    }
-                    if (newInstance != null)
-                    {
-                        newInstance.Restore(states);
-                    }
-                }
-            }
-        }
-
-        public override void UpdateCInstance(CInstanceChagedState instanceState)
-        {
-            // Do nothing
-        }
-
-        public override void UpdateCLink(CLinkChangedState linkState)
-        {
-            // To nothing
-        }
-
-        public override IEnumerable<T> SelectInstances<T>(string className, IDictionary<string, object> conditionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)
-        {
-            var resultSet = new List<T>();
-            var candidates = domainInstances[className].Where(i => { return compare((T)i, conditionPropertyValues); });
-            foreach (var ci in candidates)
-            {
-                resultSet.Add((T)ci);
-            }
-            return resultSet;
-        }
-
-    }
-
-}
-");
+            this.Write("                        default:\r\n                            if (logger != null)" +
+                    " logger.LogError($\"{className} is not right domain class.\");\r\n                  " +
+                    "          break;\r\n                    }\r\n                    if (newInstance != " +
+                    "null)\r\n                    {\r\n                        newInstance.Restore(states" +
+                    ");\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n      " +
+                    "  public override void UpdateCInstance(CInstanceChagedState instanceState)\r\n    " +
+                    "    {\r\n            NotifyClassStateChanged(instanceState.OP, instanceState.Targe" +
+                    "t, instanceState.ChangedProperties);\r\n        }\r\n\r\n        public override void " +
+                    "UpdateState(DomainClassDef instance, IDictionary<string, object> chnaged)\r\n     " +
+                    "   {\r\n            NotifyClassStateChanged(ChangedState.Operation.Update,instance" +
+                    ", chnaged);\r\n        }\r\n\r\n        public override void UpdateCLink(CLinkChangedS" +
+                    "tate linkState)\r\n        {\r\n            NotifyRelationshipStateChanged(linkState" +
+                    ".OP, linkState.Target.RelationshipID, linkState.Target.Phrase, linkState.Target." +
+                    "Source, linkState.Target.Destination);\r\n        }\r\n\r\n        public override IEn" +
+                    "umerable<T> SelectInstances<T>(string className, IDictionary<string, object> con" +
+                    "ditionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)\r\n     " +
+                    "   {\r\n            var resultSet = new List<T>();\r\n            var candidates = d" +
+                    "omainInstances[className].Where(i => { return compare((T)i, conditionPropertyVal" +
+                    "ues); });\r\n            foreach (var ci in candidates)\r\n            {\r\n          " +
+                    "      resultSet.Add((T)ci);\r\n            }\r\n            return resultSet;\r\n     " +
+                    "   }\r\n\r\n    }\r\n\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

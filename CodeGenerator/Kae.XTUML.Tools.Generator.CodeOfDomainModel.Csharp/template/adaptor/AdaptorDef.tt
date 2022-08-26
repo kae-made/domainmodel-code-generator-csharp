@@ -27,6 +27,12 @@ using System.Threading.Tasks;
 
 namespace <#= nameSpace #>.Adaptor
 {
+    // Entry for Application front end.
+    public static class DomainModelAdaptorEntry
+    {
+        public static DomainModelAdaptor GetAdaptor(Logger logger) { return ProcessManagementAdaptor.GetInstance(logger); }
+    }
+
 <#
     Initialize();
 
@@ -54,6 +60,9 @@ namespace <#= nameSpace #>.Adaptor
         public <#= adaptorName #>(<#= domainFacadeClassName#> domainModel, Logger logger) : base(logger)
         {
             this.domainModel = domainModel;
+            domainOpsParamSpecs = _domainOpsParamSpecs;
+            classSpecs = _classSpecs;
+            domainModelName = "<#= nameSpace #>";
         }
 
 <#
@@ -64,7 +73,7 @@ namespace <#= nameSpace #>.Adaptor
 
     // domain operation dictionary generation
 #>
-        protected Dictionary<string, Dictionary<string, ParamSpec>> domainOpsParamSpecs = new Dictionary<string, Dictionary<string, ParamSpec>>()
+        protected Dictionary<string, Dictionary<string, ParamSpec>> _domainOpsParamSpecs = new Dictionary<string, Dictionary<string, ParamSpec>>()
         {
 <#
     int syncCount = 1;
@@ -106,7 +115,7 @@ namespace <#= nameSpace #>.Adaptor
 <#
     // dictionaly class spec
 #>
-        protected Dictionary<string, ClassSpec> classSpecs = new Dictionary<string, ClassSpec>()
+        protected Dictionary<string, ClassSpec> _classSpecs = new Dictionary<string, ClassSpec>()
         {
 <#
     int classCount = 1;
@@ -115,7 +124,7 @@ namespace <#= nameSpace #>.Adaptor
         var classSpec = classSpecs[classSpecKey];
 #>
             {
-                "<#= classSpec.Name #>", new ClassSpec()
+                "<#= classSpec.KeyLetter #>", new ClassSpec()
                 {                
                     Name = "<#= classSpec.Name #>",
                     KeyLetter = "<#= classSpec.KeyLetter #>",
@@ -130,7 +139,7 @@ namespace <#= nameSpace #>.Adaptor
 #>
                         {
                             "<#= prop.Name #>", new PropSpec()
-                            { Name = "<#= prop.Name #>", DataType = ParamSpec.DataType.<#= prop.DataType.ToString()  #>, Identity = <#= prop.Identity #>, Writable = <#= prop.Writable.ToString().ToLower() #>, Mathematical = <#= prop.Mathematical.ToString().ToLower() #>, Reference = <#= prop.Reference.ToString().ToLower() #>, StateMachineState = <#= prop.StateMachineState.ToString().ToLower() #> }
+                            { Name = "<#= prop.Name #>", DataType = ParamSpec.DataType.<#= prop.DataType.ToString() #>, Identity = <#= prop.Identity #>, Writable = <#= prop.Writable.ToString().ToLower() #>, Mathematical = <#= prop.Mathematical.ToString().ToLower() #>, Reference = <#= prop.Reference.ToString().ToLower() #>, StateMachineState = <#= prop.StateMachineState.ToString().ToLower() #> }
                         }<# if (itemCount < classSpec.Properties.Count) { #>,<# } #>
 
 <#
@@ -264,7 +273,7 @@ namespace <#= nameSpace #>.Adaptor
             if (domainOpsParamSpecs.ContainsKey(name))
             {
                 var opSpec = domainOpsParamSpecs[name];
-                RequestingParameters invSpec = new RequestingParameters();
+                RequestingParameters invSpec = new RequestingParameters() { Parameters = new Dictionary<string, object>() };
                 if (CheckParameters(opSpec, parameters, <#= invVarName #>))
                 {
                     switch (name)
@@ -313,7 +322,7 @@ namespace <#= nameSpace #>.Adaptor
                 if (classSpec.Operations.ContainsKey(name))
                 {
                     var opSpec = classSpec.Operations[name];
-                    var invSpec = new RequestingParameters();
+                    var invSpec = new RequestingParameters() { Parameters = new Dictionary<string, object>(), Identities = new Dictionary<string, string>() };
                     if (CheckIdentity(classSpec.Properties, parameters, invSpec))
                     {
                         if(CheckParameters(opSpec.Parameters,parameters, invSpec))
@@ -332,7 +341,7 @@ namespace <#= nameSpace #>.Adaptor
             string instSelectedCode = GetSelectedByIdentitiesCode(domainClassName, "selected", invVarName + ".Identities", classSpec.Properties);
 #>
                                 case "<#= classKeyLett #>":
-                                    var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).First();
+                                    var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
                                     if (<#= instVarName #> != null)
                                     {
                                         switch (name)
@@ -389,13 +398,13 @@ namespace <#= nameSpace #>.Adaptor
             if (classSpecs.ContainsKey(classKeyLett))
             {
                 var classSpec = classSpecs[classKeyLett];
-                if (classSpec.Operations.ContainsKey(name))
+                if (classSpec.Events.ContainsKey(name))
                 {
-                    var opSpec = classSpec.Operations[name];
-                    var invSpec = new RequestingParameters();
+                    var evtSpec = classSpec.Events[name];
+                    var invSpec = new RequestingParameters() { Parameters = new Dictionary<string, object>(), Identities = new Dictionary<string, string>() };
                     if (CheckIdentity(classSpec.Properties, parameters, invSpec))
                     {
-                        if(CheckParameters(opSpec.Parameters,parameters, invSpec))
+                        if(CheckParameters(evtSpec.Parameters,parameters, invSpec))
                         {
                             switch (classKeyLett)
                             {
@@ -411,7 +420,7 @@ namespace <#= nameSpace #>.Adaptor
             string instSelectedCode = GetSelectedByIdentitiesCode(domainClassName, "selected", invVarName + ".Identities", classSpec.Properties);
 #>
                                 case "<#= classKeyLett #>":
-                                    var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).First();
+                                    var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
                                     switch (name)
                                     {
 <#
@@ -461,7 +470,7 @@ namespace <#= nameSpace #>.Adaptor
             if (classSpecs.ContainsKey(classKeyLett))
             {
                 var classSpec = classSpecs[classKeyLett];
-                var invSpec = new RequestingParameters();
+                var invSpec = new RequestingParameters() { Parameters = new Dictionary<string, object>(), Identities = new Dictionary<string, string>() };
                 if (CheckProperties(classSpec.Properties, parameters, invSpec))
                 {
                     switch (classKeyLett)
@@ -478,7 +487,7 @@ namespace <#= nameSpace #>.Adaptor
             {
 #>
                         case "<#= classKeyLett #>":
-                            var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).First();
+                            var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
                             if (<#= instVarName #> != null)
                             {
 <#
@@ -519,6 +528,13 @@ namespace <#= nameSpace #>.Adaptor
 
         public override string GetInstances(string classKeyLett)
         {
+            List<Dictionary<string, object>> resultInstances = GetInstancesRaw(classKeyLett);
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(resultInstances);
+        }
+
+        protected List<Dictionary<string, object>> GetInstancesRaw(string classKeyLett)
+        {
             var resultInstances = new List<Dictionary<string, object>>();
             if (classSpecs.ContainsKey(classKeyLett))
             {
@@ -550,6 +566,7 @@ namespace <#= nameSpace #>.Adaptor
 <#
             }
 #>
+                            resultInstances.Add(<#= resultInstVarName #>);
                             break;
 <#
     }
@@ -559,7 +576,7 @@ namespace <#= nameSpace #>.Adaptor
                 
             }
 
-            return Newtonsoft.Json.JsonConvert.SerializeObject(resultInstances);
+            return resultInstances;
         }
 
         public override string GetInstance(string classKeyLett, IDictionary<string, string> identities)
@@ -578,7 +595,7 @@ namespace <#= nameSpace #>.Adaptor
         string instSelectedCode = GetSelectedByIdentitiesCode(domainClassName, "selected", "identities", classSpec.Properties);
 #>
                 case "<#= classKeyLett #>":
-                    <#= domainClassName #> <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).First();
+                    <#= domainClassName #> <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
                     if (<#= instVarName #> != null)
                     {
 <#
@@ -622,7 +639,7 @@ namespace <#= nameSpace #>.Adaptor
         string instSelectedCode = GetSelectedByIdentitiesCode(domainClassName, "selected", "identities", classSpec.Properties);
 #>
                         case "<#= classKeyLett #>":
-                            <#= domainClassName #> <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).First();
+                            <#= domainClassName #> <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
                             if (<#= instVarName #> != null)
                             {
                                 switch (relName)
@@ -705,5 +722,38 @@ namespace <#= nameSpace #>.Adaptor
             return result; 
         }
 
+        public override string GetDomainModelSpec()
+        {
+            var spec = new {
+                name = "<#= nameSpace #>",
+                operations = domainOpsParamSpecs,
+                classes = classSpecs
+            };
+            string result = Newtonsoft.Json.JsonConvert.SerializeObject(spec);
+            return result;
+        }
+
+        public override void RegisterUpdateHandler(InstanceRepository.ClassPropertiesUpdateHandler classPropertiesUpdateHandler, InstanceRepository.RelationshipUpdateHandler relationshipUpdateHandler)
+        {
+            domainModel.InstanceRepository.ClassPropertiesUpdated += classPropertiesUpdateHandler;
+            domainModel.InstanceRepository.RelationshipUpdated += relationshipUpdateHandler;
+        }
+
+        public override void LoadDomainInstances(string instances)
+        {
+            string domainName = "<#= nameSpace #>";
+            var instancesJson = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, IList<IDictionary<string, object>>>>(instances);
+            domainModel.InstanceRepository.LoadState(domainName, instancesJson);
+        }
+
+        public override string SaveDomainInstances()
+        {
+            Dictionary<string, List<Dictionary<string, object>>> instances = new Dictionary<string, List<Dictionary<string, object>>>();
+            foreach(var ck in classSpecs.Keys)
+            {
+                instances.Add(ck, GetInstancesRaw(ck));
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(instances);
+        }
     }
 }

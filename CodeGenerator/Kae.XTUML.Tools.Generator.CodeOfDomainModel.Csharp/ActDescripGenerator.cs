@@ -1287,7 +1287,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         {
                             if (linkList[linkIndex].SetDestination)
                             {
-                                writer.WriteLine($"{indent}{declCode}{setCode}.First();");
+                                writer.WriteLine($"{indent}{declCode}{setCode}.FirstOrDefault();");
                                 if (loopDepth > 0)
                                 {
                                     writer.WriteLine($"{indent}break;");
@@ -1327,7 +1327,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         {
                             if (linkList[linkIndex].SetDestination)
                             {
-                                setCode += ".First()";
+                                setCode += ".FirstOrDefault()";
                             }
                             writer.WriteLine($"{indent}{declCode}{setCode};");
                             // if (linkList[linkIndex].SetDestination && currentSrcSet)
@@ -1475,7 +1475,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})(instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").First());");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})(instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").FirstOrDefault());");
             }
 
             return sb.ToString();
@@ -1531,7 +1531,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})(instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode})).First());");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})(instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode})).FirstOrDefault());");
             }
 
 
@@ -1646,7 +1646,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     break;
                 }
 
-                code = $"{GetSelfVarNameOnCode(formVar)}.{methodName}({GetSelfVarNameOnCode(partVar)}, changedStates);";
+                code = $"{GetSelfVarNameOnCode(formVar)}.{methodName}({GetSelfVarNameOnCode(partVar)}, changedStates)";
             }
             else if (subRelDef is CIMClassR_COMP)
             {
@@ -1711,7 +1711,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         break;
                     }
                 }
-                code = $"{GetSelfVarNameOnCode(subVar)}.{methodName}({GetSelfVarNameOnCode(superVar)}, changedStates);";
+                code = $"{GetSelfVarNameOnCode(subVar)}.{methodName}({GetSelfVarNameOnCode(superVar)}, changedStates)";
             }
 
             return code;

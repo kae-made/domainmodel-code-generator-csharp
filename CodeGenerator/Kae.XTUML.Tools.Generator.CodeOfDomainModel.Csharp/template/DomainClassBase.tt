@@ -248,7 +248,7 @@ namespace <#= nameSpace #>
                 {
                     // TODO: ???
                 }
-                var partDef = partDefs.First();
+                var partDef = partDefs.FirstOrDefault();
                 var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
                 var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
                 if (partDef.Attr_Mult == 0)
@@ -523,6 +523,30 @@ namespace <#= nameSpace #>
 #>
 
             return results;
+        }
+
+        public string GetIdentities()
+        {
+            string identities = $"<#
+        bool first = true;
+        var oidDefs = objDef.LinkedFromR104();
+        foreach(var oidDef in oidDefs)
+        {
+            if (oidDef.Attr_Oid_ID == 0)
+            {
+                var oidaDefs = oidDef.LinkedOtherSideR105();
+                foreach (var oidaDef in oidaDefs)
+                {
+                    var attrDef = oidaDef.LinkedOtherSideR105();
+                    string propName = GeneratorNames.GetAttrPropertyName(attrDef);
+                    if (first == false) { #>,<# } #><#= attrDef.Attr_Name #>={this.<#= propName #>}<#
+                    first = false;
+                }
+            }
+        }
+#>";
+
+            return identities;
         }
         
         public IDictionary<string, object> GetProperties(bool onlyIdentity)

@@ -34,7 +34,7 @@
                     {
                         // TODO: ???
                     }
-                    var partDef = partDefs.First();
+                    var partDef = partDefs.FirstOrDefault();
                     var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
                     var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
                     if (partDef.Attr_Mult == 0)
@@ -103,7 +103,7 @@
                 {
                     // TODO: ???
                 }
-                var partDef = partDefs.First();
+                var partDef = partDefs.FirstOrDefault();
                 string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                 var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
                 var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
@@ -134,7 +134,7 @@
 <#= indent #>    if (<#= relVarName #> == null)
 <#= indent #>    {
 <#= indent #>   var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
-<#= indent #>   <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForRelVarName #>" };
+<#= indent #>   <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForRelVarName #>" };
 
 <#= indent #>    }
 <#= indent #>    return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
@@ -303,7 +303,7 @@
 <#= indent #>    if (<#= relVarName #> == null)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst => (<#= condition #>));
-<#= indent #>        <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = null };
+<#= indent #>        <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = null };
 <#= indent #>    }
 <#= indent #>    return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
 <#= indent #>}
@@ -565,8 +565,8 @@
 <#= indent #>    if (<#= relOneVarName #> == null)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= oneObjDef.Attr_Key_Lett #>").Where(inst=>(<#= oneCondition #>));
-<#= indent #>        <#= relOneVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOneRelVarName #>" };
-<#= indent #>        // (<#= oneObjTypeName #>)candidates.First();
+<#= indent #>        <#= relOneVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOneRelVarName #>" };
+<#= indent #>        // (<#= oneObjTypeName #>)candidates.FirstOrDefault();
 <#= indent #>    }
 <#= indent #>    return <#= relOneVarName #>.GetDestination<<#= oneObjTypeName #>>();
 <#= indent #>}
@@ -586,8 +586,8 @@
 <#= indent #>    if (<#= relOtherVarName #> == null)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= otherObjDef.Attr_Key_Lett #>").Where(inst=>(<#= otherCondition #>));
-<#= indent #>        <#= relOtherVarName #> = new LinkedInstance() { Source = this, Destination = candidates.First(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOtherRelVarName #>" };
-<#= indent #>        // (<#= otherObjTypeName #>)candidates.First();
+<#= indent #>        <#= relOtherVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOtherRelVarName #>" };
+<#= indent #>        // (<#= otherObjTypeName #>)candidates.FirstOrDefault();
 <#= indent #>    }
 <#= indent #>    return <#= relOtherVarName #>.GetDestination<<#= otherObjTypeName #>>();
 <#= indent #>}
@@ -628,7 +628,7 @@
 #>
 <#= indent #>{
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
-<#= indent #>    return (<#= targetClassName #>)candidates.First();
+<#= indent #>    return (<#= targetClassName #>)candidates.FirstOrDefault();
 <#= indent #>}
 <#
                 }
@@ -688,7 +688,7 @@
 #>
 <#= indent #>{
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
-<#= indent #>    return (<#= targetTypeName #>)candidates.First();
+<#= indent #>    return (<#= targetTypeName #>)candidates.FirstOrDefault();
 <#= indent #>}
 
 <#
@@ -747,7 +747,7 @@
 #>
 <#= indent #>{
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
-<#= indent #>    return (<#= targetType #>)candidates.First();
+<#= indent #>    return (<#= targetType #>)candidates.FirstOrDefault();
 <#= indent #>}
 
 <#
@@ -817,7 +817,7 @@
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances(key).Where(inst=>((this == ((<#= subClassIFName #>)inst).<#= superGetMethodName #>())));
 <#= indent #>        if (candidates.Count()>0)
 <#= indent #>        {
-<#= indent #>            result = (<#= subClassIFName #>)candidates.First();
+<#= indent #>            result = (<#= subClassIFName #>)candidates.FirstOrDefault();
 <#= indent #>            break;
 <#= indent #>        }
 <#= indent #>    }
