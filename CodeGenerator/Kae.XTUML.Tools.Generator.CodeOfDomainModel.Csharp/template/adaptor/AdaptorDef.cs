@@ -2016,7 +2016,11 @@ namespace ");
             Dictionary<string, List<Dictionary<string, object>>> instances = new Dictionary<string, List<Dictionary<string, object>>>();
             foreach(var ck in classSpecs.Keys)
             {
-                instances.Add(ck, GetInstancesRaw(ck));
+                var classInstances = GetInstancesRaw(ck);
+                if (classInstances.Count > 0)
+                {
+                    instances.Add(ck, classInstances);
+                }
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(instances);
         }
