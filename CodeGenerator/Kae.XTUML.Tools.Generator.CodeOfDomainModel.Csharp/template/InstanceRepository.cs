@@ -71,6 +71,9 @@ namespace ");
     {
         private Logger logger;
 
+        public override event ClassPropertiesUpdateHandler ClassPropertiesUpdated;
+        public override event RelationshipUpdateHandler RelationshipUpdated;
+
         public InstanceRepositoryInMemory(Logger logger)
         {
             this.logger = logger;
@@ -88,7 +91,7 @@ namespace ");
                     {
 ");
             
-            #line 46 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 49 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
 
     foreach(var objDef in objDefs)
     {
@@ -100,21 +103,21 @@ namespace ");
             #line hidden
             this.Write("                        case \"");
             
-            #line 52 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 55 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write("\":\r\n                            newInstance = ");
             
-            #line 53 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 56 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassBaseName));
             
             #line default
             #line hidden
             this.Write(".CreateInstance(this, logger);\r\n                            break;\r\n");
             
-            #line 55 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
+            #line 58 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\InstanceRepository.tt"
 
     }
 
@@ -127,21 +130,29 @@ namespace ");
                     "null)\r\n                    {\r\n                        newInstance.Restore(states" +
                     ");\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n      " +
                     "  public override void UpdateCInstance(CInstanceChagedState instanceState)\r\n    " +
-                    "    {\r\n            NotifyClassStateChanged(instanceState.OP, instanceState.Targe" +
-                    "t, instanceState.ChangedProperties);\r\n        }\r\n\r\n        public override void " +
-                    "UpdateState(DomainClassDef instance, IDictionary<string, object> chnaged)\r\n     " +
-                    "   {\r\n            NotifyClassStateChanged(ChangedState.Operation.Update,instance" +
-                    ", chnaged);\r\n        }\r\n\r\n        public override void UpdateCLink(CLinkChangedS" +
-                    "tate linkState)\r\n        {\r\n            NotifyRelationshipStateChanged(linkState" +
-                    ".OP, linkState.Target.RelationshipID, linkState.Target.Phrase, linkState.Target." +
-                    "Source, linkState.Target.Destination);\r\n        }\r\n\r\n        public override IEn" +
-                    "umerable<T> SelectInstances<T>(string className, IDictionary<string, object> con" +
-                    "ditionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)\r\n     " +
-                    "   {\r\n            var resultSet = new List<T>();\r\n            var candidates = d" +
-                    "omainInstances[className].Where(i => { return compare((T)i, conditionPropertyVal" +
-                    "ues); });\r\n            foreach (var ci in candidates)\r\n            {\r\n          " +
-                    "      resultSet.Add((T)ci);\r\n            }\r\n            return resultSet;\r\n     " +
-                    "   }\r\n\r\n    }\r\n\r\n}\r\n");
+                    "    {\r\n            ClassPropertiesUpdated?.Invoke(instanceState.Target, new Clas" +
+                    "sPropertiesUpdatedEventArgs() { Operation = instanceState.OP.ToString(), ClassKe" +
+                    "yLetter = instanceState.Target.ClassName, Identities = instanceState.Target.GetI" +
+                    "dentities(), Properties = instanceState.ChangedProperties });\r\n        }\r\n\r\n    " +
+                    "    public override void UpdateState(DomainClassDef instance, IDictionary<string" +
+                    ", object> changed)\r\n        {\r\n            ClassPropertiesUpdated?.Invoke(instan" +
+                    "ce, new ClassPropertiesUpdatedEventArgs() { Operation = ChangedState.Operation.U" +
+                    "pdate.ToString(), ClassKeyLetter = instance.ClassName, Identities = instance.Get" +
+                    "Identities(), Properties = changed });\r\n        }\r\n\r\n        public override voi" +
+                    "d UpdateCLink(CLinkChangedState linkState)\r\n        {\r\n            RelationshipU" +
+                    "pdated?.Invoke(this, new RelationshipUpdatedEventArgs() { Operation = linkState." +
+                    "OP.ToString(), RelationshipId = linkState.Target.RelationshipID, Phrase = linkSt" +
+                    "ate.Target.Phrase, SourceClassKeyLetter = linkState.Target.Source.ClassName, Sou" +
+                    "rceIdentities = linkState.Target.Source.GetIdentities(), DestinationClassKeyLett" +
+                    "er = linkState.Target.Destination.ClassName, DestinationIdentities = linkState.T" +
+                    "arget.Destination.GetIdentities() });\r\n        }\r\n\r\n        public override IEnu" +
+                    "merable<T> SelectInstances<T>(string className, IDictionary<string, object> cond" +
+                    "itionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)\r\n      " +
+                    "  {\r\n            var resultSet = new List<T>();\r\n            var candidates = do" +
+                    "mainInstances[className].Where(i => { return compare((T)i, conditionPropertyValu" +
+                    "es); });\r\n            foreach (var ci in candidates)\r\n            {\r\n           " +
+                    "     resultSet.Add((T)ci);\r\n            }\r\n            return resultSet;\r\n      " +
+                    "  }\r\n\r\n    }\r\n\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

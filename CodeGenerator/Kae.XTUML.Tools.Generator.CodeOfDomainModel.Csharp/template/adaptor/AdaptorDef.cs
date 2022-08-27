@@ -1991,7 +1991,7 @@ namespace ");
             return result;
         }
 
-        public override void RegisterUpdateHandler(InstanceRepository.ClassPropertiesUpdateHandler classPropertiesUpdateHandler, InstanceRepository.RelationshipUpdateHandler relationshipUpdateHandler)
+        public override void RegisterUpdateHandler(ClassPropertiesUpdateHandler classPropertiesUpdateHandler, RelationshipUpdateHandler relationshipUpdateHandler)
         {
             domainModel.InstanceRepository.ClassPropertiesUpdated += classPropertiesUpdateHandler;
             domainModel.InstanceRepository.RelationshipUpdated += relationshipUpdateHandler;
