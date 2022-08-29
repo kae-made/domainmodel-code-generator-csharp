@@ -21,7 +21,7 @@ namespace ConsoleAppCsharpGenerator
             }
         }
 
-        private static readonly string version = "0.1.0";
+        private static readonly string version = "1.0.0";
         CsharpCodeGenerator generator;
         public Program()
         {

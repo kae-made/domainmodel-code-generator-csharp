@@ -24,3 +24,11 @@ generating C# project name.
 .NET runtime version which is used in generating C# project.  
 - --gen-folder <i>folder-path</i>  
 generated files are stored into the <i>folder-path</i>.
+- --action-gen
+    - true: generate behavior code of function, transformer, entry action and derived mathematical attribute
+    - false: don't generate behavior code. user should write code by hand.
+- -adoptor-gen
+    - true: generate adaptor class for another domain implementation
+    - false: don't generate adaptor class
+
+※ When user uses action code generation, user needs to build domain model on BridgePoint and to use sql file under gen/code_generation folder of domain model.
