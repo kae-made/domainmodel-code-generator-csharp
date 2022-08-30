@@ -30,7 +30,7 @@ namespace <#= nameSpace #>.Adaptor
     // Entry for Application front end.
     public static class DomainModelAdaptorEntry
     {
-        public static DomainModelAdaptor GetAdaptor(Logger logger) { return ProcessManagementAdaptor.GetInstance(logger); }
+        public static DomainModelAdaptor GetAdaptor(Logger logger) { return <#= nameSpace #>Adaptor.GetInstance(logger); }
     }
 
 <#

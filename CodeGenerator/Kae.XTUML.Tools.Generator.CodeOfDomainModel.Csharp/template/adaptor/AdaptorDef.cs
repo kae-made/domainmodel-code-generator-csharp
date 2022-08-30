@@ -70,8 +70,14 @@ namespace ");
             #line hidden
             this.Write(".Adaptor\r\n{\r\n    // Entry for Application front end.\r\n    public static class Dom" +
                     "ainModelAdaptorEntry\r\n    {\r\n        public static DomainModelAdaptor GetAdaptor" +
-                    "(Logger logger) { return ProcessManagementAdaptor.GetInstance(logger); }\r\n    }\r" +
-                    "\n\r\n");
+                    "(Logger logger) { return ");
+            
+            #line 33 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
+            
+            #line default
+            #line hidden
+            this.Write("Adaptor.GetInstance(logger); }\r\n    }\r\n\r\n");
             
             #line 36 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
