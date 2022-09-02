@@ -76,10 +76,11 @@
             {
                 Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
                 var actDef = opbDef.CIMSuperClassACT_ACT();
-                var actDescripGen = new ActDescripGenerator(actDef, "this", "    ", "        ");
+                string baseIndent = "    ";
+                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, coloringManager);
                 var descripCode = actDescripGen.Generate();
 #>
-<#= indent #>   // Generated from action description
+<#= indent #>    // Generated from action description
 <#= descripCode #>
 <#
             }

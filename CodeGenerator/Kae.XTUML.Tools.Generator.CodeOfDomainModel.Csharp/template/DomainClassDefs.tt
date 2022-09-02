@@ -53,7 +53,7 @@ namespace <#= nameSpace #>
 
     {
 <#
-        var propertiesGen = new ciclass.PropertyDef("        ", objDef, false);
+        var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, coloringManager);
         string propertiesGenCode = propertiesGen.TransformText();
 #>
         // Conceptual Information Class's Properties
@@ -82,7 +82,7 @@ namespace <#= nameSpace #>
 <#= relationshipDef #>
 
 <#
-        var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false);
+        var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, coloringManager);
         string operationGenCode = operationsGen.TransformText();
 #>
         // Conceptual Information Class's Operations

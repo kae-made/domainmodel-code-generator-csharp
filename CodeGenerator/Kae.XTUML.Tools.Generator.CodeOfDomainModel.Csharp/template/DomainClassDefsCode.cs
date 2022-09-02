@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM;
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string version;
         string nameSpace;
         IEnumerable<CIClassDef> classObjDefs;
+        ColoringManager coloringManager;
 
-        public DomainClassDefs(string version, string nameSpace, IEnumerable<CIClassDef> classObjDef)
+        public DomainClassDefs(string version, string nameSpace, IEnumerable<CIClassDef> classObjDef, ColoringManager coloringManager)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.classObjDefs = classObjDef;
+            this.coloringManager = coloringManager;
         }
 
         public void prototype_get_identities()
@@ -55,7 +58,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var propertiesGen = new ciclass.PropertyDef("        ", objDef, false);
+                var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, coloringManager);
                 string propertiesGenCode = propertiesGen.TransformText();
             }
         }
@@ -73,7 +76,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false);
+                var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, coloringManager);
                 string operationGenCode = operationsGen.TransformText();
 
             }

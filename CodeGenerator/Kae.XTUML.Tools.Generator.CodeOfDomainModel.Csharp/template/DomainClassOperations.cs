@@ -88,7 +88,7 @@ namespace ");
             
             #line 35 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassOperations.tt"
 
-    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true);
+    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true, coloringManager);
     string operationGenCode = operationsGen.TransformText();
 
             

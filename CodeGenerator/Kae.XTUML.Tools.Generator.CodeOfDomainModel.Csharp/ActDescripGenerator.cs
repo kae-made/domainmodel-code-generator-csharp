@@ -1,4 +1,5 @@
 ﻿using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         private List<Dictionary<string, VariableDef>> declaredVariables = new List<Dictionary<string, VariableDef>>();
 
+        ColoringManager coloringManager;
 
-        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent)
+        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, ColoringManager coloringManager)
         {
             this.actDef = actDef;
             this.selfVarNameOnCode = selfVarName;
             this.baseIndent = baseIndent;
             this.indent = indent;
+            this.coloringManager = coloringManager;
         }
 
         Dictionary<string, string> eeReferDefs = new Dictionary<string, string>();
@@ -35,40 +38,144 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 return $"{indent}// mark - no generation";
             }
-            string code = "";
 
-            var blkDef = actDef.LinkedToR666();
-            if (blkDef != null)
+            string resultCode = "";
+
+            bool overwriteByColoring = false;
+            var codeBefores = new List<string>();
+            var codeAfters = new List<string>();
+            if (coloringManager != null)
             {
-                code = GenerateBlock(blkDef);
-            }
-
-            var bicDef = actDef.LinkedOneSideR694();
-            var bieDef = actDef.LinkedOtherSideR640();
-            var parsed2BlkDef = actDef.LinkedToR650();
-
-            var currentScopeBlkDef = actDef.LinkedToR699();
-
-            indent += baseIndent;
-
-            var sb = new StringBuilder();
-            var writer = new StringWriter(sb);
-            if (eeReferDefs.Count > 0) {
-                writer.WriteLine($"{indent}// External Entities Reference Declarations.");
-                foreach (var eeKey in eeReferDefs.Keys)
+                IList<ColoringForInstance> colorings;
+                if (coloringManager.HasColoring(actDef, out colorings))
                 {
-                    writer.WriteLine($"{indent}{eeReferDefs[eeKey]};");
-                    writer.WriteLine("");
+                    // 一つでもOverwriteがあれば、Action記述からの生成は行わない
+                    // Overwrite 指定されている場合は、Before、Body、After の順で生成する。
+                    // Overwrite 指定が無い場合は、Before、Afterで囲み順番に階層を形成する
+                    var sbBody = new StringBuilder();
+                    var writerBody = new StringWriter(sbBody);
+                    var coloredGenCodes = coloringManager.GenerateForColoring(colorings, indent, baseIndent);
+                    for (int cIndex = 0; cIndex < colorings.Count; cIndex++)
+                    {
+                        var ccodeGen = coloredGenCodes[cIndex];
+                        var coloring = colorings[cIndex];
+                        if ((ccodeGen.AddStyle & GenerationResult.Style.Overwrite) != 0)
+                        {
+                            if (!string.IsNullOrEmpty(sbBody.ToString()))
+                            {
+                                writerBody.WriteLine();
+                            }
+                            overwriteByColoring = true;
+                            var sbCodeFrag = new StringBuilder();
+                            var writerFrag = new StringWriter(sbCodeFrag);
+                            writerFrag.WriteLine($"{indent}// code by coloring of {coloring.Specification.Name}");
+                            if ((ccodeGen.AddStyle & GenerationResult.Style.AddBefore) != 0)
+                            {
+                                writerFrag.WriteLine($"{indent}// code before");
+                                writerFrag.Write(ccodeGen.CodeBefore);
+                                writerFrag.WriteLine();
+                            }
+                            writerFrag.WriteLine($"{indent}// code body");
+                            writerFrag.Write(ccodeGen.CodeOverwrite);
+                            if ((ccodeGen.AddStyle & GenerationResult.Style.AddAfter) != 0)
+                            {
+                                writerFrag.WriteLine();
+                                writerFrag.WriteLine($"{indent}// code after");
+                                writerFrag.Write(ccodeGen.CodeAfter);
+                            }
+                            writerBody.Write(sbCodeFrag.ToString());
+                        }
+                        else
+                        {
+                            if ((ccodeGen.AddStyle & GenerationResult.Style.AddBefore) != 0)
+                            {
+                                var sbCodeFrag = new StringBuilder();
+                                var writerFrag = new StringWriter(sbCodeFrag);
+                                writerFrag.WriteLine($"{indent}// code before by coloring of {coloring.Specification.Name}");
+                                writerFrag.Write(ccodeGen.CodeBefore);
+                                codeBefores.Add(writerFrag.ToString());
+                            }
+                            if ((ccodeGen.AddStyle & GenerationResult.Style.AddAfter) != 0)
+                            {
+                                var sbCodeFrag = new StringBuilder();
+                                var writerFrag = new StringWriter(sbCodeFrag);
+                                writerFrag.WriteLine($"{indent}// code after by coloring of {coloring.Specification.Name}");
+                                writerFrag.Write(ccodeGen.CodeBefore);
+                                codeAfters.Insert(0, writerFrag.ToString());
+                            }
+                        }
+                    }
+                    resultCode = sbBody.ToString();
                 }
             }
-            if (hasUsedSelectedVar)
-            {
-                writer.WriteLine($"{indent}DomainClassDef selected = null;");
-                writer.WriteLine("");
-            }
-            writer.Write(code);
 
-            return sb.ToString();
+            if (overwriteByColoring == false)
+            {
+                string code = "";
+                var blkDef = actDef.LinkedToR666();
+                if (blkDef != null)
+                {
+                    code = GenerateBlock(blkDef);
+                }
+
+                var bicDef = actDef.LinkedOneSideR694();
+                var bieDef = actDef.LinkedOtherSideR640();
+                var parsed2BlkDef = actDef.LinkedToR650();
+
+                var currentScopeBlkDef = actDef.LinkedToR699();
+
+                indent += baseIndent;
+
+                var sb = new StringBuilder();
+                var writer = new StringWriter(sb);
+                if (eeReferDefs.Count > 0)
+                {
+                    writer.WriteLine($"{indent}// External Entities Reference Declarations.");
+                    foreach (var eeKey in eeReferDefs.Keys)
+                    {
+                        writer.WriteLine($"{indent}{eeReferDefs[eeKey]};");
+                        writer.WriteLine("");
+                    }
+                }
+                if (hasUsedSelectedVar)
+                {
+                    writer.WriteLine($"{indent}DomainClassDef selected = null;");
+                    writer.WriteLine("");
+                }
+                writer.Write(code);
+                resultCode = sb.ToString();
+            }
+
+            if (codeBefores.Count > 0)
+            {
+                var sb = new StringBuilder();
+                var writer = new StringWriter(sb);
+                for (int index = 0; index < codeBefores.Count; index++)
+                {
+                    if (index > 0)
+                    {
+                        writer.WriteLine();
+                    }
+                    writer.Write(codeBefores[index]);
+                }
+                writer.WriteLine();
+                writer.Write(resultCode);
+                resultCode = sb.ToString();
+            }
+            if (codeAfters.Count > 0)
+            {
+                var sb = new StringBuilder();
+                var writer = new StringWriter(sb);
+                writer.Write(resultCode);
+                foreach (var codeAfter in codeAfters)
+                {
+                    writer.WriteLine();
+                    writer.Write(codeAfter);
+                }
+                resultCode = sb.ToString();
+            }
+
+            return resultCode;
         }
 
         public bool GenCode()

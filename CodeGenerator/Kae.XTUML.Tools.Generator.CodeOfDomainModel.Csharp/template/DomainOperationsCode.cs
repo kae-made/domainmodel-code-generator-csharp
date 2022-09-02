@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM;
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string nameSpace;
         string domainFacadeClassName;
         IEnumerable<CIClassDef> syncClassDefs;
+        ColoringManager coloringManager;
 
-        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs)
+        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, ColoringManager coloringManager)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.domainFacadeClassName = domainFacadeClassName;
             this.syncClassDefs = syncDefs;
+            this.coloringManager = coloringManager;
         }
 
         public void prototypeAction()
@@ -35,7 +38,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 var retDtDef = syncDef.LinkedToR25();
                 if (retDtDef.Attr_Name == "void") ;
                 string syncName = syncDef.Attr_Name;
-                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ");
+                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", coloringManager);
                 string code = actDescripGen.Generate();
             }
         }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Knowledge & Experience. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private string indent;
         private CIMClassO_OBJ objDef;
         private bool genLogicCode;
-        public ClassOperationDef(string indent, CIMClassO_OBJ objDef, bool genLogicCode)
+        private ColoringManager coloringManager;
+
+        public ClassOperationDef(string indent, CIMClassO_OBJ objDef, bool genLogicCode, ColoringManager coloringManager)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genLogicCode = genLogicCode;
+            this.coloringManager = coloringManager;
         }
     }
 }

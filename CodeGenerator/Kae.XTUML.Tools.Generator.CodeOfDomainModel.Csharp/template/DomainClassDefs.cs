@@ -138,7 +138,7 @@ using Kae.DomainModel.Csharp.Framework;
             
             #line 55 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassDefs.tt"
 
-        var propertiesGen = new ciclass.PropertyDef("        ", objDef, false);
+        var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, coloringManager);
         string propertiesGenCode = propertiesGen.TransformText();
 
             
@@ -194,7 +194,7 @@ using Kae.DomainModel.Csharp.Framework;
             
             #line 84 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassDefs.tt"
 
-        var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false);
+        var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, coloringManager);
         string operationGenCode = operationsGen.TransformText();
 
             

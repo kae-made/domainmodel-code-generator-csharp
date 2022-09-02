@@ -307,7 +307,7 @@ namespace ");
             #line 157 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 
     // attribute generation
-    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true);
+    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, coloringManager);
     string propertiesGenCode = propertiesGen.TransformText();
 
             

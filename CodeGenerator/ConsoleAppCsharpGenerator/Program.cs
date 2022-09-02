@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Knowledge & Experience. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using Kae.Tools.Generator;
 using Kae.Tools.Generator.Context;
 using Kae.Utility.Logging;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp;
@@ -53,24 +54,24 @@ namespace ConsoleAppCsharpGenerator
             {
                 if (args[index] == "--metamodel")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyOOAofOOAModelFilePath).First();
+                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyOOAofOOAModelFilePath).First();
                     requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--meta-datatype")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyMetaDataTypeDefFilePath).First();
+                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyMetaDataTypeDefFilePath).First();
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--base-datatype")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyBaseDataTypeDefFilePaht).First();
+                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyBaseDataTypeDefFilePaht).First();
                     requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--domainmodel")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyDomainModelFilePath).First();
+                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyDomainModelFilePath).First();
                     requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                     // domainModelFilePath = args[index];
@@ -89,13 +90,14 @@ namespace ConsoleAppCsharpGenerator
                 }
                 else if (args[index] == "--gen-folder")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyGenFolderPath).First();
+                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyGenFolderPath).First();
                     requiredOptions.Remove(args[index]);
                     ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--colors")
                 {
-                    colorsFileName = args[++index];
+                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyColoringFilePath).First();
+                    ((PathSelectionParam)cp).Path = args[++index];
                 }
                 else if (args[index] == "--action-gen")
                 {

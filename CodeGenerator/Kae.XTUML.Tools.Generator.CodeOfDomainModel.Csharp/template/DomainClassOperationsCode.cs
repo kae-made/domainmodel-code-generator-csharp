@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Knowledge & Experience. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,13 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string version;
         string nameSpace;
         CIMClassO_OBJ objDef;
-
-        public DomainClassOperations(string version, string nameSpace, CIMClassO_OBJ objDef)
+        ColoringManager coloringManager;
+        public DomainClassOperations(string version, string nameSpace, CIMClassO_OBJ objDef, ColoringManager coloringManager)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.objDef = objDef;
+            this.coloringManager = coloringManager;
         }
 
         public void prototypeAct()
@@ -29,7 +31,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             {
                 var opbDef = tfrDef.LinkedFromR696();
                 var actDef = opbDef.CIMSuperClassACT_ACT();
-                var actDescripGen = new ActDescripGenerator(actDef, "this","", "");
+                var actDescripGen = new ActDescripGenerator(actDef, "this","", "", coloringManager);
                 actDescripGen.Generate();
             }
         }

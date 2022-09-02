@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Knowledge & Experience. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private string indent;
         private CIMClassO_OBJ objDef;
         private bool genImplCode;
+        private ColoringManager coloringManager;
 
-        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode)
+        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, ColoringManager colringManager)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genImplCode = genImplCode;
+            this.coloringManager = colringManager;
         }
 
         public void prototypeAction()
@@ -39,7 +42,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                         {
                             string actionDescrip = dbattrDef.Attr_Action_Semantics;
                             var actDef = dabDef.CIMSuperClassACT_ACT();
-                            var actGen = new ActDescripGenerator(actDef, "this", "", "");
+                            var actGen = new ActDescripGenerator(actDef, "this", "", "", coloringManager);
                             string actGenCode = actGen.Generate();
                         }
                     }

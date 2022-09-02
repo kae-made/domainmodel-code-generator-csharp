@@ -164,7 +164,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             genFolder.WriteContentAsync(projectPath, fileName, superTypeDefsCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
 
-            var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs);
+            var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs, coloringManager);
             //domainClassDefs.prototype();
             var domainClassDefsCode = domainClassDefs.TransformText();
             fileName = "DomainClassDefs.cs";
@@ -174,7 +174,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var domainClassBase = new DomainClassBase(Version, ProjectName, objDef);
+                var domainClassBase = new DomainClassBase(Version, ProjectName, objDef, coloringManager);
                 var domainClassBaseCode = domainClassBase.TransformText();
                 fileName = $"DomainClass{objDef.Attr_Key_Lett}Base.cs";
                 genFolder.WriteContentAsync(projectPath, fileName, domainClassBaseCode, GenFolder.WriteMode.Overwrite).Wait();
@@ -189,7 +189,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 }
                 if (hasOperations)
                 {
-                    var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef);
+                    var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef, coloringManager);
                     //domainClassOperations.prototype();
                     //domainClassOperations.prototypeAct();
                     var domainClassOperationsCode = domainClassOperations.TransformText();
@@ -216,7 +216,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     // domainClassStateMachine.prototype();
                     Console.WriteLine($"Generated - {fileName}");
 
-                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode);
+                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode, coloringManager);
                     // domainClassActions.prototype();
                     // domainClassActions.prototypeAction();
                     var domainClassActionsCode = domainClassActions.TransformText();
@@ -233,7 +233,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             Console.WriteLine($"Generated - {fileName}");
 
             var syncDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_SYNC");
-            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs);
+            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs, coloringManager);
             var domainOperationsCode = domainOperations.TransformText();
             // domainOperations.prototypeAction();
             fileName = $"{domainFacadeClassName}Operations.cs";

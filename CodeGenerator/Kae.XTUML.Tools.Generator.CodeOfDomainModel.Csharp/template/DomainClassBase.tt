@@ -156,7 +156,7 @@ namespace <#= nameSpace #>
         }
 <#
     // attribute generation
-    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true);
+    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, coloringManager);
     string propertiesGenCode = propertiesGen.TransformText();
 #>
 <#= propertiesGenCode #>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Knowledge & Experience. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.Tools.Generator.Coloring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         CIMClassO_OBJ objDef;
         CIMClassSM_SM smDef;
         bool generateCode;
+        ColoringManager coloringManager;
 
-        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode)
+        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode, ColoringManager coloringManager)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.objDef = objDef;
             this.smDef = smDef;
             this.generateCode = generateCode;
+            this.coloringManager = coloringManager;
         }
 
         public void prototypeAction()
@@ -39,7 +42,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 {
                     Console.WriteLine($"Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var actDef = sabDef.CIMSuperClassACT_ACT();
-                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ");
+                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ", coloringManager);
                     string code = actionGen.Generate();
                 }
             }
