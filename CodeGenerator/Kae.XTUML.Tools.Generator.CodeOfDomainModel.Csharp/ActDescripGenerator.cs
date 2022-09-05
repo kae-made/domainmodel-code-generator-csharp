@@ -1,5 +1,6 @@
 ﻿using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
+using Kae.Tools.Generator.Coloring.DomainWeaving;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
 using System;
 using System.Collections.Generic;

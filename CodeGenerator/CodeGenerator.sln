@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kae.XTUML.Tools.Generator.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppCsharpGenerator", "ConsoleAppCsharpGenerator\ConsoleAppCsharpGenerator.csproj", "{5A500C92-25F7-4B2F-BA0A-B01366B60FF7}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupCsharpCodeGenerator", "SetupCsharpCodeGenerator\SetupCsharpCodeGenerator.vdproj", "{8F174E59-7DA7-4CFF-99E5-813C69252A02}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupDomainModelCsharpGUIGenerator", "SetupDomainModelCsharpGUIGenerator\SetupDomainModelCsharpGUIGenerator.vdproj", "{A729330E-BC59-4F8D-B6C4-43F9502A966E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{5A500C92-25F7-4B2F-BA0A-B01366B60FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A500C92-25F7-4B2F-BA0A-B01366B60FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A500C92-25F7-4B2F-BA0A-B01366B60FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F174E59-7DA7-4CFF-99E5-813C69252A02}.Debug|Any CPU.ActiveCfg = Debug
+		{8F174E59-7DA7-4CFF-99E5-813C69252A02}.Debug|Any CPU.Build.0 = Debug
+		{8F174E59-7DA7-4CFF-99E5-813C69252A02}.Release|Any CPU.ActiveCfg = Release
+		{8F174E59-7DA7-4CFF-99E5-813C69252A02}.Release|Any CPU.Build.0 = Release
+		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Debug|Any CPU.ActiveCfg = Debug
+		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Debug|Any CPU.Build.0 = Debug
+		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Release|Any CPU.ActiveCfg = Release
+		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

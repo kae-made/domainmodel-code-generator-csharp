@@ -15,15 +15,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 {
     public class CsharpCodeGenerator : GeneratorBase
     {
-        private static readonly string CIMOOAofOOADomainName = "OOAofOOA";
-
         public static readonly string CPKeyProjectName = "project-name";
         public static readonly string CPKeyDotNetVersion = "dotnet-ver";
         public static readonly string CPKeyOverWrite = "overwrite";
         public static readonly string CPKeyActionGen = "action-gen";
         public static readonly string CPKeyBackup = "backup";
         public static readonly string CPKeyAdaptorGen = "adoptor-gen";
-
 
         public CsharpCodeGenerator(Logger logger, string version) : base(logger, version)
         {
@@ -40,24 +37,25 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         protected override void CreateAdditionalContext()
         {
+            var genContext = GetContext();
             var cpProjItem = new StringParam(CPKeyProjectName);
-            ContextParams.Add(cpProjItem);
+            genContext.AddOption(cpProjItem);
             var cpDNetVItem = new StringParam(CPKeyDotNetVersion);
-            ContextParams.Add(cpDNetVItem);
+            genContext.AddOption(cpDNetVItem);
             var cpOverWriteItem = new BooleanParam(CPKeyOverWrite);
-            ContextParams.Add(cpOverWriteItem);
+            genContext.AddOption(cpOverWriteItem);
             var cpActionGen = new BooleanParam(CPKeyActionGen);
-            ContextParams.Add(cpActionGen);
+            genContext.AddOption(cpActionGen);
             var cpBackup = new BooleanParam(CPKeyBackup);
-            ContextParams.Add(cpBackup);
+            genContext.AddOption(cpBackup);
             var cpAdaptorGen = new BooleanParam(CPKeyAdaptorGen);
-            contextParams.Add(cpAdaptorGen);
+            genContext.AddOption(cpAdaptorGen);
         }
 
         protected override bool AdditionalWorkForResloveContext()
         {
             int index = 0;
-            foreach (var cp in ContextParams)
+            foreach (var cp in GetContext().Options)
             {
                 if (cp.ParamName == CPKeyProjectName)
                 {
@@ -131,6 +129,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string fileName = $"{ProjectName}.csproj";
             genFolder.WriteContentAsync(projectPath, fileName, projectFileCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
+            
 
             return true;
         }
@@ -148,6 +148,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string fileName = "InstanceRepositoryInMemory.cs";
             genFolder.WriteContentAsync(projectPath, fileName, instanceRepositoryCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
 
             var classDtDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_DT");
             var domainDataTypeDefs = new DomainDataTypeDefs(Version, ProjectName, classDtDefs);
@@ -155,6 +156,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             fileName = "DomainDataTypes.cs";
             genFolder.WriteContentAsync(projectPath, fileName, domainDataTypeDefsCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
 
             var classRelDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "R_REL");
             var superTypeDefs = new SuperTypeDefs(ProjectName, Version, classRelDefs);
@@ -163,22 +165,25 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             fileName = "SubClassDefs.cs";
             genFolder.WriteContentAsync(projectPath, fileName, superTypeDefsCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
 
-            var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs, coloringManager);
+            var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs, ColoringManagerForDomainWeaving);
             //domainClassDefs.prototype();
             var domainClassDefsCode = domainClassDefs.TransformText();
             fileName = "DomainClassDefs.cs";
             genFolder.WriteContentAsync(projectPath, fileName, domainClassDefsCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
 
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var domainClassBase = new DomainClassBase(Version, ProjectName, objDef, coloringManager);
+                var domainClassBase = new DomainClassBase(Version, ProjectName, objDef, ColoringManagerForDomainWeaving);
                 var domainClassBaseCode = domainClassBase.TransformText();
                 fileName = $"DomainClass{objDef.Attr_Key_Lett}Base.cs";
                 genFolder.WriteContentAsync(projectPath, fileName, domainClassBaseCode, GenFolder.WriteMode.Overwrite).Wait();
                 Console.WriteLine($"Generated - {fileName}");
+                logger.LogInfo($"Generated - {fileName}");
 
                 var tfrDefs = objDef.LinkedFromR115();
                 bool hasOperations = false;
@@ -189,7 +194,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 }
                 if (hasOperations)
                 {
-                    var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef, coloringManager);
+                    var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef, ColoringManagerForDomainWeaving);
                     //domainClassOperations.prototype();
                     //domainClassOperations.prototypeAct();
                     var domainClassOperationsCode = domainClassOperations.TransformText();
@@ -197,6 +202,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}BaseOperations.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassOperationsCode, behaviorFileWriteMode).Wait();
                     Console.WriteLine($"Generated - {fileName}");
+                    logger.LogInfo($"Generated - {fileName}");
                 }
 
                 CIMClassSM_SM smDef = null;
@@ -215,14 +221,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassStateMachineCode, GenFolder.WriteMode.Overwrite).Wait();
                     // domainClassStateMachine.prototype();
                     Console.WriteLine($"Generated - {fileName}");
+                    logger.LogInfo($"Generated - {fileName}");
 
-                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode, coloringManager);
+                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode, ColoringManagerForDomainWeaving);
                     // domainClassActions.prototype();
                     // domainClassActions.prototypeAction();
                     var domainClassActionsCode = domainClassActions.TransformText();
                     fileName = $"DomainClass{objDef.Attr_Key_Lett}StateMachineActions.cs";
                     genFolder.WriteContentAsync(projectPath, fileName, domainClassActionsCode, behaviorFileWriteMode).Wait();
                     Console.WriteLine($"Generated - {fileName}");
+                    logger.LogInfo($"Generated - {fileName}");
                 }
             }
             string domainFacadeClassName = GeneratorNames.GetDomainFacadeClassName(ProjectName);
@@ -231,14 +239,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             fileName = $"{domainFacadeClassName}.cs";
             genFolder.WriteContentAsync(projectPath, fileName, domainFacadeCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
 
             var syncDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_SYNC");
-            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs, coloringManager);
+            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs, ColoringManagerForDomainWeaving);
             var domainOperationsCode = domainOperations.TransformText();
             // domainOperations.prototypeAction();
             fileName = $"{domainFacadeClassName}Operations.cs";
             genFolder.WriteContentAsync(projectPath, fileName, domainOperationsCode, behaviorFileWriteMode).Wait();
             Console.WriteLine($"Generated - {fileName}");
+            logger.LogInfo($"Generated - {fileName}");
 
             string eeDefFolderName = Path.Join(projectPath, ExternalEntityDef.GetFolderName());
             genFolder.CreateFolder(eeDefFolderName);
@@ -254,6 +264,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";
                     genFolder.WriteContentAsync(eeDefFolderName, fileName, eeDefGenCode, GenFolder.WriteMode.Overwrite).Wait();
                     Console.WriteLine($"Generated - {fileName}");
+                    logger.LogInfo($"Generated - {fileName}");
                 }
 #if false
                 var brgDefs = eeDef.LinkedFromR19();
@@ -282,6 +293,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 string adaptorFileName = $"{ProjectName}Adaptor.cs";
                 genFolder.WriteContentAsync(adaptorFolderName, adaptorFileName, adaptorGenCode, GenFolder.WriteMode.Overwrite).Wait();
                 Console.WriteLine($"Generated - {adaptorFileName}");
+                logger.LogInfo($"Generated - {fileName}");
             }
         }
 
