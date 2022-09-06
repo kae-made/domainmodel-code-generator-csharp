@@ -11,6 +11,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupCsharpCodeGenerator", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupDomainModelCsharpGUIGenerator", "SetupDomainModelCsharpGUIGenerator\SetupDomainModelCsharpGUIGenerator.vdproj", "{A729330E-BC59-4F8D-B6C4-43F9502A966E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kae.XTUML.Tools.WpfAppChsarpGenerator", "WpfAppChsarGenerator\Kae.XTUML.Tools.WpfAppChsarpGenerator.csproj", "{49F3125B-6911-4CA4-9138-2B8ED54901E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Debug|Any CPU.Build.0 = Debug
 		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Release|Any CPU.ActiveCfg = Release
 		{A729330E-BC59-4F8D-B6C4-43F9502A966E}.Release|Any CPU.Build.0 = Release
+		{49F3125B-6911-4CA4-9138-2B8ED54901E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49F3125B-6911-4CA4-9138-2B8ED54901E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49F3125B-6911-4CA4-9138-2B8ED54901E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49F3125B-6911-4CA4-9138-2B8ED54901E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
