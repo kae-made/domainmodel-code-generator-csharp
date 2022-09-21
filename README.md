@@ -4,9 +4,10 @@
 
 ## How to use  
 1. Create conceptual information model for your conceptual domain according to the style of [eXecutable and Translatable UML modeling](https://xtuml.org/).  
-1. Generate application library from the model. Please see [Sample Generator Application](./CodeGenerator/ConsoleAppCsharpGenerator/).  
+1. Generate application library from the model. Please see [Sample Generator Application](./CodeGenerator/ConsoleAppCsharpGenerator/). 
+1. Or GUI Application. Please see [GUI Application](./CodeGenerator/WpfAppChsarGenerator/).
 
-※ You can use BrdigePoint MicrowaveOven or [LaundromatInHotel](https://github.com/kae-made/artifacts-laundromat-in-hotel-tutorial/tree/main/model/LaundromatInHotel) as a sample model.
+※ You can use BrdigePoint MicrowaveOven, [LaundromatInHotel](https://github.com/kae-made/artifacts-laundromat-in-hotel-tutorial/tree/main/model/LaundromatInHotel) or [ProcessManagement](https://github.com/kae-made/domain-model-csharp-adaptor-samples/tree/main/TestModel/ProcessManagement) as a sample model.
 ※ Generated DTDL schemas of LaundromatInHotel are published at https://github.com/kae-made/artifacts-laundromat-in-hotel-tutorial/tree/main/code/csharp/LaundromatInHotel.
 
 ---
