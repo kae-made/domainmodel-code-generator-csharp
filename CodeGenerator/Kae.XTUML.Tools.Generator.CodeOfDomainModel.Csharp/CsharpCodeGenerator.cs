@@ -125,6 +125,13 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
               new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="5.0.1"},
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.1" }
             });
+
+            var extPackages = this.coloringManager.GetExternalPackages();
+            foreach(var extPackage in extPackages)
+            {
+                projectFile.AddLibrary(extPackage);
+            }
+
             var projectFileCode = projectFile.TransformText();
             string fileName = $"{ProjectName}.csproj";
             genFolder.WriteContentAsync(projectPath, fileName, projectFileCode, GenFolder.WriteMode.Overwrite).Wait();

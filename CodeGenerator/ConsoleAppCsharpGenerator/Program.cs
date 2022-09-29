@@ -7,6 +7,7 @@ using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ConsoleAppCsharpGenerator
@@ -41,7 +42,7 @@ namespace ConsoleAppCsharpGenerator
         private string colorsFileName;
         public bool ResolveArgs(string[] args)
         {
-            var contextParams = generator.ContextParams;
+            var genContext = generator.GetContext();
             if (args.Length == 0)
             {
                 // ShowCommandline();
@@ -54,70 +55,58 @@ namespace ConsoleAppCsharpGenerator
             {
                 if (args[index] == "--metamodel")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyOOAofOOAModelFilePath).First();
                     requiredOptions.Remove(args[index]);
-                    ((PathSelectionParam)cp).Path = args[++index];
+                    genContext.SetOptionValue(GeneratorBase.CPKeyOOAofOOAModelFilePath, (args[++index], false));
                 }
                 else if (args[index] == "--meta-datatype")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyMetaDataTypeDefFilePath).First();
-                    ((PathSelectionParam)cp).Path = args[++index];
+                    genContext.SetOptionValue(GeneratorBase.CPKeyMetaDataTypeDefFilePath, (args[++index], false));
                 }
                 else if (args[index] == "--base-datatype")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyBaseDataTypeDefFilePaht).First();
                     requiredOptions.Remove(args[index]);
-                    ((PathSelectionParam)cp).Path = args[++index];
+                    genContext.SetOptionValue(GeneratorBase.CPKeyBaseDataTypeDefFilePaht, (args[++index], false));
                 }
                 else if (args[index] == "--domainmodel")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyDomainModelFilePath).First();
                     requiredOptions.Remove(args[index]);
-                    ((PathSelectionParam)cp).Path = args[++index];
-                    // domainModelFilePath = args[index];
+                    string domainModelPath = args[++index];
+                    genContext.SetOptionValue(GeneratorBase.CPKeyDomainModelFilePath,(domainModelPath, !File.Exists(domainModelPath)));
                 }
                 else if (args[index] == "--project")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyProjectName).First();
                     requiredOptions.Remove(args[index]);
-                    ((StringParam)cp).Value = args[++index];
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyProjectName, args[++index]);
                 }
                 else if (args[index] == "--dotnetver")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyDotNetVersion).First();
                     requiredOptions.Remove(args[index]);
-                    ((StringParam)cp).Value = args[++index];
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyDotNetVersion, args[++index]);
                 }
                 else if (args[index] == "--gen-folder")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyGenFolderPath).First();
                     requiredOptions.Remove(args[index]);
-                    ((PathSelectionParam)cp).Path = args[++index];
+                    genContext.SetOptionValue(GeneratorBase.CPKeyGenFolderPath, (args[++index], true));
                 }
                 else if (args[index] == "--colors")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == GeneratorBase.CPKeyColoringFilePath).First();
-                    ((PathSelectionParam)cp).Path = args[++index];
+                    genContext.SetOptionValue(GeneratorBase.CPKeyColoringFilePath, (args[++index], false));
                 }
                 else if (args[index] == "--action-gen")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyActionGen).First();
-                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyActionGen, bool.Parse(args[++index]));
                 }
                 else if (args[index] == "--overwrite")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyOverWrite).First();
-                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyOverWrite, bool.Parse(args[++index]));
                 }
                 else if (args[index] == "--backup")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyBackup).First();
-                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyBackup, bool.Parse(args[++index]));
                 }
                 else if (args[index]== "--adoptor-gen")
                 {
-                    var cp = contextParams.Where(c => c.ParamName == CsharpCodeGenerator.CPKeyAdaptorGen).First();
-                    ((BooleanParam)cp).Value = bool.Parse(args[++index]);
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAdaptorGen, bool.Parse(args[++index]));
                 }
                 else
                 {
