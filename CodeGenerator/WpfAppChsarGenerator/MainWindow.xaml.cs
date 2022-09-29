@@ -38,7 +38,7 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
         }
 
         Logger textBlockLogger = null;
-        List<string> supportedDotNetVers = new List<string>() { "net 5.0", "net 6.0", "netcoreapp3.1" };
+        List<string> supportedDotNetVers = new List<string>() { "net5.0", "net6.0", "netcoreapp3.1" };
         List<string> dotNetVers = new List<string>() { ".NET 5.0", ".NET 6.0", ".NET Core 3.1" };
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
