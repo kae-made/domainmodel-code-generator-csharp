@@ -27,7 +27,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\SetupCsharpCodeGenerator.msi"
+        "OutputFilename" = "8:Debug\\CsharpCodeGenerator.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -37,6 +37,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -53,6 +61,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -141,7 +165,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SetupCsharpCodeGenerator"
         "ProductCode" = "8:{800CA1CA-4AB5-4594-95B4-5B5765B97E09}"
-        "PackageCode" = "8:{6AC44017-86C4-4388-A978-87A9F3723051}"
+        "PackageCode" = "8:{D6E89876-FE18-4FA4-AE42-63B795A380C3}"
         "UpgradeCode" = "8:{3B3CB5A2-4974-4EA7-95DF-8AE4110F3CA7}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -662,7 +686,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C6A565905C524C22AD60DA7BB1BA7565"
             {
-            "SourcePath" = "8:..\\ConsoleAppCsharpGenerator\\obj\\Release\\net5.0\\apphost.exe"
+            "SourcePath" = "8:..\\ConsoleAppCsharpGenerator\\obj\\Release\\net6.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_66C406781C654AE68E3D8F853456AB6B"

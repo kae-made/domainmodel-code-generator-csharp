@@ -33,6 +33,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
             }
         }
+        public void AddLibrary(string nameWithVersion)
+        {
+            string[] nv = nameWithVersion.Split(new char[] { ',' });
+            AddLibrary(nv[0], nv[1]);
+        }
+        public void AddLibrary(string name, string version)
+        {
+            usingLibraries.Add(new Library() { Name = name, Version = version });
+        }
 
         public class Library
         {
