@@ -50,14 +50,14 @@ namespace <#= nameSpace #>.Adaptor
             if (adapterInstance == null)
             {
                 var instanceRepository = new InstanceRepositoryInMemory(logger);
-                var cimLib = new CIMProcessManagementLib(instanceRepository);
+                var cimLib = new <#= domainFacadeClassName #>(instanceRepository);
                 adapterInstance = new <#= adaptorName #>(cimLib, logger);
             }
             return adapterInstance;
         }
 
 
-        public <#= adaptorName #>(<#= domainFacadeClassName#> domainModel, Logger logger) : base(logger)
+        public <#= adaptorName #>(<#= domainFacadeClassName #> domainModel, Logger logger) : base(logger)
         {
             this.domainModel = domainModel;
             domainOpsParamSpecs = _domainOpsParamSpecs;
@@ -497,12 +497,27 @@ namespace <#= nameSpace #>.Adaptor
                     if (propSpec.Writable)
                     {
                         var attrDef = propSpec.AttrDef;
-                        string attrTypeName = DomainDataTypeDefs.GetDataTypeName(DomainDataTypeDefs.GetBaseDT(attrDef));
+                        var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+                        string attrTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
                         string attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
+                        bool isStructuredDataType = DomainDataTypeDefs.IsStructuredDataType(dtDef);
 #>
                                 if (invSpec.Parameters.ContainsKey("<#= pk #>"))
                                 {
+<#
+                        if (isStructuredDataType == false)
+                        {
+#>
                                     <#= instVarName #>.<#= attrPropName #> = (<#= attrTypeName #>)invSpec.Parameters["<#= pk #>"];
+<#
+                        }
+                        else
+                        {
+#>
+                                    <#= instVarName #>.<#= attrPropName #>.Restore((IDictionary<string, object>)invSpec.Parameters["<#= pk #>"]);
+<#
+                        }
+#>
                                 }
 <#
                     }

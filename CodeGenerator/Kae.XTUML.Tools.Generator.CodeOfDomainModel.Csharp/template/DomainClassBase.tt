@@ -470,6 +470,7 @@ namespace <#= nameSpace #>
         var attrDef = implAttrDef.AttrDef;
         var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
         string dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+        bool isStructuredDataType = DomainDataTypeDefs.IsStructuredDataType(dtDef);
         string localPropVarName = GeneratorNames.GetAttrPropertyLocalName(attrDef);
         string stateOfPropVarName = GeneratorNames.GetPropertyStateVariableName(attrDef);
         if (implAttrDef.IsState)
@@ -481,7 +482,20 @@ namespace <#= nameSpace #>
         else
         {
 #>
+<#
+            if (isStructuredDataType == false)
+            {
+#>
             <#= localPropVarName #> = (<#= dataTypeName #>)propertyValues["<#= attrDef.Attr_Name #>"];
+<#
+            }
+            else
+            {
+#>
+             <#= localPropVarName #>.Restore((IDictionary<string, object>)propertyValues["<#= attrDef.Attr_Name #>"]);
+<#
+            }
+#>
             <#= stateOfPropVarName #> = false;
 <#
         }

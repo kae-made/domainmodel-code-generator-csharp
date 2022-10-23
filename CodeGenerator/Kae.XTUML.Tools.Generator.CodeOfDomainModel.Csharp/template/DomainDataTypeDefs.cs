@@ -275,9 +275,53 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(" other)\r\n        {\r\n            return !(one == other);\r\n        }\r\n    }\r\n\r\n");
+            this.Write(" other)\r\n        {\r\n            return !(one == other);\r\n        }\r\n\r\n        pub" +
+                    "lic void Restore(IDictionary<string, object> value)\r\n        {\r\n");
             
-            #line 117 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+
+            foreach(var mbrDef in mbrDefs)
+            {
+                var mbrDtDef = mbrDef.LinkedToR45();
+                string mbrDtName = GetDataTypeName(mbrDtDef);
+                string mbrName = mbrDef.Attr_Name;
+
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write(" = (");
+            
+            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrDtName));
+            
+            #line default
+            #line hidden
+            this.Write(")value[\"");
+            
+            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write("\"];\r\n");
+            
+            #line 126 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n    }\r\n\r\n");
+            
+            #line 132 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
 
         }
     }

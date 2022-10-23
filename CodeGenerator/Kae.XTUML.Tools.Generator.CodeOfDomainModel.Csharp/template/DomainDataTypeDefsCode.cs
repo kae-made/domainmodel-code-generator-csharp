@@ -155,5 +155,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 throw new IndexOutOfRangeException($"O_ATTR[{attrDef.Attr_Attr_ID}]'s subtype is wrong!");
             }
         }
+
+        public static bool IsStructuredDataType(CIMClassS_DT dtDef)
+        {
+            var subDtDef = dtDef.SubClassR17();
+            if (subDtDef is CIMClassS_SDT)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

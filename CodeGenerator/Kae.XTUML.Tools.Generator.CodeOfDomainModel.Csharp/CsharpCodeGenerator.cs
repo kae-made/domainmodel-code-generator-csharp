@@ -122,7 +122,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
               new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="5.1.0"},
+              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="5.2.0"},
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.1" }
             });
 

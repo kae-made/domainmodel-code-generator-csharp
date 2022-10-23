@@ -112,6 +112,21 @@ namespace <#= nameSpace #>
         {
             return !(one == other);
         }
+
+        public void Restore(IDictionary<string, object> value)
+        {
+<#
+            foreach(var mbrDef in mbrDefs)
+            {
+                var mbrDtDef = mbrDef.LinkedToR45();
+                string mbrDtName = GetDataTypeName(mbrDtDef);
+                string mbrName = mbrDef.Attr_Name;
+#>
+            <#= mbrName #> = (<#= mbrDtName #>)value["<#= mbrName #>"];
+<#
+            }
+#>
+        }
     }
 
 <#
