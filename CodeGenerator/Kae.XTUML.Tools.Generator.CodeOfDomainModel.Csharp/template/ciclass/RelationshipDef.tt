@@ -163,6 +163,7 @@
                         var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                         var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                         string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                        string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
                         string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
 #>
 <#
@@ -170,6 +171,7 @@
                         {
 #>
 <#= indent #>        this.<#= thisAttrName #> = <#= condTargetVarName #>.<#= tgtAttrName #>;
+<#= indent #>        this.<#= stateVarName #> = true;
 <#
                         }
                     }
@@ -218,8 +220,10 @@
                             var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                             var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                             string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                            string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
 #>
 <#= indent #>        this.<#= thisAttrName #> = null;
+<#= indent #>        this.<#= stateVarName #> = true;
 <#
                         }
 #>
@@ -331,11 +335,13 @@
                 var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                 var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                 string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
                 string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
                 if (genImplCode)
                 {
 #>
 <#= indent #>        this.<#= thisAttrName #> = <#= condTargetVarName #>.<#= tgtAttrName #>;
+<#= indent #>        this.<#= stateVarName #> = true;
 <#
                 }
             }
@@ -375,9 +381,11 @@
                     {
                         var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                         var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
+                        string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
                         string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
 #>
 <#= indent #>        this.<#= thisAttrName #> = null;
+<#= indent #>        this.<#= stateVarName #> = true;
 <#
                     }
 #>
@@ -462,6 +470,7 @@
                     var tgtObjDef = tgtAttrDef.LinkedToR102();
                     var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
                     var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
+                    string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisRefAttrDef);
                     var tgtAttrPropName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
                     var subRtoDef = tgtRtdaDef.LinkedOneSideR110().SubClassR204();
                     if (subRtoDef is CIMClassR_AONE)
@@ -476,6 +485,9 @@
 <#= indent #>        this.<#= thisAttrPropLocalName #> = <#= otherArgName #>.<#=tgtAttrPropName  #>;
 <#
                     }
+#>
+<#= indent #>        this.<#= stateVarName #> = true;
+<#
                 }
 #>
 
@@ -525,6 +537,7 @@
                     var tgtObjDef = tgtAttrDef.LinkedToR102();
                     var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
                     var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
+                    string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisRefAttrDef);
                     var subRtoDef = tgtRtdaDef.LinkedOneSideR110().SubClassR204();
                     if (subRtoDef is CIMClassR_AONE)
                     {
@@ -538,6 +551,9 @@
 <#= indent #>            this.<#= thisAttrPropLocalName #> = null;
 <#
                     }
+#>
+<#= indent #>            this.<#= stateVarName #> = true;
+<#
                 }
 #>
 <#= indent #>            <#= relOneVarName #> = null;

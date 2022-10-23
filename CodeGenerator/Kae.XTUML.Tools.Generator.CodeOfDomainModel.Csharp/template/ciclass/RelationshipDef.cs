@@ -585,13 +585,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                         var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                         var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                         string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                        string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
                         string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
 
             
             #line default
             #line hidden
             
-            #line 168 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 169 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                         if (genImplCode)
                         {
@@ -600,35 +601,49 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 172 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 173 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 172 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 173 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 172 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 173 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condTargetVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 172 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 173 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(tgtAttrName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 173 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 174 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        this.");
+            
+            #line 174 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(stateVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = true;\r\n");
+            
+            #line 175 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                         }
                     }
@@ -648,98 +663,98 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 188 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 190 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logLinkGen));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 189 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 191 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result = (");
             
-            #line 189 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 191 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()!=null);\r\n");
             
-            #line 190 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 192 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if (result)\r\n");
             
-            #line 191 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 193 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        {\r\n");
             
-            #line 192 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 194 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            if(");
             
-            #line 192 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 194 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(" != null) ");
             
-            #line 192 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 194 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = ");
             
-            #line 192 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 194 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 193 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 195 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        }\r\n");
             
-            #line 194 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 196 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 195 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 197 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 196 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 198 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 197 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 199 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
 
@@ -748,69 +763,69 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public bool ");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameUnLink));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condTargetVarName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write("=null)");
             
-            #line 201 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 203 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 202 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 204 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 204 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 205 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 207 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     if (genImplCode)
                     {
@@ -819,110 +834,125 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 209 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 211 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 210 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 212 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    bool result = false;\r\n");
             
-            #line 211 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 211 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" != null && ( ");
             
-            #line 211 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unRelCondtion));
             
             #line default
             #line hidden
             this.Write(" ))\r\n");
             
-            #line 212 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 214 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if (");
             
-            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(" != null) ");
             
-            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = ");
             
-            #line 213 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 214 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 216 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 217 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                         foreach(var orefDef in orefDefs)
                         {
                             var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                             var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                             string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                            string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
 
             
             #line default
             #line hidden
             
-            #line 222 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 225 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 222 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 225 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n");
             
-            #line 223 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 226 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        this.");
+            
+            #line 226 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(stateVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = true;\r\n");
+            
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                         }
 
@@ -930,56 +960,56 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 226 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 230 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 226 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 230 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n\r\n");
             
-            #line 228 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 232 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logUnlinkGen));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n");
             
-            #line 230 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 234 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result = true;\r\n");
             
-            #line 231 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 235 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 232 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 236 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 233 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 237 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 234 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 238 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
                 }
@@ -991,48 +1021,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 241 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 245 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 241 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 245 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 241 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 245 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 241 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 245 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 242 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 246 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 244 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 248 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 245 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 249 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     if (genImplCode)
                     {
@@ -1041,112 +1071,112 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 249 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 253 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 250 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 254 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var result = new List<");
             
-            #line 250 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 254 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 251 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 255 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 251 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 255 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 251 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 255 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 252 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 253 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("    foreach (var inst in candidates)\r\n");
-            
-            #line 254 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("    {\r\n");
-            
-            #line 255 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("        result.Add((");
-            
-            #line 255 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
-            
-            #line default
-            #line hidden
-            this.Write(")inst);\r\n");
-            
             #line 256 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
-            this.Write("    }\r\n");
+            this.Write("\r\n");
             
             #line 257 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
-            this.Write("\r\n");
+            this.Write("    foreach (var inst in candidates)\r\n");
             
             #line 258 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
-            this.Write("    return result;\r\n");
+            this.Write("    {\r\n");
             
             #line 259 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
-            this.Write("}\r\n\r\n");
+            this.Write("        result.Add((");
+            
+            #line 259 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
+            
+            #line default
+            #line hidden
+            this.Write(")inst);\r\n");
+            
+            #line 260 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    }\r\n");
             
             #line 261 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 262 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    return result;\r\n");
+            
+            #line 263 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n\r\n");
+            
+            #line 265 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
                 }
@@ -1184,48 +1214,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 294 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 298 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 294 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 298 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 294 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 298 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 294 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 298 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 295 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 299 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 297 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 301 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 298 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 302 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -1234,63 +1264,63 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 302 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 306 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 303 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 307 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 303 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 307 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" == null)\r\n");
             
-            #line 304 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 308 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 305 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 309 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 305 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 309 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst => (");
             
-            #line 305 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 309 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 306 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 310 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 306 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 310 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
@@ -1298,49 +1328,49 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
                     "), RelationshipID = \"");
             
-            #line 306 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 310 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relId));
             
             #line default
             #line hidden
             this.Write("\", Phrase = null };\r\n");
             
-            #line 307 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 311 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 308 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 312 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return ");
             
-            #line 308 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 312 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(".GetDestination<");
             
-            #line 308 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 312 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 309 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 313 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 311 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 315 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
 
@@ -1348,69 +1378,69 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public bool ");
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLink));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condTargetVarName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write("=null)");
             
-            #line 314 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 315 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 319 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 317 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 321 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 318 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 322 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -1419,42 +1449,42 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 322 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 326 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 323 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 327 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    bool result = false;\r\n");
             
-            #line 324 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 328 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 324 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 328 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" == null)\r\n");
             
-            #line 325 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 329 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 326 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 330 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
             var orefDefs = rgo.LinkedOtherSideR111();
@@ -1463,6 +1493,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                 var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                 var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                 string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
+                string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
                 string tgtAttrName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
                 if (genImplCode)
                 {
@@ -1471,35 +1502,49 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 338 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 343 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 338 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 343 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 338 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 343 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condTargetVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 338 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 343 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(tgtAttrName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 339 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 344 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        this.");
+            
+            #line 344 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(stateVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = true;\r\n");
+            
+            #line 345 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
             }
@@ -1511,105 +1556,105 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 346 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 352 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logLinkGen));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 347 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 353 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result = (");
             
-            #line 347 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 353 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()!=null);\r\n");
             
-            #line 348 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 354 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if (result)\r\n");
             
-            #line 349 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 355 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        {\r\n");
             
-            #line 350 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 356 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            if (");
             
-            #line 350 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 356 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(" != null) ");
             
-            #line 350 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 356 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = ");
             
-            #line 350 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 356 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 351 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 357 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        }\r\n");
             
-            #line 352 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 358 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 353 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 354 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 360 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 355 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 361 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 356 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 362 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
 
@@ -1617,69 +1662,69 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public bool ");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameUnlink));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condTargetVarName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write("=null)");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 365 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 360 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 366 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 362 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 368 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 363 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 369 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -1688,110 +1733,125 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 367 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 373 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 368 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 374 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    bool result = false;\r\n");
             
-            #line 369 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 375 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 369 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 375 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" != null && ( ");
             
-            #line 369 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 375 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unRelCondtion));
             
             #line default
             #line hidden
             this.Write(" ))\r\n");
             
-            #line 370 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 376 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 371 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 377 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if (");
             
-            #line 371 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 377 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(" != null) ");
             
-            #line 371 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 377 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = ");
             
-            #line 371 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 377 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 372 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 378 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 373 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 379 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     foreach(var orefDef in orefDefs)
                     {
                         var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                         var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
+                        string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisAttrDef);
                         string thisAttrName = GeneratorNames.GetAttrPropertyLocalName(thisAttrDef);
 
             
             #line default
             #line hidden
             
-            #line 380 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 387 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 380 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 387 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n");
             
-            #line 381 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 388 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        this.");
+            
+            #line 388 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(stateVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = true;\r\n");
+            
+            #line 389 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
 
@@ -1799,56 +1859,56 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 384 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 392 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 384 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 392 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relVarName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n\r\n");
             
-            #line 386 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 394 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logUnlinkGen));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 387 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 395 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result = true;\r\n");
             
-            #line 388 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 396 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 389 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 397 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 390 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 398 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 392 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 400 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
         }
@@ -1905,83 +1965,83 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public bool ");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLink));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(oneArgName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherObjTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherArgName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write("=null)");
             
-            #line 444 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 445 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 453 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 447 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 455 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 448 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 456 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -1990,49 +2050,49 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 452 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 460 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 453 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 461 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    bool result = false;\r\n");
             
-            #line 454 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 462 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 454 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 462 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
             
             #line default
             #line hidden
             this.Write(" == null && ");
             
-            #line 454 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 462 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
             #line hidden
             this.Write(" == null)\r\n");
             
-            #line 455 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 463 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 456 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 464 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 foreach (var orefDef in orefDefs)
                 {
@@ -2042,6 +2102,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                     var tgtObjDef = tgtAttrDef.LinkedToR102();
                     var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
                     var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
+                    string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisRefAttrDef);
                     var tgtAttrPropName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
                     var subRtoDef = tgtRtdaDef.LinkedOneSideR110().SubClassR204();
                     if (subRtoDef is CIMClassR_AONE)
@@ -2051,35 +2112,35 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 470 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 479 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 470 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 479 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrPropLocalName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 470 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 479 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(oneArgName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 470 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 479 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(tgtAttrPropName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 471 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 480 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
                     else if (subRtoDef is CIMClassR_AOTH)
@@ -2089,37 +2150,58 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 476 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 485 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        this.");
             
-            #line 476 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 485 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrPropLocalName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 476 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 485 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherArgName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 476 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 485 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(tgtAttrPropName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 477 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 486 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
+
+            
+            #line default
+            #line hidden
+            
+            #line 489 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        this.");
+            
+            #line 489 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(stateVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = true;\r\n");
+            
+            #line 490 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+
                 }
 
             
@@ -2127,154 +2209,154 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 482 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 494 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logLinkGen));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 483 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 495 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result = (");
             
-            #line 483 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 495 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinkedOne));
             
             #line default
             #line hidden
             this.Write("()!=null) && (");
             
-            #line 483 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 495 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinkedOther));
             
             #line default
             #line hidden
             this.Write("()!=null);\r\n");
             
-            #line 484 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 496 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if (result)\r\n");
             
-            #line 485 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 497 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        {\r\n");
             
-            #line 486 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 498 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            if (");
             
-            #line 486 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 498 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n");
             
-            #line 487 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            {\r\n");
             
-            #line 488 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 500 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 488 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 500 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = ");
             
-            #line 488 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 500 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 489 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 501 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 489 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 501 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Create, Target = ");
             
-            #line 489 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 501 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 490 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 502 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            }\r\n");
             
-            #line 491 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 503 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        }\r\n");
             
-            #line 492 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 504 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 493 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 505 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 494 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 506 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 495 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 507 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 496 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 508 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
 
@@ -2282,83 +2364,83 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public bool ");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameUnlink));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(oneArgName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherObjTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherArgName));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write("=null)");
             
-            #line 499 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 500 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 512 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 502 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 514 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 503 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 515 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -2367,154 +2449,154 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 507 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 519 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 508 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 520 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    bool result = false;\r\n");
             
-            #line 509 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 521 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 509 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 521 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
             
             #line default
             #line hidden
             this.Write(" != null && ");
             
-            #line 509 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 521 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n");
             
-            #line 510 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 522 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 523 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if ((");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 523 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(oneUnRelCondtion));
             
             #line default
             #line hidden
             this.Write(") && (");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 523 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherUnRelCondtion));
             
             #line default
             #line hidden
             this.Write("))\r\n");
             
-            #line 512 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 524 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        {\r\n");
             
-            #line 513 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 525 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            if (");
             
-            #line 513 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 525 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n");
             
-            #line 514 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 526 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            {\r\n");
             
-            #line 515 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 527 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 515 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 527 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = ");
             
-            #line 515 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 527 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 516 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 528 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 516 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 528 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(changedStateVarName));
             
             #line default
             #line hidden
             this.Write(".Add(new CLinkChangedState() { OP = ChangedState.Operation.Delete, Target = ");
             
-            #line 516 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 528 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 517 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 529 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            }\r\n");
             
-            #line 518 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 530 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 519 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 531 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 foreach (var orefDef in orefDefs)
                 {
@@ -2524,6 +2606,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                     var tgtObjDef = tgtAttrDef.LinkedToR102();
                     var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
                     var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
+                    string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisRefAttrDef);
                     var subRtoDef = tgtRtdaDef.LinkedOneSideR110().SubClassR204();
                     if (subRtoDef is CIMClassR_AONE)
                     {
@@ -2532,21 +2615,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 532 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 545 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            this.");
             
-            #line 532 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 545 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrPropLocalName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n");
             
-            #line 533 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 546 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
                     else if (subRtoDef is CIMClassR_AOTH)
@@ -2556,299 +2639,128 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 538 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 551 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            this.");
             
-            #line 538 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 551 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(thisAttrPropLocalName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n");
             
-            #line 539 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 552 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
+
+            
+            #line default
+            #line hidden
+            
+            #line 555 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("            this.");
+            
+            #line 555 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(stateVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = true;\r\n");
+            
+            #line 556 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+
                 }
 
             
             #line default
             #line hidden
             
-            #line 543 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 559 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 543 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 559 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n");
             
-            #line 544 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 560 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 544 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 560 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n\r\n");
             
-            #line 546 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 562 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logUnlinkGen));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 547 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 563 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            result = true;\r\n");
             
-            #line 548 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 564 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        }\r\n");
             
-            #line 549 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 565 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
-            
-            #line 550 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("    return result;\r\n");
-            
-            #line 551 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("}\r\n");
-            
-            #line 552 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 553 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-
-            }
-
-            
-            #line default
-            #line hidden
-            
-            #line 556 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("public ");
-            
-            #line 556 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 556 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinkedOne));
-            
-            #line default
-            #line hidden
-            this.Write("()");
-            
-            #line 556 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
- if (!genImplCode) { 
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n");
-            
-            #line 557 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
- } else { 
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 559 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
- } 
-            
-            #line default
-            #line hidden
-            
-            #line 560 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-
-            if (genImplCode)
-            {
-
-            
-            #line default
-            #line hidden
-            
-            #line 564 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("{\r\n");
-            
-            #line 565 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("    if (");
-            
-            #line 565 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
-            
-            #line default
-            #line hidden
-            this.Write(" == null)\r\n");
             
             #line 566 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
-            this.Write("    {\r\n");
+            this.Write("    return result;\r\n");
             
             #line 567 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("        var candidates = instanceRepository.GetDomainInstances(\"");
-            
-            #line 567 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjDef.Attr_Key_Lett));
-            
-            #line default
-            #line hidden
-            this.Write("\").Where(inst=>(");
-            
-            #line 567 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(oneCondition));
-            
-            #line default
-            #line hidden
-            this.Write("));\r\n");
-            
-            #line 568 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("        ");
-            
-            #line 568 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
-            
-            #line default
-            #line hidden
-            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
-                    "), RelationshipID = \"");
-            
-            #line 568 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relId));
-            
-            #line default
-            #line hidden
-            this.Write("\", Phrase = \"");
-            
-            #line 568 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(phrsForOneRelVarName));
-            
-            #line default
-            #line hidden
-            this.Write("\" };\r\n");
-            
-            #line 569 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("        // (");
-            
-            #line 569 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
-            
-            #line default
-            #line hidden
-            this.Write(")candidates.FirstOrDefault();\r\n");
-            
-            #line 570 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("    }\r\n");
-            
-            #line 571 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
-            
-            #line default
-            #line hidden
-            this.Write("    return ");
-            
-            #line 571 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
-            
-            #line default
-            #line hidden
-            this.Write(".GetDestination<");
-            
-            #line 571 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
-            
-            #line default
-            #line hidden
-            this.Write(">();\r\n");
-            
-            #line 572 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 573 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 568 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 574 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 569 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
 
@@ -2856,48 +2768,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 577 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 572 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 577 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(otherObjTypeName));
+            #line 572 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 577 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinkedOther));
+            #line 572 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinkedOne));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 577 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 572 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 578 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 573 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 580 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 575 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 581 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 576 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -2906,63 +2818,255 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 585 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 580 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 586 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 581 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    if (");
             
-            #line 586 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
+            #line 581 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
             
             #line default
             #line hidden
             this.Write(" == null)\r\n");
             
-            #line 587 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 582 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 588 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 583 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 588 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(otherObjDef.Attr_Key_Lett));
+            #line 583 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 588 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(otherCondition));
+            #line 583 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(oneCondition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 589 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 584 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        ");
             
+            #line 584 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
+                    "), RelationshipID = \"");
+            
+            #line 584 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relId));
+            
+            #line default
+            #line hidden
+            this.Write("\", Phrase = \"");
+            
+            #line 584 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(phrsForOneRelVarName));
+            
+            #line default
+            #line hidden
+            this.Write("\" };\r\n");
+            
+            #line 585 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        // (");
+            
+            #line 585 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
+            
+            #line default
+            #line hidden
+            this.Write(")candidates.FirstOrDefault();\r\n");
+            
+            #line 586 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    }\r\n");
+            
+            #line 587 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    return ");
+            
+            #line 587 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relOneVarName));
+            
+            #line default
+            #line hidden
+            this.Write(".GetDestination<");
+            
+            #line 587 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(oneObjTypeName));
+            
+            #line default
+            #line hidden
+            this.Write(">();\r\n");
+            
+            #line 588 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n");
+            
             #line 589 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 590 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            
+            #line 593 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("public ");
+            
+            #line 593 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(otherObjTypeName));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 593 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinkedOther));
+            
+            #line default
+            #line hidden
+            this.Write("()");
+            
+            #line 593 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+ if (!genImplCode) { 
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 594 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+ } else { 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 596 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 597 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+
+            if (genImplCode)
+            {
+
+            
+            #line default
+            #line hidden
+            
+            #line 601 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("{\r\n");
+            
+            #line 602 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    if (");
+            
+            #line 602 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" == null)\r\n");
+            
+            #line 603 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    {\r\n");
+            
+            #line 604 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        var candidates = instanceRepository.GetDomainInstances(\"");
+            
+            #line 604 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(otherObjDef.Attr_Key_Lett));
+            
+            #line default
+            #line hidden
+            this.Write("\").Where(inst=>(");
+            
+            #line 604 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(otherCondition));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n");
+            
+            #line 605 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        ");
+            
+            #line 605 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
@@ -2970,70 +3074,70 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             this.Write(" = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(" +
                     "), RelationshipID = \"");
             
-            #line 589 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 605 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relId));
             
             #line default
             #line hidden
             this.Write("\", Phrase = \"");
             
-            #line 589 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 605 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(phrsForOtherRelVarName));
             
             #line default
             #line hidden
             this.Write("\" };\r\n");
             
-            #line 590 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 606 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        // (");
             
-            #line 590 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 606 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherObjTypeName));
             
             #line default
             #line hidden
             this.Write(")candidates.FirstOrDefault();\r\n");
             
-            #line 591 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 607 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 592 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 608 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return ");
             
-            #line 592 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 608 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relOtherVarName));
             
             #line default
             #line hidden
             this.Write(".GetDestination<");
             
-            #line 592 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 608 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(otherObjTypeName));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 593 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 609 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 595 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 611 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
         }
@@ -3064,48 +3168,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 621 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 637 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 621 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 637 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 621 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 637 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 621 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 637 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 622 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 638 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 624 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 640 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 625 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 641 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 if (genImplCode)
                 {
@@ -3114,56 +3218,56 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 629 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 645 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 630 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 630 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 630 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 631 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 647 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return (");
             
-            #line 631 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 647 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(")candidates.FirstOrDefault();\r\n");
             
-            #line 632 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 648 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 633 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 649 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
 
@@ -3171,7 +3275,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 636 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 652 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
                 else
@@ -3183,48 +3287,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 643 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 659 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 643 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 659 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 643 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 659 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 643 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 659 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 644 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 660 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 662 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 647 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 663 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     if (genImplCode)
                     {
@@ -3233,98 +3337,98 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 651 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 667 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 652 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 668 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var result = new List<");
             
-            #line 652 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 668 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 653 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 669 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 653 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 669 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 653 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 669 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 654 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 670 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    foreach (var c in candidates)\r\n");
             
-            #line 655 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 671 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 656 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 672 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result.Add((");
             
-            #line 656 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 672 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetClassName));
             
             #line default
             #line hidden
             this.Write(")c);\r\n");
             
-            #line 657 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 673 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 658 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 674 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 659 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 675 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 661 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 677 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                     }
                 }
@@ -3349,48 +3453,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 681 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 697 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 681 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 697 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 681 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 697 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 681 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 697 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 682 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 698 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 684 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 700 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 685 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 if (genImplCode)
                 {
@@ -3399,56 +3503,56 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 689 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 705 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 690 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 706 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 690 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 706 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 690 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 706 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 691 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 707 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return (");
             
-            #line 691 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 707 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetTypeName));
             
             #line default
             #line hidden
             this.Write(")candidates.FirstOrDefault();\r\n");
             
-            #line 692 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 708 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 694 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 710 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
             }
@@ -3461,48 +3565,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 718 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 718 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 718 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 718 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 703 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 719 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 705 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 721 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 706 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 722 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 if (genImplCode)
                 {
@@ -3511,98 +3615,98 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 710 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 726 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 711 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 727 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var result = new List<");
             
-            #line 711 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 727 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetTypeName));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 712 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 728 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 712 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 728 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 712 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 728 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 713 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 729 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    foreach (var c in candidates)\r\n");
             
-            #line 714 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 730 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 715 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 731 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result.Add((");
             
-            #line 715 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 731 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetTypeName));
             
             #line default
             #line hidden
             this.Write(")c);\r\n");
             
-            #line 716 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 732 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 717 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 733 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 718 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 734 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 720 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 736 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
             }
@@ -3627,48 +3731,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 740 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 756 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 740 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 756 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 740 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 756 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 740 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 756 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 741 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 757 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 743 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 759 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 744 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 760 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 if (genImplCode)
                 {
@@ -3677,56 +3781,56 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 748 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 764 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 749 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 765 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 749 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 765 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 749 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 765 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 750 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 766 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return (");
             
-            #line 750 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 766 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetType));
             
             #line default
             #line hidden
             this.Write(")candidates.FirstOrDefault();\r\n");
             
-            #line 751 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 767 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 753 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 769 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
             }
@@ -3739,48 +3843,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 761 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 777 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 761 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 777 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 761 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 777 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 761 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 777 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 762 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 778 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 764 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 780 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 765 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 781 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 if (genImplCode)
                 {
@@ -3789,98 +3893,98 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 769 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 785 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 770 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 786 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var result = new List<");
             
-            #line 770 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 786 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetType));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 771 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 787 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var candidates = instanceRepository.GetDomainInstances(\"");
             
-            #line 771 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 787 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
             
             #line default
             #line hidden
             this.Write("\").Where(inst=>(");
             
-            #line 771 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 787 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(condition));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 772 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 788 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    foreach (var c in candidates)\r\n");
             
-            #line 773 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 789 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 774 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 790 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        result.Add((");
             
-            #line 774 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 790 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetType));
             
             #line default
             #line hidden
             this.Write(")c);\r\n");
             
-            #line 775 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 791 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 776 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 792 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 777 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 793 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 779 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 795 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
             }
@@ -3910,48 +4014,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 804 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 820 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 804 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 820 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassIFName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 804 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 820 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassGetMethodName));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 804 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 820 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 805 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 821 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 807 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 823 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 808 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 824 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             if (genImplCode)
             {
@@ -3960,56 +4064,56 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 812 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 828 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 813 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 829 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    ");
             
-            #line 813 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 829 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassIFName));
             
             #line default
             #line hidden
             this.Write(" result = null;\r\n");
             
-            #line 814 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 830 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var subClassKeys = new List<string>() { ");
             
-            #line 814 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 830 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassKeys));
             
             #line default
             #line hidden
             this.Write(" };\r\n");
             
-            #line 815 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 831 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    foreach (var key in subClassKeys)\r\n");
             
-            #line 816 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 832 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    {\r\n");
             
-            #line 817 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 833 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
@@ -4017,84 +4121,84 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             this.Write("        var candidates = instanceRepository.GetDomainInstances(key).Where(inst=>(" +
                     "(this == ((");
             
-            #line 817 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 833 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassIFName));
             
             #line default
             #line hidden
             this.Write(")inst).");
             
-            #line 817 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 833 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(superGetMethodName));
             
             #line default
             #line hidden
             this.Write("())));\r\n");
             
-            #line 818 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 834 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        if (candidates.Count()>0)\r\n");
             
-            #line 819 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 835 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        {\r\n");
             
-            #line 820 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 836 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            result = (");
             
-            #line 820 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 836 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassIFName));
             
             #line default
             #line hidden
             this.Write(")candidates.FirstOrDefault();\r\n");
             
-            #line 821 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 837 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("            break;\r\n");
             
-            #line 822 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 838 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("        }\r\n");
             
-            #line 823 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 839 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 824 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 840 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return result;\r\n");
             
-            #line 825 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 841 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 827 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 843 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
             }
             foreach(var subDef in subDefs)
@@ -4108,48 +4212,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line hidden
             this.Write("\r\n");
             
-            #line 836 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 852 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("public ");
             
-            #line 836 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 852 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 836 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 852 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodNameLinked));
             
             #line default
             #line hidden
             this.Write("()");
             
-            #line 836 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 852 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  if (!genImplCode) { 
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 837 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 853 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 839 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 855 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 840 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 856 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 if (genImplCode)
                 {
@@ -4158,42 +4262,42 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 844 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 860 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 845 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 861 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    return (");
             
-            #line 845 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 861 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write(")");
             
-            #line 845 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 861 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(subClassGetMethodName));
             
             #line default
             #line hidden
             this.Write("();\r\n");
             
-            #line 846 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 862 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 848 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
+            #line 864 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
 
                 }
             }
