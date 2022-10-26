@@ -132,27 +132,29 @@ namespace ");
                     "  public override void UpdateCInstance(CInstanceChagedState instanceState)\r\n    " +
                     "    {\r\n            ClassPropertiesUpdated?.Invoke(instanceState.Target, new Clas" +
                     "sPropertiesUpdatedEventArgs() { Operation = instanceState.OP.ToString(), ClassKe" +
-                    "yLetter = instanceState.Target.ClassName, Identities = instanceState.Target.GetI" +
-                    "dentities(), Properties = instanceState.ChangedProperties });\r\n        }\r\n\r\n    " +
-                    "    public override void UpdateState(DomainClassDef instance, IDictionary<string" +
-                    ", object> changed)\r\n        {\r\n            ClassPropertiesUpdated?.Invoke(instan" +
-                    "ce, new ClassPropertiesUpdatedEventArgs() { Operation = ChangedState.Operation.U" +
-                    "pdate.ToString(), ClassKeyLetter = instance.ClassName, Identities = instance.Get" +
-                    "Identities(), Properties = changed });\r\n        }\r\n\r\n        public override voi" +
-                    "d UpdateCLink(CLinkChangedState linkState)\r\n        {\r\n            RelationshipU" +
-                    "pdated?.Invoke(this, new RelationshipUpdatedEventArgs() { Operation = linkState." +
-                    "OP.ToString(), RelationshipId = linkState.Target.RelationshipID, Phrase = linkSt" +
-                    "ate.Target.Phrase, SourceClassKeyLetter = linkState.Target.Source.ClassName, Sou" +
-                    "rceIdentities = linkState.Target.Source.GetIdentities(), DestinationClassKeyLett" +
-                    "er = linkState.Target.Destination.ClassName, DestinationIdentities = linkState.T" +
-                    "arget.Destination.GetIdentities() });\r\n        }\r\n\r\n        public override IEnu" +
-                    "merable<T> SelectInstances<T>(string className, IDictionary<string, object> cond" +
-                    "itionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)\r\n      " +
-                    "  {\r\n            var resultSet = new List<T>();\r\n            var candidates = do" +
-                    "mainInstances[className].Where(i => { return compare((T)i, conditionPropertyValu" +
-                    "es); });\r\n            foreach (var ci in candidates)\r\n            {\r\n           " +
-                    "     resultSet.Add((T)ci);\r\n            }\r\n            return resultSet;\r\n      " +
-                    "  }\r\n\r\n    }\r\n\r\n}\r\n");
+                    "yLetter = instanceState.Target.ClassName, Instance = instanceState.Target, Ident" +
+                    "ities = instanceState.Target.GetIdentities(), Properties = instanceState.Changed" +
+                    "Properties });\r\n        }\r\n\r\n#if false\r\n        public override void UpdateState" +
+                    "(DomainClassDef instance, IDictionary<string, object> changed)\r\n        {\r\n     " +
+                    "       ClassPropertiesUpdated?.Invoke(instance, new ClassPropertiesUpdatedEventA" +
+                    "rgs() { Operation = ChangedState.Operation.Update.ToString(), ClassKeyLetter = i" +
+                    "nstance.ClassName, Identities = instance.GetIdentities(), Properties = changed }" +
+                    ");\r\n        }\r\n#endif\r\n        public override void UpdateCLink(CLinkChangedStat" +
+                    "e linkState)\r\n        {\r\n            RelationshipUpdated?.Invoke(this, new Relat" +
+                    "ionshipUpdatedEventArgs() { Operation = linkState.OP.ToString(), RelationshipId " +
+                    "= linkState.Target.RelationshipID, Phrase = linkState.Target.Phrase, SourceClass" +
+                    "KeyLetter = linkState.Target.Source.ClassName, SourceInstance=linkState.Target.S" +
+                    "ource, SourceIdentities = linkState.Target.Source.GetIdentities(), DestinationCl" +
+                    "assKeyLetter = linkState.Target.Destination.ClassName, DestinationInstance = lin" +
+                    "kState.Target.Destination, DestinationIdentities = linkState.Target.Destination." +
+                    "GetIdentities() });\r\n        }\r\n\r\n        public override IEnumerable<T> SelectI" +
+                    "nstances<T>(string className, IDictionary<string, object> conditionPropertyValue" +
+                    "s, Func<T, IDictionary<string, object>, bool> compare)\r\n        {\r\n            v" +
+                    "ar resultSet = new List<T>();\r\n            var candidates = domainInstances[clas" +
+                    "sName].Where(i => { return compare((T)i, conditionPropertyValues); });\r\n        " +
+                    "    foreach (var ci in candidates)\r\n            {\r\n                resultSet.Add" +
+                    "((T)ci);\r\n            }\r\n            return resultSet;\r\n        }\r\n\r\n    }\r\n\r\n}\r" +
+                    "\n");
             return this.GenerationEnvironment.ToString();
         }
     }

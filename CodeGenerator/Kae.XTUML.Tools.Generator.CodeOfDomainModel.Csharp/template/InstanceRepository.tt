@@ -72,17 +72,18 @@ namespace <#= nameSpace #>
 
         public override void UpdateCInstance(CInstanceChagedState instanceState)
         {
-            ClassPropertiesUpdated?.Invoke(instanceState.Target, new ClassPropertiesUpdatedEventArgs() { Operation = instanceState.OP.ToString(), ClassKeyLetter = instanceState.Target.ClassName, Identities = instanceState.Target.GetIdentities(), Properties = instanceState.ChangedProperties });
+            ClassPropertiesUpdated?.Invoke(instanceState.Target, new ClassPropertiesUpdatedEventArgs() { Operation = instanceState.OP.ToString(), ClassKeyLetter = instanceState.Target.ClassName, Instance = instanceState.Target, Identities = instanceState.Target.GetIdentities(), Properties = instanceState.ChangedProperties });
         }
 
+#if false
         public override void UpdateState(DomainClassDef instance, IDictionary<string, object> changed)
         {
             ClassPropertiesUpdated?.Invoke(instance, new ClassPropertiesUpdatedEventArgs() { Operation = ChangedState.Operation.Update.ToString(), ClassKeyLetter = instance.ClassName, Identities = instance.GetIdentities(), Properties = changed });
         }
-
+#endif
         public override void UpdateCLink(CLinkChangedState linkState)
         {
-            RelationshipUpdated?.Invoke(this, new RelationshipUpdatedEventArgs() { Operation = linkState.OP.ToString(), RelationshipId = linkState.Target.RelationshipID, Phrase = linkState.Target.Phrase, SourceClassKeyLetter = linkState.Target.Source.ClassName, SourceIdentities = linkState.Target.Source.GetIdentities(), DestinationClassKeyLetter = linkState.Target.Destination.ClassName, DestinationIdentities = linkState.Target.Destination.GetIdentities() });
+            RelationshipUpdated?.Invoke(this, new RelationshipUpdatedEventArgs() { Operation = linkState.OP.ToString(), RelationshipId = linkState.Target.RelationshipID, Phrase = linkState.Target.Phrase, SourceClassKeyLetter = linkState.Target.Source.ClassName, SourceInstance=linkState.Target.Source, SourceIdentities = linkState.Target.Source.GetIdentities(), DestinationClassKeyLetter = linkState.Target.Destination.ClassName, DestinationInstance = linkState.Target.Destination, DestinationIdentities = linkState.Target.Destination.GetIdentities() });
         }
 
         public override IEnumerable<T> SelectInstances<T>(string className, IDictionary<string, object> conditionPropertyValues, Func<T, IDictionary<string, object>, bool> compare)
