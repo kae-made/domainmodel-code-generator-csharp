@@ -289,30 +289,142 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("            ");
+            this.Write("            if (value.ContainsKey(\"");
             
             #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write("\"))\r\n            {\r\n");
+            
+            #line 127 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+
+                if (mbrDtName == "DateTime")
+                {
+
+            
+            #line default
+            #line hidden
+            this.Write("                if (value[\"");
+            
+            #line 131 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write("\"] is string)\r\n                {\r\n                    ");
+            
+            #line 133 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 133 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrDtName));
+            
+            #line default
+            #line hidden
+            this.Write(".Parse((string)value[\"");
+            
+            #line 133 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write("\"]);\r\n                }\r\n                else\r\n                {\r\n               " +
+                    "     ");
+            
+            #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mbrDtName));
             
             #line default
             #line hidden
             this.Write(")value[\"");
             
-            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write("\"];\r\n                }\r\n");
+            
+            #line 139 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+
+                }
+                else if (mbrDtName == "double")
+                {
+
+            
+            #line default
+            #line hidden
+            this.Write("                ");
+            
+            #line 144 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write(" = DataTypeConverter.ConvertToDouble(value[\"");
+            
+            #line 144 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write("\"]);\r\n");
+            
+            #line 145 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+
+                }
+                else
+                {
+
+            
+            #line default
+            #line hidden
+            this.Write("                ");
+            
+            #line 150 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
+            
+            #line default
+            #line hidden
+            this.Write(" = (");
+            
+            #line 150 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mbrDtName));
+            
+            #line default
+            #line hidden
+            this.Write(")value[\"");
+            
+            #line 150 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mbrName));
             
             #line default
             #line hidden
             this.Write("\"];\r\n");
             
-            #line 126 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            #line 151 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+
+                }
+
+            
+            #line default
+            #line hidden
+            this.Write("            }\r\n");
+            
+            #line 155 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
 
             }
 
@@ -321,7 +433,7 @@ namespace ");
             #line hidden
             this.Write("        }\r\n    }\r\n\r\n");
             
-            #line 132 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
+            #line 161 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainDataTypeDefs.tt"
 
         }
     }
@@ -329,7 +441,55 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("}\r\n");
+            this.Write(@"
+    public static class DataTypeConverter
+    {
+        public static double ConvertToDouble(object value)
+        {
+            if (value is Int16)
+            {
+                return (double)((Int16)value);
+            }
+            else if (value is Int32)
+            {
+                return (double)((Int32)value);
+            }
+            else if (value is Int64)
+            {
+                return (double)((Int64)value);
+            }
+            else if (value is UInt16)
+            {
+                return (double)(UInt16)value;
+            }
+            else if (value is UInt32)
+            {
+                return (double)((UInt32)value);
+            }
+            else if (value is UInt64)
+            {
+                return (double)((UInt64)value);
+            }
+            else if (value is Decimal)
+            {
+                return (double)((Decimal)value);
+            }
+            else if (value is Single)
+            {
+                return (double)((Single)value);
+            }
+            else if (value is String)
+            {
+                return double.Parse((string)value);
+            }
+            else
+            {
+                return (double)value;
+            }
+        }
+    }
+}
+");
             return this.GenerationEnvironment.ToString();
         }
     }
