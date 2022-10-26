@@ -473,10 +473,14 @@ namespace <#= nameSpace #>
         bool isStructuredDataType = DomainDataTypeDefs.IsStructuredDataType(dtDef);
         string localPropVarName = GeneratorNames.GetAttrPropertyLocalName(attrDef);
         string stateOfPropVarName = GeneratorNames.GetPropertyStateVariableName(attrDef);
+#>
+            if (propertyValues.ContainsKey("<#= attrDef.Attr_Name #>"))
+            {
+<#
         if (implAttrDef.IsState)
         {
 #>
-            <#= stateMachineLocalVariableName #>.ForceUpdateState((int)propertyValues["<#= attrDef.Attr_Name #>"]);
+                <#= stateMachineLocalVariableName #>.ForceUpdateState((int)propertyValues["<#= attrDef.Attr_Name #>"]);
 <#
         }
         else
@@ -485,17 +489,34 @@ namespace <#= nameSpace #>
 <#
             if (isStructuredDataType == false)
             {
+                if (dataTypeName != "DateTime")
+                {
 #>
-            <#= localPropVarName #> = (<#= dataTypeName #>)propertyValues["<#= attrDef.Attr_Name #>"];
+                <#= localPropVarName #> = (<#= dataTypeName #>)propertyValues["<#= attrDef.Attr_Name #>"];
 <#
+                }
+                else
+                {
+#>
+                if (propertyValues["<#= attrDef.Attr_Name #>"] is string)
+                {
+                    <#= localPropVarName #> = <#= dataTypeName #>.Parse((string)propertyValues["<#= attrDef.Attr_Name #>"]);
+                }
+                else
+                {
+                    <#= localPropVarName #> = (<#= dataTypeName #>)propertyValues["<#= attrDef.Attr_Name #>"];
+                }
+<#
+                }
             }
             else
             {
 #>
-             <#= localPropVarName #>.Restore((IDictionary<string, object>)propertyValues["<#= attrDef.Attr_Name #>"]);
+                <#= localPropVarName #>.Restore((IDictionary<string, object>)propertyValues["<#= attrDef.Attr_Name #>"]);
 <#
             }
 #>
+            }
             <#= stateOfPropVarName #> = false;
 <#
         }
