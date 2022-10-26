@@ -22,9 +22,14 @@
     var attrDefs = objDef.LinkedFromR102();
     foreach (var attrDef in attrDefs)
     {
-        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false };
+        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false, IsStructured = false };
         var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
         var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+        var subDtDef = dtDef.SubClassR17();
+        if (subDtDef is CIMClassS_SDT)
+        {
+            implAttrDef.IsStructured = true;
+        }
         var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
         implAttrDef.DataTypeName = attrPropDataTypeName;
         bool generate = true;
@@ -85,7 +90,7 @@
                 var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
                 string localVarName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
 #>
-<#= indent #>protected <#= attrPropDataTypeName #> <#= localVarName #>;
+<#= indent #>protected <#= attrPropDataTypeName #> <#= localVarName #><# if (implAttrDef.IsStructured) { #> = new <#= attrPropDataTypeName #>() <# } #>;
 <#
             }
             else

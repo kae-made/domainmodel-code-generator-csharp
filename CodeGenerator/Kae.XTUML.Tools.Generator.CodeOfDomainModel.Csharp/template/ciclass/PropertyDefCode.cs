@@ -48,6 +48,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                         }
                     }
                 }
+                var attrDtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+                var subDtDef = attrDtDef.SubClassR17();
+                if (subDtDef is CIMClassS_SDT)
+                {
+                    
+                }
             }
         }
     }
@@ -63,6 +69,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         public CIMClassACT_ACT ActDef { get; set; }
         public string ActionSemantics { get; set; }
         public bool Writable { get; set; } = true;
+        public bool IsStructured { get; set; }
     }
 
 }
