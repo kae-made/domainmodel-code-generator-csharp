@@ -1,6 +1,7 @@
 ﻿using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,20 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         private string baseIndent;
         private string indent;
         private string selfVarNameOnCode;
+        private Logger logger;
 
         private List<Dictionary<string, VariableDef>> declaredVariables = new List<Dictionary<string, VariableDef>>();
 
         ColoringManager coloringManager;
 
-        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, ColoringManager coloringManager)
+        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, ColoringManager coloringManager, Logger logger)
         {
             this.actDef = actDef;
             this.selfVarNameOnCode = selfVarName;
             this.baseIndent = baseIndent;
             this.indent = indent;
             this.coloringManager = coloringManager;
+            this.logger = logger;
         }
 
         Dictionary<string, string> eeReferDefs = new Dictionary<string, string>();
@@ -202,7 +205,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             else if (subActDef is CIMClassACT_DAB)
             {
                 var dbattrDef = ((CIMClassACT_DAB)subActDef).LinkedToR693();
-                actionDescrip= dbattrDef.Attr_Action_Semantics;
+                actionDescrip = dbattrDef.Attr_Action_Semantics;
             }
             if (!string.IsNullOrEmpty(actionDescrip))
             {
@@ -242,7 +245,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var varDefs = blkDef.LinkedFromR823();
             foreach (var varDef in varDefs)
             {
-                var variableDef = new VariableDef() { Name=varDef.Attr_Name, Declared=false, VarDef=varDef };
+                var variableDef = new VariableDef() { Name = varDef.Attr_Name, Declared = false, VarDef = varDef };
                 declaredVariables[declaredVariables.Count - 1].Add(variableDef.Name, variableDef);
                 var dtDef = varDef.LinkedToR848();
                 string dataTypeName = "";
@@ -282,11 +285,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             if (selectedVarDef == null)
             {
                 selectedVarDef = new VariableDef() { Declared = false, Name = "selected", Set = false };
-                declaredVariables[declaredVariables.Count-1].Add(selectedVarDef.Name, selectedVarDef);
+                declaredVariables[declaredVariables.Count - 1].Add(selectedVarDef.Name, selectedVarDef);
             }
 
             var valDefs = blkDef.LinkedFromR826();
-            foreach(var valDef in valDefs)
+            foreach (var valDef in valDefs)
             {
                 var dtDef = valDef.LinkedToR820();
                 var subValDef = valDef.SubClassR801();
@@ -383,7 +386,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             declaredVariables.RemoveAt(declaredVariables.Count - 1);
             foreach (var dVar in declaredVariables)
             {
-                foreach(var vk in dVar.Keys)
+                foreach (var vk in dVar.Keys)
                 {
                     if (dVar[vk].DeclaredDepth > blockDepth)
                     {
@@ -567,7 +570,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var condValDef = actWhlDef.LinkedToR626();
             bool isDecl;
             string condVarName;
-            string condCode = GenerateV_VAL(condValDef,out condVarName);
+            string condCode = GenerateV_VAL(condValDef, out condVarName);
             string bodyCode = GenerateBlock(blkDef);
             writer.WriteLine($"{indent}while ({condCode})");
             writer.WriteLine(indent + "{");
@@ -589,21 +592,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
             writer.WriteLine($"{indent}if ({conditionVal})");
-            writer.WriteLine(indent+"{");
+            writer.WriteLine(indent + "{");
             writer.Write(bodyCode);
-            writer.WriteLine(indent+"}");
+            writer.WriteLine(indent + "}");
 
             var actELDefs = actIfDef.LinkedFromR682();
-            foreach(var elDef in actELDefs)
+            foreach (var elDef in actELDefs)
             {
                 var elBlkDef = elDef.LinkedToR658();
                 var elValDef = elDef.LinkedToR659();
                 string elBodyCode = GenerateBlock(elBlkDef);
                 string elCondValCode = GenerateV_VAL(elValDef, out condVarName);
                 writer.WriteLine($"{indent}else if ({elCondValCode})");
-                writer.WriteLine(indent+"{");
+                writer.WriteLine(indent + "{");
                 writer.Write(elBodyCode);
-                writer.WriteLine(indent+"}");
+                writer.WriteLine(indent + "}");
             }
 
             var actE1Def = actIfDef.LinkedFromR683();
@@ -612,9 +615,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 var elseBlkDef = actE1Def.LinkedToR606();
                 bodyCode = GenerateBlock(elseBlkDef);
                 writer.WriteLine($"{indent}else");
-                writer.WriteLine(indent+"{");
+                writer.WriteLine(indent + "{");
                 writer.Write(bodyCode);
-                writer.WriteLine(indent+"}");
+                writer.WriteLine(indent + "}");
             }
             var actELDef = actIfDef.LinkedToR690();
             var actE2Def = actIfDef.LinkedToR692();
@@ -664,7 +667,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var syncDef = actFncDef.LinkedToR675();
             var syncParamDefs = actFncDef.LinkedFromR669();
             string paramCode = "";
-            foreach(var syncParamDef in syncParamDefs)
+            foreach (var syncParamDef in syncParamDefs)
             {
                 var spValDef = syncParamDef.LinkedToR800();
                 string varName;
@@ -762,15 +765,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string domainClassImplName = GeneratorNames.GetDomainClassImplName(objDef);
 
             var instVarDef = HasDeclaredVariable(varDef.Attr_Name);
- //           if (instVarDef == null)
-   //         {
-     //           instVarDef = new VariableDef() { Declared = false, Name = varDef.Attr_Name, Set = false, VarDef = varDef };
-       //         declaredVariables[declaredVariables.Count - 1].Add(varDef.Attr_Name, instVarDef);
-         //   }
+            //           if (instVarDef == null)
+            //         {
+            //           instVarDef = new VariableDef() { Declared = false, Name = varDef.Attr_Name, Set = false, VarDef = varDef };
+            //         declaredVariables[declaredVariables.Count - 1].Add(varDef.Attr_Name, instVarDef);
+            //   }
             if (instVarDef.Declared == false)
             {
                 code += "var ";
-//                instVarDef.Declared = true;
+                //                instVarDef.Declared = true;
                 DeclaredVariable(instVarDef);
             }
             code += $"{varDef.Attr_Name} = {domainClassImplName}.CreateInstance(instanceRepository, logger, changedStates);";
@@ -815,29 +818,29 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
 
             var dstVarDef = HasDeclaredVariable(varDestDef.Attr_Name);
-//            if(dstVarDef == null)
-//            {
-//                dstVarDef = new VariableDef() { Declared=false, Name=varDestDef.Attr_Name, VarDef=varDestDef};
-//                if (actSelDef.Attr_cardinality=="one" || actSelDef.Attr_cardinality == "any")
-//                {
-//                    dstVarDef.Set = false;
-//                }
-//                else
-//                {
-//                    dstVarDef.Set = true;
-//                }
-//                declaredVariables[declaredVariables.Count - 1].Add(dstVarDef.Name, dstVarDef);
-//            }
+            //            if(dstVarDef == null)
+            //            {
+            //                dstVarDef = new VariableDef() { Declared=false, Name=varDestDef.Attr_Name, VarDef=varDestDef};
+            //                if (actSelDef.Attr_cardinality=="one" || actSelDef.Attr_cardinality == "any")
+            //                {
+            //                    dstVarDef.Set = false;
+            //                }
+            //                else
+            //                {
+            //                    dstVarDef.Set = true;
+            //                }
+            //                declaredVariables[declaredVariables.Count - 1].Add(dstVarDef.Name, dstVarDef);
+            //            }
             if (dstVarDef.Declared == false)
             {
                 // var
-//                dstVarDef.Declared=true;
+                //                dstVarDef.Declared=true;
                 DeclaredVariable(dstVarDef);
             }
             return code;
         }
 
-       bool  hasUsedSelectedVar= false;
+        bool hasUsedSelectedVar = false;
 
         protected string GenerateRelatedCode(string cardinality, CIMClassACT_LNK lnkDef, CIMClassV_VAL srcValDef, CIMClassV_VAR dstVarDef, string whereCode)
         {
@@ -1460,12 +1463,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 indent = indent.Substring(baseIndent.Length);
                 writer.WriteLine($"{indent}" + "}");
-                if (shoudBreak && dstVariableDef.Set == false && i < logicSteps.Count - 1 && logicSteps[logicSteps.Count-i-1] == false)
+                if (shoudBreak && dstVariableDef.Set == false && i < logicSteps.Count - 1 && logicSteps[logicSteps.Count - i - 1] == false)
                 {
                     bool addBreak = true;
                     if (logicSteps.Count - i - 2 >= 0)
                     {
-                        if (logicSteps[logicSteps.Count-i-2] == true)
+                        if (logicSteps[logicSteps.Count - i - 2] == true)
                         {
                             addBreak = false;
                         }
@@ -1523,7 +1526,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 var isrDef = (CIMClassV_ISR)subValDef;
                 var varDef = isrDef.LinkedToR809();
                 var variableDef = HasDeclaredVariable(varDef.Attr_Name);
-                objDef= variableDef.GetObjDef();
+                objDef = variableDef.GetObjDef();
                 varName = variableDef.Name;
                 Set = variableDef.Set;
             }
@@ -1566,7 +1569,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string declCode = "";
 
 
-            if (declaredVarDef.Declared==false)
+            if (declaredVarDef.Declared == false)
             {
                 declCode = "var ";
                 // declaredVarDef.Declared = true;
@@ -1575,6 +1578,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             if (declaredVarDef.Set)
             {
                 writer.WriteLine($"{indent}{declCode}{candSetVarName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
+                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {candSetVarName} = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {candSetVarName}, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"many\").Result;");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = new List<{domainClassName}>();");
                 writer.WriteLine($"{indent}foreach (var {candVarName} in {candSetVarName})");
                 writer.WriteLine($"{indent}" + "{");
@@ -1583,7 +1587,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})(instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").FirstOrDefault());");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name}TempSet = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
+                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {varDef.Attr_Name}TempSet = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"any\").Result;");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varDef.Attr_Name}TempSet.FirstOrDefault());");
             }
 
             return sb.ToString();
@@ -1600,12 +1606,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var varDef = actFiwDef.LinkedToR665();
             var objDef = actFiwDef.LinkedToR676();
             string domainClassName = GeneratorNames.GetDomainClassName(objDef);
+            string domainClassImplClassName = GeneratorNames.GetDomainClassImplName(objDef);
             string candVarName = $"candidatesOf{varDef.Attr_Name}";
 
             string valVarName;
             addDomainClassCast = true;
             string valCode = GenerateV_VAL(valDef, out valVarName);
             addDomainClassCast = false;
+            string valVarNameForSQL;
+            string valCodeForSql = GenerateV_VAL(valDef, out valVarNameForSQL, true);
 
             var dstVarDef = HasDeclaredVariable(varDef.Attr_Name);
             if (dstVarDef == null)
@@ -1617,20 +1626,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 }
                 else
                 {
-                    dstVarDef.Set   = true;
+                    dstVarDef.Set = true;
                 }
             }
-            string declCode="";
-            if (dstVarDef.Declared==false)
+            string declCode = "";
+            if (dstVarDef.Declared == false)
             {
-                declCode  = "var ";
-              //  dstVarDef.Declared = true;
+                declCode = "var ";
+                //  dstVarDef.Declared = true;
                 DeclaredVariable(dstVarDef);
             }
 
             if (dstVarDef.Set)
             {
                 writer.WriteLine($"{indent}{declCode}{candVarName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode}));");
+                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {candVarName} = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {candVarName}, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = new List<{domainClassName}>();");
                 writer.WriteLine($"{indent}foreach (var instance in {candVarName})");
                 writer.WriteLine($"{indent}" + "{");
@@ -1639,7 +1649,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})(instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode})).FirstOrDefault());");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name}TempSet = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode}));");
+                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {varDef.Attr_Name}TempSet = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varDef.Attr_Name}TempSet.FirstOrDefault());");
             }
 
 
@@ -1656,7 +1668,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var varAssocDef = actUruDef.LinkedToR624();
             var relDef = actUruDef.LinkedToR656();
 
-            writer.WriteLine( $"{indent}// Unrelate {varOneDef.Attr_Name} From {varOtherDef.Attr_Name} Across R{relDef.Attr_Numb} Using {varAssocDef.Attr_Name}");
+            writer.WriteLine($"{indent}// Unrelate {varOneDef.Attr_Name} From {varOtherDef.Attr_Name} Across R{relDef.Attr_Numb} Using {varAssocDef.Attr_Name}");
             string unlinkCode = GenerateLinkCode(relDef, actUruDef.Attr_relationship_phrase, varOneDef, varOtherDef, false, varAssocDef);
             writer.WriteLine($"{indent}{unlinkCode};");
 
@@ -1704,7 +1716,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var varRightDef = actRelDef.LinkedToR616();
             var relDef = actRelDef.LinkedToR653();
 
-            writer.WriteLine( $"{indent}// {varLeftDef.Attr_Name} - R{relDef.Attr_Numb} -> {varRightDef.Attr_Name};");
+            writer.WriteLine($"{indent}// {varLeftDef.Attr_Name} - R{relDef.Attr_Numb} -> {varRightDef.Attr_Name};");
             string code = GenerateLinkCode(relDef, actRelDef.Attr_relationship_phrase, varLeftDef, varRightDef, true);
             writer.WriteLine($"{indent}{code};");
 
@@ -1825,7 +1837,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return code;
         }
 
-        private string  GetSelfVarNameOnCode(VariableDef varDef)
+        private string GetSelfVarNameOnCode(VariableDef varDef)
         {
             string varName = varDef.Name;
             if (varName.ToLower() == "self")
@@ -1876,7 +1888,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     var paramValDef = currentParDef.LinkedToR800();
                     string paramVarName;
                     eventParamsCode += $"{currentParDef.Attr_Name}:" + GenerateV_VAL(paramValDef, out paramVarName);
-                    currentParDef=currentParDef.LinkedToR816Succeeds();
+                    currentParDef = currentParDef.LinkedToR816Succeeds();
                 }
             }
             var subEEssDef = eEssDef.SubClassR701();
@@ -2014,7 +2026,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var writer = new StringWriter(sb);
             var valDef = eGprDef.LinkedToR714();
             string varName;
-            string code = GenerateV_VAL(valDef,out varName);
+            string code = GenerateV_VAL(valDef, out varName);
             writer.WriteLine($"{indent}{code}.Send();");
 
             return sb.ToString();
@@ -2022,14 +2034,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         protected string GenerateACT_IOP(CIMClassACT_IOP actIopDef)
         {
             var valDef = actIopDef.LinkedToR629();
-             var vParDefs = actIopDef.LinkedFromR679();
+            var vParDefs = actIopDef.LinkedFromR679();
             var sprRoDef = actIopDef.LinkedToR657();
             var sprPoDef = actIopDef.LinkedToR680();
             throw new NotImplementedException();
         }
         protected string GenerateACT_SGN(CIMClassACT_SGN actSgnDef)
         {
-            var valDef =  actSgnDef.LinkedToR630();
+            var valDef = actSgnDef.LinkedToR630();
             var vParDefs = actSgnDef.LinkedFromR662();
             var sprRsDef = actSgnDef.LinkedToR660();
             var sprPsDef = actSgnDef.LinkedToR663();
@@ -2038,7 +2050,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
 
         // V_VAL generation
-        protected string GenerateV_VAL(CIMClassV_VAL valDef, out string varName)
+        protected string GenerateV_VAL(CIMClassV_VAL valDef, out string varName, bool sqlStyle = false)
         {
             string code = "";
             varName = null;
@@ -2047,92 +2059,93 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             if (subValDef is CIMClassV_FNV)
             {
-                code = GenerateVAL_FNV((CIMClassV_FNV)subValDef);
+                code = GenerateVAL_FNV((CIMClassV_FNV)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_PVL)
             {
                 // Parameter value
-                code = GenerateVAL_PVL((CIMClassV_PVL)subValDef, out varName);
+                code = GenerateVAL_PVL((CIMClassV_PVL)subValDef, out varName, sqlStyle);
             }
             else if (subValDef is CIMClassV_SLR)
             {
-                code = GenerateVAL_SLR((CIMClassV_SLR)subValDef, out varName);
+                code = GenerateVAL_SLR((CIMClassV_SLR)subValDef, out varName, sqlStyle);
             }
             else if (subValDef is CIMClassV_BRV)
             {
-                code = GenerateVAL_BRV((CIMClassV_BRV)subValDef);
+                code = GenerateVAL_BRV((CIMClassV_BRV)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_IRF)
             {
-                code = GenerateVAL_IRF((CIMClassV_IRF)subValDef, out varName);
+                code = GenerateVAL_IRF((CIMClassV_IRF)subValDef, out varName, sqlStyle);
             }
             else if (subValDef is CIMClassV_AVL)
             {
                 // Object Attribute
-                code = GenerateVAL_AVL((CIMClassV_AVL)subValDef);
+                code = GenerateVAL_AVL((CIMClassV_AVL)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_LIN)
             {
-                code = GenerateVAL_LIN((CIMClassV_LIN)subValDef);
+                code = GenerateVAL_LIN((CIMClassV_LIN)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_LST)
             {
-                code = GenerateVAL_LST((CIMClassV_LST)subValDef);
+                code = GenerateVAL_LST((CIMClassV_LST)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_UNY)
             {
-                code = GenerateVAL_UNY((CIMClassV_UNY)subValDef);
+                code = GenerateVAL_UNY((CIMClassV_UNY)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_TRV)
             {
-                code = GenerateVAL_TRV((CIMClassV_TRV)subValDef);
+                code = GenerateVAL_TRV((CIMClassV_TRV)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_ISR)
             {
-                code = GenerateVAL_ISR((CIMClassV_ISR)subValDef, out varName);
+                code = GenerateVAL_ISR((CIMClassV_ISR)subValDef, out varName, sqlStyle);
             }
             else if (subValDef is CIMClassV_EDV)
             {
-                code=GenerateVAL_EDV((CIMClassV_EDV)subValDef,out varName);
+                code = GenerateVAL_EDV((CIMClassV_EDV)subValDef, out varName, sqlStyle);
             }
             else if (subValDef is CIMClassV_TVL)
             {
-                code= GenerateVAL_TVL((CIMClassV_TVL)subValDef, out varName);
+                code = GenerateVAL_TVL((CIMClassV_TVL)subValDef, out varName, sqlStyle);
             }
             else if (subValDef is CIMClassV_LRL)
             {
-                code = GenerateVAL_LRL((CIMClassV_LRL)subValDef);
+                code = GenerateVAL_LRL((CIMClassV_LRL)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_LBO)
             {
-                code = GenerateVAL_LBO((CIMClassV_LBO)subValDef);
+                code = GenerateVAL_LBO((CIMClassV_LBO)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_BIN)
             {
-                code = GenerateVAL_BIN((CIMClassV_BIN)subValDef);
+                code = GenerateVAL_BIN((CIMClassV_BIN)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_LEN)
             {
-                code = GenerateVAL_LEN((CIMClassV_LEN)subValDef);
+                code = GenerateVAL_LEN((CIMClassV_LEN)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_MVL)
             {
-                code = GenerateVAL_MVL((CIMClassV_MVL)subValDef);
+                code = GenerateVAL_MVL((CIMClassV_MVL)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_AER)
             {
-                code = GenerateVAL_AER((CIMClassV_AER)subValDef);
+                code = GenerateVAL_AER((CIMClassV_AER)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_ALV)
             {
-                code = GenerateVAL_ALV((CIMClassV_ALV)subValDef);
+                code = GenerateVAL_ALV((CIMClassV_ALV)subValDef, sqlStyle);
             }
             else if (subValDef is CIMClassV_SCV)
             {
-                code = GenerateVAL_SCV((CIMClassV_SCV)subValDef);
+                code = GenerateVAL_SCV((CIMClassV_SCV)subValDef, sqlStyle);
             }
             else
             {
+                logger.LogWarning($"Unknown VAL_?:'{subValDef.GetType().Name}'");
                 throw new NotImplementedException();
             }
 
@@ -2166,7 +2179,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         }
 
 
-        protected string GenerateVAL_FNV(CIMClassV_FNV fnvDef)
+        protected string GenerateVAL_FNV(CIMClassV_FNV fnvDef, bool sqlStyle = false)
         {
             // Function Invocation
             var syncDef = fnvDef.LinkedToR827();
@@ -2183,9 +2196,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 }
                 paramCode += $"{syncParamDef.Attr_Name}:{pValCode}";
             }
-            return $"this.{syncDef.Attr_Name}({paramCode})";
+            string result = $"this.{syncDef.Attr_Name}({paramCode})";
+            if (sqlStyle)
+            {
+                result = "{" + result + "}";
+            }
+            return result;
         }
-        protected string GenerateVAL_PVL(CIMClassV_PVL pvlDef, out string varName)
+        protected string GenerateVAL_PVL(CIMClassV_PVL pvlDef, out string varName, bool sqlStyle = false)
         {
             // parameter value for any operations of domain, class, external entitiy and so on
             string code = "";
@@ -2213,7 +2231,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             return code;
         }
-        protected string GenerateVAL_SLR(CIMClassV_SLR slrDef, out string varName)
+        protected string GenerateVAL_SLR(CIMClassV_SLR slrDef, out string varName, bool sqlStyle = false)
         {
             string code = "";
 
@@ -2222,19 +2240,24 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 code = "selected";
                 var varDef = HasDeclaredVariable(code);
-                
-//                if (varDef == null)
-//                {
-//                    varDef = new VariableDef() { Name = code, Declared = true };
-//                    declaredVariables[declaredVariables.Count-1].Add(code, varDef);
-//                }
+
+                //                if (varDef == null)
+                //                {
+                //                    varDef = new VariableDef() { Name = code, Declared = true };
+                //                    declaredVariables[declaredVariables.Count-1].Add(code, varDef);
+                //                }
             }
             var vtrvDef = slrDef.LinkedToR825();
             varName = code;
 
+            if (sqlStyle)
+            {
+                code = "";
+            }
+
             return code;
         }
-        protected string GenerateVAL_BRV(CIMClassV_BRV brvDef)
+        protected string GenerateVAL_BRV(CIMClassV_BRV brvDef, bool sqlStyle = false)
         {
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
@@ -2265,9 +2288,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 eeReferDefs.Add(eeDef.Attr_Key_Lett, eeRefCode);
             }
 
-            return $"{eeWrapperRefVarName}.{brgDef.Attr_Name}({paramCode})";
+            string result = $"{eeWrapperRefVarName}.{brgDef.Attr_Name}({paramCode})";
+            if (sqlStyle)
+            {
+                result = "{" + result + "}";
+            }
+            return result;
         }
-        protected string GenerateVAL_IRF(CIMClassV_IRF irfDef, out string varName)
+        protected string GenerateVAL_IRF(CIMClassV_IRF irfDef, out string varName, bool sqlStyle = false)
         {
             // instance reference value
             var varDef = irfDef.LinkedToR808();
@@ -2280,49 +2308,66 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 code = varDef.Attr_Name;
                 var declaredVarDef = HasDeclaredVariable(varDef.Attr_Name);
-//                if (declaredVarDef==null)
-//                {
-//                    var instVarDef = new VariableDef() { Name = varDef.Attr_Name, Declared = false, VarDef = varDef };
-//                    declaredVariables[declaredVariables.Count - 1].Add(varDef.Attr_Name, instVarDef);
-//                    var subVarDef = varDef.SubClassR814();
-//                }
+                //                if (declaredVarDef==null)
+                //                {
+                //                    var instVarDef = new VariableDef() { Name = varDef.Attr_Name, Declared = false, VarDef = varDef };
+                //                    declaredVariables[declaredVariables.Count - 1].Add(varDef.Attr_Name, instVarDef);
+                //                    var subVarDef = varDef.SubClassR814();
+                //                }
             }
             varName = code;
-
+            if (sqlStyle)
+            {
+                code = "";
+            }
             return code;
         }
 
         protected bool addDomainClassCast = false;
-        protected string GenerateVAL_AVL(CIMClassV_AVL avlDef)
+        protected string GenerateVAL_AVL(CIMClassV_AVL avlDef, bool sqlStyle = false)
         {
             // Class Property Value
             var attrDef = avlDef.LinkedToR806();
             string attrName = GeneratorNames.GetAttrPropertyName(attrDef);
             var valDef = avlDef.LinkedToR807();
             string varName;
-            string valCode = GenerateV_VAL(valDef, out varName);
-            
+            string valCode = GenerateV_VAL(valDef, out varName, sqlStyle);
+
             string code = $"{valCode}.{attrName}";
-            if (addDomainClassCast || varName=="selected")
+            if (addDomainClassCast || varName == "selected")
             {
                 var objDef = attrDef.LinkedToR102();
                 string domainClassName = GeneratorNames.GetDomainClassName(objDef);
                 code = $"(({domainClassName}){valCode}).{attrName}";
             }
 
-            return $"{code}";
+            string result = $"{code}";
+            if (sqlStyle)
+            {
+                result = "{" + result + "}";
+                if (string.IsNullOrEmpty(valCode))
+                {
+                    result = attrDef.Attr_Name;
+                }
+            }
+            return result;
         }
-        protected string GenerateVAL_LIN(CIMClassV_LIN linDef)
+        protected string GenerateVAL_LIN(CIMClassV_LIN linDef, bool sqlStyle = false)
         {
             // integer value
             return $"{linDef.Attr_Value}";
         }
-        protected string GenerateVAL_LST(CIMClassV_LST lstDef)
+        protected string GenerateVAL_LST(CIMClassV_LST lstDef, bool sqlStyle = false)
         {
             // string value
-            return $"\"{lstDef.Attr_Value}\"";
+            string result = $"\"{lstDef.Attr_Value}\"";
+            if (sqlStyle)
+            {
+                result = $"'{lstDef.Attr_Value}'";
+            }
+            return result;
         }
-        protected string GenerateVAL_UNY(CIMClassV_UNY unyDef)
+        protected string GenerateVAL_UNY(CIMClassV_UNY unyDef, bool sqlStyle = false)
         {
             // Unery
             string code = "";
@@ -2369,6 +2414,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             else if (unyDef.Attr_Operator.ToLower() == "not")
             {
                 code = $"! {oprdCode}";
+                if (sqlStyle)
+                {
+                    code = $"NOT {oprdCode}";
+                }
             }
             else
             {
@@ -2377,7 +2426,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             return $"{code}";
         }
-        protected string GenerateVAL_TRV(CIMClassV_TRV trvDef)
+        protected string GenerateVAL_TRV(CIMClassV_TRV trvDef, bool sqlStyle = false)
         {
             // Invoke Domain Class Operation
             var valDef = trvDef.LinkedToR830();
@@ -2396,9 +2445,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 string paramValCode = GenerateV_VAL(paramValDef, out paramVarName);
                 paramCode += $"{paramDef.Attr_Name}:{paramValCode}";
             }
-            return $"{valDef.Attr_Name}.{trfDef.Attr_Name}({paramCode})";
+            string result = $"{valDef.Attr_Name}.{trfDef.Attr_Name}({paramCode})";
+            if (sqlStyle)
+            {
+                result = "{" + result + "}";
+            }
+            return result;
         }
-        protected string GenerateVAL_ISR(CIMClassV_ISR isrDef, out string varName)
+        protected string GenerateVAL_ISR(CIMClassV_ISR isrDef, out string varName, bool sqlStyle = false)
         {
             // TODO: continue
             var varDef = isrDef.LinkedToR809();
@@ -2409,10 +2463,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 hasVarDef = new VariableDef() { Name = varName, Declared = false, VarDef = varDef };
                 var subVarDef = varDef.SubClassR814();
             }
-//            isDecl = varDef.Attr_Declared;
+            //            isDecl = varDef.Attr_Declared;
             return $"{varDef.Attr_Name}";
         }
-        protected string GenerateVAL_EDV(CIMClassV_EDV edvDef, out string varName)
+        protected string GenerateVAL_EDV(CIMClassV_EDV edvDef, out string varName, bool sqlStyle = false)
         {
             string code = "";
             varName = null;
@@ -2431,41 +2485,48 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             return code;
         }
-        protected string GenerateVAL_TVL(CIMClassV_TVL tvlDef, out string varName)
+        protected string GenerateVAL_TVL(CIMClassV_TVL tvlDef, out string varName, bool sqlStyle = false)
         {
             string code = "";
             var varDef = tvlDef.LinkedToR805();
             code = varDef.Attr_Name;
             var hasVarDef = HasDeclaredVariable(varDef.Attr_Name);
-//            if (hasVarDef == null)
-//            {
-//                hasVarDef = new VariableDef() { Name=code, Declared=false, VarDef=varDef};
-//                declaredVariables[declaredVariables.Count-1].Add(code, hasVarDef);
-//                var subVarDef = varDef.SubClassR814();
-//            }
+            //            if (hasVarDef == null)
+            //            {
+            //                hasVarDef = new VariableDef() { Name=code, Declared=false, VarDef=varDef};
+            //                declaredVariables[declaredVariables.Count-1].Add(code, hasVarDef);
+            //                var subVarDef = varDef.SubClassR814();
+            //            }
             //          isDecl = varDef.Attr_Declared;
             varName = code;
-    
+
             return code;
         }
-        protected string GenerateVAL_LRL(CIMClassV_LRL lrlDef)
+        protected string GenerateVAL_LRL(CIMClassV_LRL lrlDef, bool sqlStyle = false)
         {
             // real value
-      //      isDecl =false;
+            //      isDecl =false;
             return $"{lrlDef.Attr_Value}";
         }
-        protected string GenerateVAL_LBO(CIMClassV_LBO lboDef)
+        protected string GenerateVAL_LBO(CIMClassV_LBO lboDef, bool sqlStyle = false)
         {
+            string result = "";
             if (lboDef.Attr_Value.ToLower() == "true")
             {
-                return "true";
+                result = "true";
             }
             else
             {
-                return "false";
+                result = "false";
             }
+            if (sqlStyle)
+            {
+                result = result.ToUpper();
+            }
+
+            return result;
         }
-        protected string GenerateVAL_BIN(CIMClassV_BIN binDef)
+        protected string GenerateVAL_BIN(CIMClassV_BIN binDef, bool sqlStyle = false)
         {
             string code = "";
 
@@ -2474,21 +2535,37 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var valRightDef = binDef.LinkedToR803();
 
             string leftVarName;
-            var leftValCode = GenerateV_VAL(valLeftDef, out leftVarName);
+            var leftValCode = GenerateV_VAL(valLeftDef, out leftVarName, sqlStyle);
             string rightVarName;
-            var rightValCode = GenerateV_VAL(valRightDef, out rightVarName);
+            var rightValCode = GenerateV_VAL(valRightDef, out rightVarName, sqlStyle);
             if (op == "and")
             {
                 op = "&&";
-            } else if (op == "or")
+                if (sqlStyle)
+                {
+                    op = "AND";
+                }
+            }
+            else if (op == "or")
             {
                 op = "||";
+                if (sqlStyle)
+                {
+                    op = "OR";
+                }
+            }
+            else if (op == "==")
+            {
+                if (sqlStyle)
+                {
+                    op = "=";
+                }
             }
             code = $"({leftValCode} {op} {rightValCode})";
 
             return code;
         }
-        protected string GenerateVAL_LEN(CIMClassV_LEN lenDef)
+        protected string GenerateVAL_LEN(CIMClassV_LEN lenDef, bool sqlStyle = false)
         {
             // Enum value
             var enumDef = lenDef.LinkedToR824();
@@ -2497,7 +2574,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             return $"{dataTypeName}.{enumDef.Attr_Name}";
         }
-        protected string GenerateVAL_MVL(CIMClassV_MVL mvlDef)
+        protected string GenerateVAL_MVL(CIMClassV_MVL mvlDef, bool sqlStyle = false)
         {
             var mbrDef = mvlDef.LinkedToR836();
             var sdtDef = mbrDef.LinkedToR44();
@@ -2505,18 +2582,26 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var valDef = mvlDef.LinkedToR837();
             string varName;
             string valCode = GenerateV_VAL(valDef, out varName);
-            return $"{valCode}.{mbrDef.Attr_Name}";
+            string result = $"{valCode}.{mbrDef.Attr_Name}";
+            if (sqlStyle)
+            {
+                result = "{" + result + "}";
+            }
+            return result;
         }
-        protected string GenerateVAL_AER(CIMClassV_AER aerDef)
+        protected string GenerateVAL_AER(CIMClassV_AER aerDef, bool sqlStyle = false)
         {
+            logger.LogWarning($"V_AER({aerDef.ToString()}) is not supprted");
             throw new NotImplementedException();
         }
-        protected string GenerateVAL_ALV(CIMClassV_ALV alvDef)
+        protected string GenerateVAL_ALV(CIMClassV_ALV alvDef, bool sqlStyle = false)
         {
+            logger.LogWarning($"V_ALV({alvDef.ToString()}) is not supprted");
             throw new NotImplementedException();
         }
-        protected string GenerateVAL_SCV(CIMClassV_SCV scvDef)
+        protected string GenerateVAL_SCV(CIMClassV_SCV scvDef, bool sqlStyle = false)
         {
+            logger.LogWarning($"V_SCV({scvDef.ToString()}) is not supprted");
             throw new NotImplementedException();
         }
 

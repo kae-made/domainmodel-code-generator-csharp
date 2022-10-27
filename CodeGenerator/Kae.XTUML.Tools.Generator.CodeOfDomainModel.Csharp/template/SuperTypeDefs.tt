@@ -19,6 +19,8 @@
 // ------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using Kae.DomainModel.Csharp.Framework;
+using Kae.Utility.Logging;
 
 namespace <#= nameSpace #>
 {
@@ -48,6 +50,45 @@ namespace <#= nameSpace #>
     }
 <#
             isFirst = false;
+        }
+    }
+    foreach(var classRelDef in classRelDefs)
+    {
+        var relDef = (CIMClassR_REL)classRelDef;
+        var subRelDef = relDef.SubClassR206();
+        if (subRelDef is CIMClassR_SUBSUP)
+        {
+            var subsupRefDef = (CIMClassR_SUBSUP)subRelDef;
+            var superDef = subsupRefDef.LinkedFromR212();
+            var subDefs = subsupRefDef.LinkedFromR213();
+            string factoryClassName = GeneratorNames.GetSubClassFactoryClassName(superDef);
+#>
+
+    public static class <#= factoryClassName #>
+    {
+        public static DomainClassDef CreateInstance(string classKey, InstanceRepository instanceRepository, Logger logger)
+        {
+            switch (classKey)
+            {
+<#
+            foreach(var subDef in subDefs)
+            {
+                var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                string subObjClassImplName = GeneratorNames.GetDomainClassImplName(subObjDef);
+#>
+                case "<#= subObjDef.Attr_Key_Lett #>":
+                    return <#= subObjClassImplName #>.CreateInstance(instanceRepository, logger);
+<#
+            }
+#>
+                default:
+                    logger.LogError($"Bad class key letter:'{classKey}' for SubClassR4");
+                    break;
+            }
+            return null;
+        }
+    }
+<#
         }
     }
 #>

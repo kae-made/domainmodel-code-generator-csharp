@@ -56,17 +56,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Kae.StateMachine;
 using Kae.DomainModel.Csharp.Framework;
+using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
 
 namespace ");
             
-            #line 24 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 25 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 26 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 27 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
     string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
 
@@ -80,14 +81,14 @@ namespace ");
             #line hidden
             this.Write("    partial class ");
             
-            #line 34 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 35 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(stateMachineClassName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
-            #line 36 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 37 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
 
     var stateDefs = smDef.LinkedFromR501();
@@ -114,7 +115,7 @@ namespace ");
                 {
                     Console.WriteLine($"  - Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var smActDef = sabDef.CIMSuperClassACT_ACT();
-                    var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ", coloringManager);
+                    var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ", coloringManager, logger);
                     genCodeFromDescrip = actionGen.Generate();
                 }
             }
@@ -148,21 +149,21 @@ namespace ");
             #line hidden
             this.Write("        protected void ");
             
-            #line 91 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 92 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(actionMethodName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 91 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 92 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(args));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 93 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 94 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
         if (!generateCode)
         {
@@ -172,7 +173,7 @@ namespace ");
             #line hidden
             this.Write("            // TODO: Let\'s write action code!\r\n");
             
-            #line 98 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 99 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
         }
 
@@ -181,14 +182,14 @@ namespace ");
             #line hidden
             this.Write("            // Action Description on Model as a reference.\r\n\r\n");
             
-            #line 103 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 104 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(descrip));
             
             #line default
             #line hidden
             this.Write("\r\n\r\n");
             
-            #line 105 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 106 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
         if (!string.IsNullOrEmpty(genCodeFromDescrip))
         {
@@ -197,14 +198,14 @@ namespace ");
             #line default
             #line hidden
             
-            #line 109 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 110 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(genCodeFromDescrip));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 110 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 111 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
         }
         else
@@ -219,7 +220,7 @@ namespace ");
                     "   \r\n            throw new NotImplementedException();\r\n            // Please del" +
                     "ete above throw exception statement after implement this method.\r\n");
             
-            #line 122 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
             }
         }
@@ -229,7 +230,7 @@ namespace ");
             #line hidden
             this.Write("        }\r\n\r\n");
             
-            #line 128 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
+            #line 129 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassActions.tt"
 
 
         //string descrip = GeneratorNames.DescripToCodeComment()

@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kae.StateMachine;
 using Kae.DomainModel.Csharp.Framework;
+using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
 
 namespace <#= nameSpace #>
 {
@@ -59,7 +60,7 @@ namespace <#= nameSpace #>
                 {
                     Console.WriteLine($"  - Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var smActDef = sabDef.CIMSuperClassACT_ACT();
-                    var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ", coloringManager);
+                    var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ", coloringManager, logger);
                     genCodeFromDescrip = actionGen.Generate();
                 }
             }

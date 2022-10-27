@@ -49,6 +49,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return $"GetSuperClassR{relDef.Attr_Numb}";
         }
 
+        public static string GetSubClassFactoryClassName(CIMClassR_SUPER superDef)
+        {
+            var relDef = superDef.LinkedToR212().CIMSuperClassR_REL();
+            return $"SubClass{GetRelID(relDef)}Factory";
+        }
+
         public static string GetTakeEventMethodName()
         {
             return "TakeEvent";

@@ -4,6 +4,7 @@ using Kae.CIM;
 using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string nameSpace;
         IEnumerable<CIClassDef> classObjDefs;
         ColoringManager coloringManager;
+        Logger logger;
 
-        public DomainClassDefs(string version, string nameSpace, IEnumerable<CIClassDef> classObjDef, ColoringManager coloringManager)
+        public DomainClassDefs(string version, string nameSpace, IEnumerable<CIClassDef> classObjDef, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.classObjDefs = classObjDef;
             this.coloringManager = coloringManager;
+            this.logger = logger;
         }
 
         public void prototype_get_identities()
@@ -59,7 +62,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, coloringManager);
+                var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, coloringManager, logger);
                 string propertiesGenCode = propertiesGen.TransformText();
             }
         }
@@ -77,7 +80,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, coloringManager);
+                var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, coloringManager, logger);
                 string operationGenCode = operationsGen.TransformText();
 
             }

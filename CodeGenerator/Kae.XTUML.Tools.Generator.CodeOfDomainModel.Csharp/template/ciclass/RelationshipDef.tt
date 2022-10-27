@@ -107,6 +107,7 @@
                 string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "", partDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                 var targetObjDef = partDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
                 var targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+                var targetClassImplName = GeneratorNames.GetDomainClassImplName(targetObjDef);
                 string returnType = "";
                 string condTargetVarName = "instance";
                 string condition = GetRelCondition(rgo, targetClassName);
@@ -133,8 +134,9 @@
 <#= indent #>{
 <#= indent #>    if (<#= relVarName #> == null)
 <#= indent #>    {
-<#= indent #>   var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
-<#= indent #>   <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForRelVarName #>" };
+<#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>        if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relId #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
+<#= indent #>        <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForRelVarName #>" };
 
 <#= indent #>    }
 <#= indent #>    return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
@@ -249,10 +251,12 @@
 <#
                     if (genImplCode)
                     {
+                        string relId = GeneratorNames.GetRelID(relDef);
 #>
 <#= indent #>{
 <#= indent #>    var result = new List<<#= targetClassName #>>();
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relId #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "many").Result;
 <#= indent #>
 <#= indent #>    foreach (var inst in candidates)
 <#= indent #>    {
@@ -277,6 +281,7 @@
             string methodNameUnlink = GeneratorNames.GetRelationshipMethodName(relDef, "", "", GeneratorNames.RelLinkMethodType.Unlink);
             var targetObjDef = rsubsupDef.LinkedFromR212().CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
             string targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+            string targetClassImplName = GeneratorNames.GetDomainClassImplName(targetObjDef);
             string methodNameLinked = GeneratorNames.GetGetSuperClassMethodName(relDef, objDef);
             string condTargetVarName = "instance";
             string condition = GetRelCondition(rgo, targetClassName);
@@ -307,6 +312,7 @@
 <#= indent #>    if (<#= relVarName #> == null)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst => (<#= condition #>));
+<#= indent #>        if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relId #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>        <#= relVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = null };
 <#= indent #>    }
 <#= indent #>    return <#= relVarName #>.GetDestination<<#= targetClassName #>>();
@@ -446,6 +452,11 @@
             string relId = GeneratorNames.GetRelID(relDef);
             string phrsForOneRelVarName = GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs);
             string phrsForOtherRelVarName = GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs);
+            string relNameForOne = $"{relId}_{phrsForOneRelVarName}";
+            string relNameForOther = $"{relId}_{phrsForOtherRelVarName}";
+            string oneClassImplName = GeneratorNames.GetDomainClassImplName(oneObjDef);
+            string otherClassImplName = GeneratorNames.GetDomainClassImplName(otherObjDef);
+
 
             var orefDefs = rgo.LinkedOtherSideR111();
 #>
@@ -469,6 +480,7 @@
                     var tgtAttrDef = tgtRtdaDef.LinkedOtherSideR110().LinkedOtherSideR105();
                     var tgtObjDef = tgtAttrDef.LinkedToR102();
                     var tgtObjTypeName = GeneratorNames.GetDomainClassName(tgtObjDef);
+                    string tgttClassImplName = GeneratorNames.GetDomainClassImplName(tgtObjDef);
                     var thisAttrPropLocalName = GeneratorNames.GetAttrPropertyLocalName(thisRefAttrDef);
                     string stateVarName = GeneratorNames.GetPropertyStateVariableName(thisRefAttrDef);
                     var tgtAttrPropName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
@@ -581,6 +593,7 @@
 <#= indent #>    if (<#= relOneVarName #> == null)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= oneObjDef.Attr_Key_Lett #>").Where(inst=>(<#= oneCondition #>));
+<#= indent #>        if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= oneObjDef.Attr_Key_Lett #>", "<#= relNameForOne #>", candidates, () => { return <#= oneClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>        <#= relOneVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOneRelVarName #>" };
 <#= indent #>        // (<#= oneObjTypeName #>)candidates.FirstOrDefault();
 <#= indent #>    }
@@ -602,6 +615,7 @@
 <#= indent #>    if (<#= relOtherVarName #> == null)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances("<#= otherObjDef.Attr_Key_Lett #>").Where(inst=>(<#= otherCondition #>));
+<#= indent #>        if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= otherObjDef.Attr_Key_Lett #>", "<#= relNameForOne #>", candidates, () => { return <#= otherClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>        <#= relOtherVarName #> = new LinkedInstance() { Source = this, Destination = candidates.FirstOrDefault(), RelationshipID = "<#= relId #>", Phrase = "<#= phrsForOtherRelVarName #>" };
 <#= indent #>        // (<#= otherObjTypeName #>)candidates.FirstOrDefault();
 <#= indent #>    }
@@ -627,6 +641,8 @@
             {
                 var targetObjDef = rformDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
                 string targetClassName = GeneratorNames.GetDomainClassName(targetObjDef);
+                string targetClassImplName = GeneratorNames.GetDomainClassImplName(targetObjDef);
+                string relName = GeneratorNames.GetRelID(relDef);
                 string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "", rformDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                 string condition = GetRelCondition(rformDef.CIMSuperClassR_RGO(), domainClassName, false);
                 string returnType = "";
@@ -644,6 +660,7 @@
 #>
 <#= indent #>{
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>    return (<#= targetClassName #>)candidates.FirstOrDefault();
 <#= indent #>}
 <#
@@ -667,6 +684,7 @@
 <#= indent #>{
 <#= indent #>    var result = new List<<#= targetClassName #>>();
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "many").Result;
 <#= indent #>    foreach (var c in candidates)
 <#= indent #>    {
 <#= indent #>        result.Add((<#= targetClassName #>)c);
@@ -687,7 +705,9 @@
             var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
             var raothDef = rassocDef.LinkedFromR210();
             string targetTypeName = GeneratorNames.GetDomainClassName(targetObjDef);
-            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef,"Other" ,raothDef.Attr_Txt_Phrs,GeneratorNames.RelLinkMethodType.Linked);
+            string targetClassImplName = GeneratorNames.GetDomainClassImplName(targetObjDef);
+            string relName = $"{GeneratorNames.GetRelID(relDef)}_{GeneratorNames.ToProgramAvailableString(raothDef.Attr_Txt_Phrs)}";
+            string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef,"Other" , raothDef.Attr_Txt_Phrs,GeneratorNames.RelLinkMethodType.Linked);
             string condition = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), domainClassName, false);
             string returnType = "";
             if (raothDef.Attr_Mult == 0)
@@ -704,6 +724,7 @@
 #>
 <#= indent #>{
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>    return (<#= targetTypeName #>)candidates.FirstOrDefault();
 <#= indent #>}
 
@@ -726,6 +747,7 @@
 <#= indent #>{
 <#= indent #>    var result = new List<<#= targetTypeName #>>();
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "many").Result;
 <#= indent #>    foreach (var c in candidates)
 <#= indent #>    {
 <#= indent #>        result.Add((<#= targetTypeName #>)c);
@@ -745,6 +767,8 @@
             var targetObjDef = rassocDef.LinkedFromR211().CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
             string targetType = GeneratorNames.GetDomainClassName(targetObjDef);
             var raoneDef = rassocDef.LinkedFromR209();
+            string targetClassImplName = GeneratorNames.GetDomainClassImplName(targetObjDef);
+            string relName = $"{GeneratorNames.GetRelID(relDef)}_{GeneratorNames.ToProgramAvailableString(raoneDef.Attr_Txt_Phrs)}";
             string methodNameLinked = GeneratorNames.GetRelationshipMethodName(relDef, "One", raoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
             string condition = GetRelCondition(rassocDef.LinkedFromR211().CIMSuperClassR_RGO(), domainClassName, false);
             string returnType = "";
@@ -763,6 +787,7 @@
 #>
 <#= indent #>{
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>    return (<#= targetType #>)candidates.FirstOrDefault();
 <#= indent #>}
 
@@ -785,6 +810,7 @@
 <#= indent #>{
 <#= indent #>    var result = new List<<#= targetType #>>();
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
+<#= indent #>    if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "many").Result;
 <#= indent #>    foreach (var c in candidates)
 <#= indent #>    {
 <#= indent #>        result.Add((<#= targetType #>)c);
@@ -799,6 +825,9 @@
         else if (subRto is CIMClassR_SUPER)
         {
             var superDef = (CIMClassR_SUPER)subRto;
+            string subClassFactoryName = GeneratorNames.GetSubClassFactoryClassName(superDef);
+            var formalizedAttrDef = GetFormalizedO_ATTRForR_SUPER(superDef);
+            var formalizedAttrAccessorName = GeneratorNames.GetAttrPropertyName(formalizedAttrDef);
             var subsupDef = superDef.LinkedToR212();
             var subsupRelDef = subsupDef.CIMSuperClassR_REL();
             var subClassIFName = GeneratorNames.GetSubRelInterfaceName(subsupRelDef);
@@ -831,7 +860,8 @@
 <#= indent #>    foreach (var key in subClassKeys)
 <#= indent #>    {
 <#= indent #>        var candidates = instanceRepository.GetDomainInstances(key).Where(inst=>((this == ((<#= subClassIFName #>)inst).<#= superGetMethodName #>())));
-<#= indent #>        if (candidates.Count()>0)
+<#= indent #>        if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null)  candidates = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, key, candidates, () => { return "<#= formalizedAttrDef.Attr_Name #> = '{this.<#= formalizedAttrAccessorName #>}'"; }, () => { return <#= subClassFactoryName #>.CreateInstance(key, instanceRepository, logger); }, "any").Result;
+<#= indent #>        if (candidates.Count() > 0)
 <#= indent #>        {
 <#= indent #>            result = (<#= subClassIFName #>)candidates.FirstOrDefault();
 <#= indent #>            break;

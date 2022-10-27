@@ -83,6 +83,22 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             return condition;
         }
 
-
+        public static CIMClassO_ATTR GetFormalizedO_ATTRForR_SUPER(CIMClassR_SUPER superDef)
+        {
+            var oirDef = superDef.CIMSuperClassR_RTO().LinkedToR109();
+            if (oirDef != null)
+            {
+                if (oirDef.Attr_Oid_ID == 0)
+                {
+                    var oidaDefs = oirDef.LinkedOtherSideR105();
+                    foreach(var oidaDef in oidaDefs)
+                    {
+                        var attrDef = oidaDef.LinkedOtherSideR105();
+                        return attrDef;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

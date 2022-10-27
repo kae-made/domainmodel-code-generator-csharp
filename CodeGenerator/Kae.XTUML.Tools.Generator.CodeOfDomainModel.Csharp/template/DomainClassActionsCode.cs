@@ -3,6 +3,7 @@
 using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         CIMClassSM_SM smDef;
         bool generateCode;
         ColoringManager coloringManager;
+        Logger logger;
 
-        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode, ColoringManager coloringManager)
+        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
@@ -28,6 +30,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.smDef = smDef;
             this.generateCode = generateCode;
             this.coloringManager = coloringManager;
+            this.logger = logger;
         }
 
         public void prototypeAction()
@@ -43,7 +46,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 {
                     Console.WriteLine($"Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var actDef = sabDef.CIMSuperClassACT_ACT();
-                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ", coloringManager);
+                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ", coloringManager, logger);
                     string code = actionGen.Generate();
                 }
             }

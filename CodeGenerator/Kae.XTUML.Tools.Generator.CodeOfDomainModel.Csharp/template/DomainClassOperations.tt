@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kae.StateMachine;
 using Kae.DomainModel.Csharp.Framework;
+using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
 
 namespace <#= nameSpace #>
 {
@@ -33,7 +34,7 @@ namespace <#= nameSpace #>
     partial class <#= domainClassBaseName #>
     {
 <#
-    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true, coloringManager);
+    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true, coloringManager, logger);
     string operationGenCode = operationsGen.TransformText();
 #>
 <#= operationGenCode #>

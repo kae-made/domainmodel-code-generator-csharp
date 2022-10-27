@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Kae.DomainModel.Csharp.Framework;
+using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
 
 namespace <#= nameSpace #>
 {
@@ -74,7 +75,7 @@ namespace <#= nameSpace #>
         {
             Console.WriteLine($"  - Generating {syncDef.Attr_Name}...");
             var actDef = fnbDef.CIMSuperClassACT_ACT();
-            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", coloringManager);
+            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", coloringManager, logger);
             string code = actDescripGen.Generate();
 #>
             // Generated from action description

@@ -3,6 +3,7 @@
 using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private CIMClassO_OBJ objDef;
         private bool genLogicCode;
         private ColoringManager coloringManager;
+        private Logger logger;
 
-        public ClassOperationDef(string indent, CIMClassO_OBJ objDef, bool genLogicCode, ColoringManager coloringManager)
+        public ClassOperationDef(string indent, CIMClassO_OBJ objDef, bool genLogicCode, ColoringManager coloringManager, Logger logger)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genLogicCode = genLogicCode;
             this.coloringManager = coloringManager;
+            this.logger = logger;
         }
     }
 }

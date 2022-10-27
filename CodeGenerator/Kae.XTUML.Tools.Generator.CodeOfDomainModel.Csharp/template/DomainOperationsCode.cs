@@ -4,6 +4,7 @@ using Kae.CIM;
 using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +20,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string domainFacadeClassName;
         IEnumerable<CIClassDef> syncClassDefs;
         ColoringManager coloringManager;
+        Logger logger;
 
-        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, ColoringManager coloringManager)
+        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.domainFacadeClassName = domainFacadeClassName;
             this.syncClassDefs = syncDefs;
             this.coloringManager = coloringManager;
+            this.logger = logger;
         }
 
         public void prototypeAction()
@@ -39,7 +42,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 var retDtDef = syncDef.LinkedToR25();
                 if (retDtDef.Attr_Name == "void") ;
                 string syncName = syncDef.Attr_Name;
-                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", coloringManager);
+                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", coloringManager, logger);
                 string code = actDescripGen.Generate();
             }
         }

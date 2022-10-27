@@ -297,7 +297,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             }
             else
             {
-                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", coloringManager);
+                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", coloringManager, logger);
                 string actGenCode = actGen.Generate();
 
             

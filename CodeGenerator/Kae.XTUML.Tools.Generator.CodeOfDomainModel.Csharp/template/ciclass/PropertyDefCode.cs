@@ -3,6 +3,7 @@
 using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private CIMClassO_OBJ objDef;
         private bool genImplCode;
         private ColoringManager coloringManager;
+        private Logger logger;
 
-        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, ColoringManager colringManager)
+        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, ColoringManager colringManager, Logger logger)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genImplCode = genImplCode;
             this.coloringManager = colringManager;
+            this.logger = logger;
         }
 
         public void prototypeAction()
@@ -43,7 +46,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                         {
                             string actionDescrip = dbattrDef.Attr_Action_Semantics;
                             var actDef = dabDef.CIMSuperClassACT_ACT();
-                            var actGen = new ActDescripGenerator(actDef, "this", "", "", coloringManager);
+                            var actGen = new ActDescripGenerator(actDef, "this", "", "", coloringManager, logger);
                             string actGenCode = actGen.Generate();
                         }
                     }

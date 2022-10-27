@@ -44,6 +44,25 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                     isFirst = false;
                 }
             }
+
+            foreach(var classRelDef in classRelDefs)
+            {
+                var relDef = (CIMClassR_REL)classRelDef;
+                var subRelDef = relDef.SubClassR206();
+                if (subRelDef is CIMClassR_SUBSUP)
+                {
+                    var subsupRefDef = (CIMClassR_SUBSUP)subRelDef;
+                    var superDef = subsupRefDef.LinkedFromR212();
+                    var subDefs = subsupRefDef.LinkedFromR213();
+                    string factoryClassName = GeneratorNames.GetSubClassFactoryClassName(superDef);
+                    foreach(var subDef in subDefs)
+                    {
+                        var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                        string subObjClassImplName = GeneratorNames.GetDomainClassImplName(subObjDef);
+                        string classKeyLetter = subObjDef.Attr_Key_Lett;
+                    }
+                }
+            }
         }
     }
 }

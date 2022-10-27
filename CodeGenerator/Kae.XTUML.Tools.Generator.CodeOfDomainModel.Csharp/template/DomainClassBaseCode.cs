@@ -3,6 +3,7 @@
 using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
+using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,17 +17,36 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
     {
         string version;
         string nameSpace;
+        string facadeClassName;
         CIMClassO_OBJ objDef;
         ColoringManager coloringManager;
+        Logger logger;
 
-        public DomainClassBase(string version, string nameSpace, CIMClassO_OBJ objDef, ColoringManager coloringManager)
+        public DomainClassBase(string version, string nameSpace, string facadeClassName, CIMClassO_OBJ objDef, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
+            this.facadeClassName = facadeClassName;
             this.objDef = objDef;
             this.coloringManager = coloringManager;
+            this.logger = logger;
         }
 
+        public static string GetAttrIdentity0Name(CIMClassO_OBJ objDef)
+        {
+            string name = "";
+            var id0Def = objDef.LinkedFromR104().Where(a => { return a.Attr_Oid_ID == 0; }).FirstOrDefault();
+            if (id0Def != null)
+            {
+                var oidaDefs = id0Def.LinkedOtherSideR105();
+                foreach (var oidaDef in oidaDefs)
+                {
+                    var oattrDef = oidaDef.LinkedOtherSideR105();
+                    name = GeneratorNames.GetAttrPropertyLocalName(oattrDef);
+                }
+            }
+            return name;
+        }
         public void prototype()
         {
             var domainClassName = GeneratorNames.GetDomainClassName(objDef);

@@ -55,17 +55,19 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 // ------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using Kae.DomainModel.Csharp.Framework;
+using Kae.Utility.Logging;
 
 namespace ");
             
-            #line 23 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 25 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 25 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 27 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
 
     bool isFirst = true;
     foreach (var classRelDef in classRelDefs)
@@ -87,7 +89,7 @@ namespace ");
             #line hidden
             this.Write("\r\n");
             
-            #line 42 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 44 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
 
             }
 
@@ -96,30 +98,96 @@ namespace ");
             #line hidden
             this.Write("    public interface ");
             
-            #line 45 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 47 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(interfaceName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        public ");
             
-            #line 47 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 49 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(superDomainClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 47 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 49 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(getSuperClassMethodName));
             
             #line default
             #line hidden
             this.Write("();\r\n    }\r\n");
             
-            #line 49 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            #line 51 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
 
             isFirst = false;
+        }
+    }
+    foreach(var classRelDef in classRelDefs)
+    {
+        var relDef = (CIMClassR_REL)classRelDef;
+        var subRelDef = relDef.SubClassR206();
+        if (subRelDef is CIMClassR_SUBSUP)
+        {
+            var subsupRefDef = (CIMClassR_SUBSUP)subRelDef;
+            var superDef = subsupRefDef.LinkedFromR212();
+            var subDefs = subsupRefDef.LinkedFromR213();
+            string factoryClassName = GeneratorNames.GetSubClassFactoryClassName(superDef);
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    public static class ");
+            
+            #line 67 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(factoryClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        public static DomainClassDef CreateInstance(string classKey, Ins" +
+                    "tanceRepository instanceRepository, Logger logger)\r\n        {\r\n            switc" +
+                    "h (classKey)\r\n            {\r\n");
+            
+            #line 73 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+
+            foreach(var subDef in subDefs)
+            {
+                var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+                string subObjClassImplName = GeneratorNames.GetDomainClassImplName(subObjDef);
+
+            
+            #line default
+            #line hidden
+            this.Write("                case \"");
+            
+            #line 79 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(subObjDef.Attr_Key_Lett));
+            
+            #line default
+            #line hidden
+            this.Write("\":\r\n                    return ");
+            
+            #line 80 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(subObjClassImplName));
+            
+            #line default
+            #line hidden
+            this.Write(".CreateInstance(instanceRepository, logger);\r\n");
+            
+            #line 81 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("                default:\r\n                    logger.LogError($\"Bad class key let" +
+                    "ter:\'{classKey}\' for SubClassR4\");\r\n                    break;\r\n            }\r\n " +
+                    "           return null;\r\n        }\r\n    }\r\n");
+            
+            #line 91 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\SuperTypeDefs.tt"
+
         }
     }
 

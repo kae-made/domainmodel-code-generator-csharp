@@ -146,7 +146,7 @@
             }
             else
             {
-                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", coloringManager);
+                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", coloringManager, logger);
                 string actGenCode = actGen.Generate();
 #>
 <#= indent #>public <#= attrPropDataTypeName #> <#= propName #>
