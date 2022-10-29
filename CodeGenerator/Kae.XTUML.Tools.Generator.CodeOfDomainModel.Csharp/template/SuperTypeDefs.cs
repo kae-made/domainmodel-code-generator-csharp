@@ -79,7 +79,7 @@ namespace ");
             var interfaceName = GeneratorNames.GetSubRelInterfaceName(relDef);
             var rsuperDef = ((CIMClassR_SUBSUP)subRelDef).LinkedFromR212();
             var objDef = rsuperDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
-            var getSuperClassMethodName = GeneratorNames.GetGetSuperClassMethodName(relDef, objDef);
+            var getSuperClassMethodName = GeneratorNames.GetGetSuperClassMethodName(relDef);
             var superDomainClassName = GeneratorNames.GetDomainClassName(objDef);
             if (isFirst == false)
             {

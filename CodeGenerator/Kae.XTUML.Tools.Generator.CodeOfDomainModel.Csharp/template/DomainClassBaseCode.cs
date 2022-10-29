@@ -452,7 +452,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
                         subClassKeys += $"\"{subObjDef.Attr_Key_Lett}\"";
                     }
-                    string superGetMethodName = GeneratorNames.GetGetSuperClassMethodName(subsupRelDef,objDef);
+                    string superGetMethodName = GeneratorNames.GetGetSuperClassMethodName(subsupRelDef);
 
                 }
             }
