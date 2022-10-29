@@ -44,7 +44,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return $"GetSubR{relDef.Attr_Numb}";
         }
 
-        public static string GetGetSuperClassMethodName(CIMClassR_REL relDef, CIMClassO_OBJ objDef)
+        public static string GetGetSuperClassMethodName(CIMClassR_REL relDef)
         {
             return $"GetSuperClassR{relDef.Attr_Numb}";
         }
