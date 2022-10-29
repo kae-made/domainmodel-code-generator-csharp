@@ -932,7 +932,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     }
                     else
                     {
-                        linkUnit.MethodName = GeneratorNames.GetGetSuperClassMethodName(relDef, dstObjDef);
+                        linkUnit.MethodName = GeneratorNames.GetGetSuperClassMethodName(relDef);
                     }
                     linkList.Add(linkUnit);
                 }
@@ -1578,7 +1578,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             if (declaredVarDef.Set)
             {
                 writer.WriteLine($"{indent}{declCode}{candSetVarName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
-                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {candSetVarName} = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {candSetVarName}, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"many\").Result;");
+                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {candSetVarName} = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {candSetVarName}, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"many\").Result;");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = new List<{domainClassName}>();");
                 writer.WriteLine($"{indent}foreach (var {candVarName} in {candSetVarName})");
                 writer.WriteLine($"{indent}" + "{");
@@ -1588,7 +1588,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             else
             {
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name}TempSet = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
-                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {varDef.Attr_Name}TempSet = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"any\").Result;");
+                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {varDef.Attr_Name}TempSet = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"any\").Result;");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varDef.Attr_Name}TempSet.FirstOrDefault());");
             }
 
@@ -1640,7 +1640,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             if (dstVarDef.Set)
             {
                 writer.WriteLine($"{indent}{declCode}{candVarName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode}));");
-                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {candVarName} = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {candVarName}, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
+                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {candVarName} = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {candVarName}, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = new List<{domainClassName}>();");
                 writer.WriteLine($"{indent}foreach (var instance in {candVarName})");
                 writer.WriteLine($"{indent}" + "{");
@@ -1650,7 +1650,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             else
             {
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name}TempSet = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode}));");
-                writer.WriteLine($"{indent}if (((IExternalStorageAdaptable)instanceRepository).GetAdaptor() != null) {varDef.Attr_Name}TempSet = ((IExternalStorageAdaptable)instanceRepository).GetAdaptor().CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
+                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {varDef.Attr_Name}TempSet = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
                 writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varDef.Attr_Name}TempSet.FirstOrDefault());");
             }
 

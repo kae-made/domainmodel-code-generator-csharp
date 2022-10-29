@@ -16,6 +16,14 @@
 //  
 // </auto-generated>
 // ------------------------------------------------------------------------------
+<#
+    if (useAzureDigitalTwins)
+    {
+#>
+using Azure.Core;
+<#
+    }
+#>
 using Kae.DomainModel.Csharp.Framework;
 using Kae.DomainModel.Csharp.Framework.Adaptor;
 using Kae.Utility.Logging;
@@ -30,7 +38,8 @@ namespace <#= nameSpace #>.Adaptor
     // Entry for Application front end.
     public static class DomainModelAdaptorEntry
     {
-        public static DomainModelAdaptor GetAdaptor(Logger logger) { return <#= nameSpace #>Adaptor.GetInstance(logger); }
+        public static IDictionary<string, object> Configuration { get; } = new Dictionary<string, object>();
+        public static DomainModelAdaptor GetAdaptor(Logger logger) { foreach (var k in Configuration.Keys) { ADTTestModelAdaptor.Configuration.Add(k, Configuration[k]); } return <#= nameSpace #>Adaptor.GetInstance(logger); }
     }
 
 <#
@@ -45,11 +54,23 @@ namespace <#= nameSpace #>.Adaptor
 
         public static DomainModelAdaptor adapterInstance = null;
 
+        public static IDictionary<string, object> Configuration { get; } = new Dictionary<string, object>();
+
         public static DomainModelAdaptor GetInstance(Logger logger)
         {
             if (adapterInstance == null)
             {
                 var instanceRepository = new InstanceRepositoryInMemory(logger);
+<#
+    if ((!string.IsNullOrEmpty(externalStorageImplClassName)) && (!string.IsNullOrEmpty(externalStorageConnectionStringKey)))
+    {
+#>
+                var azureDigitalTwinsAdaptor = new <#= externalStorageImplClassName #>((string)Configuration["<#= externalStorageConnectionStringKey #>"], (TokenCredential)Configuration["<#= externalStorageCredentialKey #>"], instanceRepository, logger);
+                azureDigitalTwinsAdaptor.Initialize();
+                instanceRepository.ExternalStorageAdaptor = azureDigitalTwinsAdaptor;
+<#
+    }
+#>
                 var cimLib = new <#= domainFacadeClassName #>(instanceRepository);
                 adapterInstance = new <#= adaptorName #>(cimLib, logger);
             }
@@ -307,6 +328,8 @@ namespace <#= nameSpace #>.Adaptor
     }
 #>
                     }
+                    if (domainModel.InstanceRepository.ExternalStorageAdaptor != null) domainModel.InstanceRepository.ExternalStorageAdaptor.ClearCache(<#= domainFacadeClassName #>.DomainName);
+
                 }
             }
 

@@ -48,38 +48,52 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
             
             #line default
             #line hidden
-            this.Write(@"
-//  
-// </auto-generated>
-// ------------------------------------------------------------------------------
-using Kae.DomainModel.Csharp.Framework;
-using Kae.DomainModel.Csharp.Framework.Adaptor;
-using Kae.Utility.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ");
+            this.Write("\r\n//  \r\n// </auto-generated>\r\n// ------------------------------------------------" +
+                    "------------------------------\r\n");
             
-            #line 28 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 19 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+
+    if (useAzureDigitalTwins)
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("using Azure.Core;\r\n");
+            
+            #line 24 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+
+    }
+
+            
+            #line default
+            #line hidden
+            this.Write("using Kae.DomainModel.Csharp.Framework;\r\nusing Kae.DomainModel.Csharp.Framework.A" +
+                    "daptor;\r\nusing Kae.Utility.Logging;\r\nusing System;\r\nusing System.Collections.Gen" +
+                    "eric;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\n\r\n" +
+                    "namespace ");
+            
+            #line 36 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
-            this.Write(".Adaptor\r\n{\r\n    // Entry for Application front end.\r\n    public static class Dom" +
-                    "ainModelAdaptorEntry\r\n    {\r\n        public static DomainModelAdaptor GetAdaptor" +
-                    "(Logger logger) { return ");
+            this.Write(@".Adaptor
+{
+    // Entry for Application front end.
+    public static class DomainModelAdaptorEntry
+    {
+        public static IDictionary<string, object> Configuration { get; } = new Dictionary<string, object>();
+        public static DomainModelAdaptor GetAdaptor(Logger logger) { foreach (var k in Configuration.Keys) { ADTTestModelAdaptor.Configuration.Add(k, Configuration[k]); } return ");
             
-            #line 33 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 42 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
             this.Write("Adaptor.GetInstance(logger); }\r\n    }\r\n\r\n");
             
-            #line 36 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 45 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     Initialize();
 
@@ -91,14 +105,14 @@ namespace ");
             #line hidden
             this.Write("    public class ");
             
-            #line 42 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 51 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(adaptorName));
             
             #line default
             #line hidden
             this.Write(" : DomainModelAdaptor\r\n    {\r\n        ");
             
-            #line 44 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 53 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainFacadeClassName));
             
             #line default
@@ -107,21 +121,65 @@ namespace ");
 
         public static DomainModelAdaptor adapterInstance = null;
 
+        public static IDictionary<string, object> Configuration { get; } = new Dictionary<string, object>();
+
         public static DomainModelAdaptor GetInstance(Logger logger)
         {
             if (adapterInstance == null)
             {
                 var instanceRepository = new InstanceRepositoryInMemory(logger);
-                var cimLib = new ");
+");
             
-            #line 53 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 64 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+
+    if ((!string.IsNullOrEmpty(externalStorageImplClassName)) && (!string.IsNullOrEmpty(externalStorageConnectionStringKey)))
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("                var azureDigitalTwinsAdaptor = new ");
+            
+            #line 68 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(externalStorageImplClassName));
+            
+            #line default
+            #line hidden
+            this.Write("((string)Configuration[\"");
+            
+            #line 68 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(externalStorageConnectionStringKey));
+            
+            #line default
+            #line hidden
+            this.Write("\"], (TokenCredential)Configuration[\"");
+            
+            #line 68 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(externalStorageCredentialKey));
+            
+            #line default
+            #line hidden
+            this.Write("\"], instanceRepository, logger);\r\n                azureDigitalTwinsAdaptor.Initia" +
+                    "lize();\r\n                instanceRepository.ExternalStorageAdaptor = azureDigita" +
+                    "lTwinsAdaptor;\r\n");
+            
+            #line 71 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+
+    }
+
+            
+            #line default
+            #line hidden
+            this.Write("                var cimLib = new ");
+            
+            #line 74 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainFacadeClassName));
             
             #line default
             #line hidden
             this.Write("(instanceRepository);\r\n                adapterInstance = new ");
             
-            #line 54 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 75 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(adaptorName));
             
             #line default
@@ -129,14 +187,14 @@ namespace ");
             this.Write("(cimLib, logger);\r\n            }\r\n            return adapterInstance;\r\n        }\r" +
                     "\n\r\n\r\n        public ");
             
-            #line 60 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 81 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(adaptorName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 60 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 81 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainFacadeClassName));
             
             #line default
@@ -145,14 +203,14 @@ namespace ");
                     "del = domainModel;\r\n            domainOpsParamSpecs = _domainOpsParamSpecs;\r\n   " +
                     "         classSpecs = _classSpecs;\r\n            domainModelName = \"");
             
-            #line 65 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 86 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
             this.Write("\";\r\n        }\r\n\r\n");
             
-            #line 68 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 89 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     var sb = new StringBuilder();
     indent = "        ";
@@ -167,7 +225,7 @@ namespace ");
             this.Write("        protected Dictionary<string, Dictionary<string, ParamSpec>> _domainOpsPar" +
                     "amSpecs = new Dictionary<string, Dictionary<string, ParamSpec>>()\r\n        {\r\n");
             
-            #line 78 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 99 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     int syncCount = 1;
     foreach (var syncSpecKey in domainOpSpecs.Keys)
@@ -179,14 +237,14 @@ namespace ");
             #line hidden
             this.Write("            {\r\n                \"");
             
-            #line 85 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 106 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(syncSpecKey));
             
             #line default
             #line hidden
             this.Write("\", new Dictionary<string, ParamSpec>()\r\n");
             
-            #line 86 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 107 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         if (syncSpec.Parameters.Count > 0)
         {
@@ -196,7 +254,7 @@ namespace ");
             #line hidden
             this.Write("                {\r\n");
             
-            #line 91 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 112 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         int paramCount = 1;
         foreach (var paramSpecKey in syncSpec.Parameters.Keys) {
@@ -208,35 +266,35 @@ namespace ");
             #line hidden
             this.Write("                    { \"");
             
-            #line 97 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramSpecKey));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 97 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(code));
             
             #line default
             #line hidden
             this.Write(" }");
             
-            #line 97 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (paramCount < syncSpec.Parameters.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 97 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 99 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 120 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             paramCount++;
         }
@@ -246,7 +304,7 @@ namespace ");
             #line hidden
             this.Write("                }\r\n");
             
-            #line 104 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
 
@@ -255,21 +313,21 @@ namespace ");
             #line hidden
             this.Write("            }");
             
-            #line 107 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 128 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (syncCount < domainOpSpecs.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 107 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 128 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 109 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 130 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         syncCount++;
     }
@@ -279,7 +337,7 @@ namespace ");
             #line hidden
             this.Write("        };\r\n\r\n");
             
-            #line 115 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 136 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     // dictionaly class spec
 
@@ -289,7 +347,7 @@ namespace ");
             this.Write("        protected Dictionary<string, ClassSpec> _classSpecs = new Dictionary<stri" +
                     "ng, ClassSpec>()\r\n        {\r\n");
             
-            #line 120 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 141 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     int classCount = 1;
     foreach (var classSpecKey in classSpecs.Keys)
@@ -301,7 +359,7 @@ namespace ");
             #line hidden
             this.Write("            {\r\n                \"");
             
-            #line 127 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 148 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classSpec.KeyLetter));
             
             #line default
@@ -309,28 +367,28 @@ namespace ");
             this.Write("\", new ClassSpec()\r\n                {                \r\n                    Name =" +
                     " \"");
             
-            #line 129 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 150 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classSpec.Name));
             
             #line default
             #line hidden
             this.Write("\",\r\n                    KeyLetter = \"");
             
-            #line 130 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 151 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classSpec.KeyLetter));
             
             #line default
             #line hidden
             this.Write("\",\r\n                    Properties = new Dictionary<string, PropSpec>()");
             
-            #line 131 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 152 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (classSpec.Properties.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("\r\n                    {\r\n");
             
-            #line 134 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 155 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         int itemCount = 1;
         foreach (var propKey in classSpec.Properties.Keys)
@@ -342,77 +400,77 @@ namespace ");
             #line hidden
             this.Write("                        {\r\n                            \"");
             
-            #line 141 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 162 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("\", new PropSpec()\r\n                            { Name = \"");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("\", DataType = ParamSpec.DataType.");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.DataType.ToString()));
             
             #line default
             #line hidden
             this.Write(", Identity = ");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Identity));
             
             #line default
             #line hidden
             this.Write(", Writable = ");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Writable.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(", Mathematical = ");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Mathematical.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(", Reference = ");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Reference.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(", StateMachineState = ");
             
-            #line 142 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.StateMachineState.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(" }\r\n                        }");
             
-            #line 143 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 164 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (itemCount < classSpec.Properties.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 143 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 164 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 145 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 166 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             itemCount++;
         }
@@ -422,21 +480,21 @@ namespace ");
             #line hidden
             this.Write("                    }");
             
-            #line 149 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 170 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write(",\r\n                    Operations = new Dictionary<string, OperationSpec>()");
             
-            #line 150 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 171 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (classSpec.Operations.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("\r\n                    {\r\n");
             
-            #line 153 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 174 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         int itemCount = 1;
         foreach (var opKey in classSpec.Operations.Keys)
@@ -448,7 +506,7 @@ namespace ");
             #line hidden
             this.Write("                        {\r\n                            \"");
             
-            #line 160 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 181 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
@@ -456,21 +514,21 @@ namespace ");
             this.Write("\", new OperationSpec()\r\n                            {\r\n                          " +
                     "      Name = \"");
             
-            #line 162 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 183 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write("\", ReturnType = ParamSpec.DataType.");
             
-            #line 162 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 183 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.ReturnType));
             
             #line default
             #line hidden
             this.Write(", Parameters = new Dictionary<string, ParamSpec>()\r\n");
             
-            #line 163 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 184 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             if (op.Parameters.Count > 0)
             {
@@ -481,7 +539,7 @@ namespace ");
             #line hidden
             this.Write("                                {\r\n");
             
-            #line 169 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 190 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                 foreach (var opParamKey in op.Parameters.Keys)
                 {
@@ -493,35 +551,35 @@ namespace ");
             #line hidden
             this.Write("                                    { \"");
             
-            #line 175 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 196 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(opParam.Name));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 175 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 196 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(code));
             
             #line default
             #line hidden
             this.Write(" }");
             
-            #line 175 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 196 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (opParamCount < op.Parameters.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 175 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 196 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 177 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 198 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
 
                     opParamCount++;
@@ -532,7 +590,7 @@ namespace ");
             #line hidden
             this.Write("                                }\r\n");
             
-            #line 183 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 204 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
 
@@ -541,21 +599,21 @@ namespace ");
             #line hidden
             this.Write("                            }");
             
-            #line 186 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 207 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (itemCount < classSpec.Operations.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 186 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 207 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n                        }\r\n");
             
-            #line 189 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 210 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
 
             itemCount++;
@@ -566,21 +624,21 @@ namespace ");
             #line hidden
             this.Write("                    }");
             
-            #line 194 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write(",\r\n                    Links = new Dictionary<string, LinkSpec>()");
             
-            #line 195 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 216 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (classSpec.Links.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("\r\n                    {\r\n");
             
-            #line 198 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 219 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         int itemCount = 1;
         foreach (var linkKey in classSpec.Links.Keys)
@@ -592,70 +650,70 @@ namespace ");
             #line hidden
             this.Write("                        {\r\n                            \"");
             
-            #line 205 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 226 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.Name));
             
             #line default
             #line hidden
             this.Write("\", new LinkSpec()\r\n                            { Name = \"");
             
-            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.Name));
             
             #line default
             #line hidden
             this.Write("\", RelID = \"");
             
-            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.RelID));
             
             #line default
             #line hidden
             this.Write("\", Phrase = \"");
             
-            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.Phrase));
             
             #line default
             #line hidden
             this.Write("\", Set = ");
             
-            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.Set.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(", Condition = ");
             
-            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.Condition.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(", DstKeyLett = \"");
             
-            #line 206 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(link.DstKeyLett));
             
             #line default
             #line hidden
             this.Write("\" }\r\n                        }");
             
-            #line 207 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 228 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (itemCount < classSpec.Links.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 207 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 228 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 209 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 230 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
 
             itemCount++;
@@ -666,21 +724,21 @@ namespace ");
             #line hidden
             this.Write("                    }");
             
-            #line 214 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 235 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
             
             #line default
             #line hidden
             this.Write(",\r\n                    Events = new Dictionary<string, OperationSpec>()");
             
-            #line 215 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 236 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (classSpec.Events.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("\r\n                    {\r\n");
             
-            #line 218 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 239 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         int itemCount = 1;
         foreach (var eventKey in classSpec.Events.Keys)
@@ -692,7 +750,7 @@ namespace ");
             #line hidden
             this.Write("                        {\r\n                            \"");
             
-            #line 225 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 246 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eventSpec.Name));
             
             #line default
@@ -700,7 +758,7 @@ namespace ");
             this.Write("\", new OperationSpec()\r\n                            {\r\n                          " +
                     "      Name = \"");
             
-            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 248 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eventSpec.Name));
             
             #line default
@@ -708,14 +766,14 @@ namespace ");
             this.Write("\", ReturnType = ParamSpec.DataType.Void, Parameters = new Dictionary<string, Para" +
                     "mSpec>()");
             
-            #line 227 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 248 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (eventSpec.Parameters.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("\r\n                                {\r\n");
             
-            #line 230 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 251 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             int evtParamCount = 1;
             foreach (var epKey in eventSpec.Parameters.Keys)
@@ -728,96 +786,26 @@ namespace ");
             #line hidden
             this.Write("                                    { \"");
             
-            #line 237 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 258 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(evtParam.Name));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 237 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 258 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(code));
             
             #line default
             #line hidden
             this.Write(" }");
             
-            #line 237 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 258 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (evtParamCount < eventSpec.Parameters.Count) { 
             
             #line default
             #line hidden
             this.Write(", ");
-            
-            #line 237 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 239 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
-
-                evtParamCount++;
-            }
-
-            
-            #line default
-            #line hidden
-            this.Write("                                }\r\n");
-            
-            #line 244 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- } else { 
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 246 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("                            }\r\n                        }");
-            
-            #line 248 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- if (itemCount < classSpec.Events.Count) { 
-            
-            #line default
-            #line hidden
-            this.Write(",");
-            
-            #line 248 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 250 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
-
-
-            itemCount++;
-        }
-
-            
-            #line default
-            #line hidden
-            this.Write("                    }");
-            
-            #line 255 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\r\n                }\r\n            }");
-            
-            #line 258 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
- if (classCount < classSpecs.Count) { 
-            
-            #line default
-            #line hidden
-            this.Write(",");
             
             #line 258 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } 
@@ -828,6 +816,76 @@ namespace ");
             
             #line 260 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
+                evtParamCount++;
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("                                }\r\n");
+            
+            #line 265 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ } else { 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 267 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("                            }\r\n                        }");
+            
+            #line 269 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ if (itemCount < classSpec.Events.Count) { 
+            
+            #line default
+            #line hidden
+            this.Write(",");
+            
+            #line 269 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 271 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+
+
+            itemCount++;
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("                    }");
+            
+            #line 276 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n                }\r\n            }");
+            
+            #line 279 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ if (classCount < classSpecs.Count) { 
+            
+            #line default
+            #line hidden
+            this.Write(",");
+            
+            #line 279 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 281 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+
         classCount++;        
     }
 
@@ -836,7 +894,7 @@ namespace ");
             #line hidden
             this.Write("        };\r\n\r\n");
             
-            #line 266 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 287 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     // Invoke Domain Operation
     string invVarName = "invSpec";
@@ -853,7 +911,7 @@ namespace ");
                 RequestingParameters invSpec = new RequestingParameters() { Parameters = new Dictionary<string, object>() };
                 if (CheckParameters(opSpec, parameters, ");
             
-            #line 277 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 298 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(invVarName));
             
             #line default
@@ -861,7 +919,7 @@ namespace ");
             this.Write("))\r\n                {\r\n                    switch (name)\r\n                    {\r\n" +
                     "");
             
-            #line 281 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 302 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     foreach (var syncSpecKey in domainOpSpecs.Keys)
     {
@@ -875,14 +933,14 @@ namespace ");
             #line hidden
             this.Write("                        case \"");
             
-            #line 289 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 310 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(syncSpec.Name));
             
             #line default
             #line hidden
             this.Write("\":\r\n");
             
-            #line 290 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 311 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         if (syncSpec.ReturnType != ParamSpec.DataType.Void)
         {
@@ -892,14 +950,14 @@ namespace ");
             #line hidden
             this.Write("                            var ");
             
-            #line 294 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 315 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(retVal));
             
             #line default
             #line hidden
             this.Write(" = new { result = ");
             
-            #line 294 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 315 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(invokeCode));
             
             #line default
@@ -907,14 +965,14 @@ namespace ");
             this.Write(" };\r\n                            result = Newtonsoft.Json.JsonConvert.SerializeOb" +
                     "ject(");
             
-            #line 295 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 316 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(retVal));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 296 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 317 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
         else
@@ -925,14 +983,14 @@ namespace ");
             #line hidden
             this.Write("                            ");
             
-            #line 301 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 322 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(invokeCode));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 302 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 323 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
 
@@ -941,14 +999,24 @@ namespace ");
             #line hidden
             this.Write("                            break;\r\n");
             
-            #line 306 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 327 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     }
 
             
             #line default
             #line hidden
-            this.Write(@"                    }
+            this.Write("                    }\r\n                    if (domainModel.InstanceRepository.Ext" +
+                    "ernalStorageAdaptor != null) domainModel.InstanceRepository.ExternalStorageAdapt" +
+                    "or.ClearCache(");
+            
+            #line 331 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(domainFacadeClassName));
+            
+            #line default
+            #line hidden
+            this.Write(@".DomainName);
+
                 }
             }
 
@@ -973,7 +1041,7 @@ namespace ");
                             {
 ");
             
-            #line 332 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 355 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     foreach(var csKey in classSpecs.Keys)
     {
@@ -990,42 +1058,42 @@ namespace ");
             #line hidden
             this.Write("                                case \"");
             
-            #line 343 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 366 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\":\r\n                                    var ");
             
-            #line 344 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 367 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 344 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 367 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(")domainModel.InstanceRepository.GetDomainInstances(\"");
             
-            #line 344 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 367 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\").Where(");
             
-            #line 344 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 367 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instSelectedCode));
             
             #line default
             #line hidden
             this.Write(").FirstOrDefault();\r\n                                    if (");
             
-            #line 345 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 368 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
@@ -1033,7 +1101,7 @@ namespace ");
             this.Write(" != null)\r\n                                    {\r\n                               " +
                     "         switch (name)\r\n                                        {\r\n");
             
-            #line 349 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 372 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             foreach (var copKey in classSpec.Operations.Keys)
             {
@@ -1048,14 +1116,14 @@ namespace ");
             #line hidden
             this.Write("                                            case \"");
             
-            #line 358 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 381 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(cOpSpec.Name));
             
             #line default
             #line hidden
             this.Write("\":\r\n");
             
-            #line 359 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 382 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         if (cOpSpec.ReturnType == ParamSpec.DataType.Void)
         {
@@ -1065,14 +1133,14 @@ namespace ");
             #line hidden
             this.Write("                                                ");
             
-            #line 363 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 386 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(invokeCode));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 364 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 387 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
         else
@@ -1083,14 +1151,14 @@ namespace ");
             #line hidden
             this.Write("                                                 var ");
             
-            #line 369 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 392 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(retVal));
             
             #line default
             #line hidden
             this.Write(" = new { result = ");
             
-            #line 369 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 392 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(invokeCode));
             
             #line default
@@ -1098,14 +1166,14 @@ namespace ");
             this.Write(" };\r\n                                                result = Newtonsoft.Json.Jso" +
                     "nConvert.SerializeObject(");
             
-            #line 370 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 393 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(retVal));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 371 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 394 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
 
@@ -1114,7 +1182,7 @@ namespace ");
             #line hidden
             this.Write("                                                break;\r\n");
             
-            #line 375 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 398 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
 
@@ -1124,7 +1192,7 @@ namespace ");
             this.Write("                                        }\r\n                                    }\r" +
                     "\n                                    break;\r\n");
             
-            #line 381 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 404 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
     }
@@ -1160,7 +1228,7 @@ namespace ");
                             {
 ");
             
-            #line 411 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 434 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     foreach(var csKey in classSpecs.Keys)
     {
@@ -1177,35 +1245,35 @@ namespace ");
             #line hidden
             this.Write("                                case \"");
             
-            #line 422 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 445 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\":\r\n                                    var ");
             
-            #line 423 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 446 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 423 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 446 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(")domainModel.InstanceRepository.GetDomainInstances(\"");
             
-            #line 423 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 446 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\").Where(");
             
-            #line 423 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 446 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instSelectedCode));
             
             #line default
@@ -1213,7 +1281,7 @@ namespace ");
             this.Write(").FirstOrDefault();\r\n                                    switch (name)\r\n         " +
                     "                           {\r\n");
             
-            #line 426 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 449 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             foreach(var evtKey in classSpec.Events.Keys)
             {
@@ -1238,14 +1306,14 @@ namespace ");
             #line hidden
             this.Write("                                        case \"");
             
-            #line 445 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 468 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(evtClassName));
             
             #line default
             #line hidden
             this.Write("\":\r\n                                            ");
             
-            #line 446 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 469 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(evtInvCode));
             
             #line default
@@ -1253,7 +1321,7 @@ namespace ");
             this.Write(";\r\n                                            sent = true;\r\n                    " +
                     "                        break;\r\n");
             
-            #line 449 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 472 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
 
@@ -1263,7 +1331,7 @@ namespace ");
             this.Write("                                    }\r\n                                    break;" +
                     "\r\n");
             
-            #line 454 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 477 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
     }
@@ -1293,7 +1361,7 @@ namespace ");
                     {
 ");
             
-            #line 478 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 501 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         foreach (var ck in classSpecs.Keys)
         {
@@ -1310,49 +1378,49 @@ namespace ");
             #line hidden
             this.Write("                        case \"");
             
-            #line 489 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 512 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\":\r\n                            var ");
             
-            #line 490 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 513 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 490 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 513 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(")domainModel.InstanceRepository.GetDomainInstances(\"");
             
-            #line 490 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 513 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\").Where(");
             
-            #line 490 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 513 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instSelectedCode));
             
             #line default
             #line hidden
             this.Write(").FirstOrDefault();\r\n                            if (");
             
-            #line 491 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 514 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n                            {\r\n");
             
-            #line 493 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 516 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                 foreach (var pk in classSpec.Properties.Keys)
                 {
@@ -1370,14 +1438,14 @@ namespace ");
             #line hidden
             this.Write("                                if (invSpec.Parameters.ContainsKey(\"");
             
-            #line 505 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 528 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pk));
             
             #line default
             #line hidden
             this.Write("\"))\r\n                                {\r\n");
             
-            #line 507 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 530 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                         if (isStructuredDataType == false)
                         {
@@ -1387,35 +1455,35 @@ namespace ");
             #line hidden
             this.Write("                                    ");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 534 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 534 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrPropName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 534 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrTypeName));
             
             #line default
             #line hidden
             this.Write(")invSpec.Parameters[\"");
             
-            #line 511 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 534 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pk));
             
             #line default
             #line hidden
             this.Write("\"];\r\n");
             
-            #line 512 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 535 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                         }
                         else
@@ -1426,28 +1494,28 @@ namespace ");
             #line hidden
             this.Write("                                    ");
             
-            #line 517 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 540 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 517 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 540 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrPropName));
             
             #line default
             #line hidden
             this.Write(".Restore((IDictionary<string, object>)invSpec.Parameters[\"");
             
-            #line 517 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 540 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pk));
             
             #line default
             #line hidden
             this.Write("\"]);\r\n");
             
-            #line 518 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 541 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                         }
 
@@ -1456,7 +1524,7 @@ namespace ");
             #line hidden
             this.Write("                                }\r\n");
             
-            #line 522 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 545 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                     }
                 }
@@ -1467,7 +1535,7 @@ namespace ");
             this.Write("                                updated = true;\r\n                            }\r\n " +
                     "                           break;\r\n");
             
-            #line 529 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 552 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
         }
@@ -1505,7 +1573,7 @@ namespace ");
                     {
 ");
             
-            #line 561 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 584 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         foreach (var ck in classSpecs.Keys)
         {
@@ -1520,35 +1588,35 @@ namespace ");
             #line hidden
             this.Write("                        case \"");
             
-            #line 570 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 593 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\":\r\n                            var ");
             
-            #line 571 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 594 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 571 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 594 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(")instance;\r\n                            var ");
             
-            #line 572 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 595 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resultInstVarName));
             
             #line default
             #line hidden
             this.Write(" = new Dictionary<string, object>();\r\n");
             
-            #line 573 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 596 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             foreach (var pk in classSpec.Properties.Keys)
             {
@@ -1561,35 +1629,35 @@ namespace ");
             #line hidden
             this.Write("                            ");
             
-            #line 580 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 603 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resultInstVarName));
             
             #line default
             #line hidden
             this.Write(".Add(\"");
             
-            #line 580 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 603 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pk));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 580 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 603 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 580 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 603 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrPropName));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 581 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 604 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
 
@@ -1598,14 +1666,14 @@ namespace ");
             #line hidden
             this.Write("                            resultInstances.Add(");
             
-            #line 584 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 607 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resultInstVarName));
             
             #line default
             #line hidden
             this.Write(");\r\n                            break;\r\n");
             
-            #line 586 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 609 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     }
 
@@ -1627,7 +1695,7 @@ namespace ");
             {
 ");
             
-            #line 602 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 625 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     foreach (var ck in classSpecs.Keys)
     {
@@ -1643,56 +1711,56 @@ namespace ");
             #line hidden
             this.Write("                case \"");
             
-            #line 612 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 635 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\":\r\n                    ");
             
-            #line 613 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 636 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 613 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 636 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 613 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 636 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(")domainModel.InstanceRepository.GetDomainInstances(\"");
             
-            #line 613 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 636 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\").Where(");
             
-            #line 613 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 636 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instSelectedCode));
             
             #line default
             #line hidden
             this.Write(").FirstOrDefault();\r\n                    if (");
             
-            #line 614 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 637 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n                    {\r\n");
             
-            #line 616 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 639 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         foreach (var pk in classSpec.Properties.Keys)
         {
@@ -1705,28 +1773,28 @@ namespace ");
             #line hidden
             this.Write("                        resultInstance.Add(\"");
             
-            #line 623 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pk));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 623 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 623 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrPropName));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 624 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 647 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
 
@@ -1735,7 +1803,7 @@ namespace ");
             #line hidden
             this.Write("                    }\r\n                    break;\r\n");
             
-            #line 629 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 652 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     }
 
@@ -1758,7 +1826,7 @@ namespace ");
                     {
 ");
             
-            #line 646 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 669 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     foreach (var ck in classSpecs.Keys)
     {
@@ -1774,49 +1842,49 @@ namespace ");
             #line hidden
             this.Write("                        case \"");
             
-            #line 656 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 679 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\":\r\n                            ");
             
-            #line 657 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 680 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 657 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 680 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 657 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 680 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassName));
             
             #line default
             #line hidden
             this.Write(")domainModel.InstanceRepository.GetDomainInstances(\"");
             
-            #line 657 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 680 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(classKeyLett));
             
             #line default
             #line hidden
             this.Write("\").Where(");
             
-            #line 657 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 680 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instSelectedCode));
             
             #line default
             #line hidden
             this.Write(").FirstOrDefault();\r\n                            if (");
             
-            #line 658 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 681 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
@@ -1824,7 +1892,7 @@ namespace ");
             this.Write(" != null)\r\n                            {\r\n                                switch " +
                     "(relName)\r\n                                {\r\n");
             
-            #line 662 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 685 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         foreach (var lk in classSpec.Links.Keys)
         {
@@ -1841,14 +1909,14 @@ namespace ");
             #line hidden
             this.Write("                                    case \"");
             
-            #line 673 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 696 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(linkSpec.Name));
             
             #line default
             #line hidden
             this.Write("\":\r\n");
             
-            #line 674 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 697 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             if (linkSpec.Set)
             {
@@ -1858,42 +1926,42 @@ namespace ");
             #line hidden
             this.Write("                                        var ");
             
-            #line 678 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relInstSetVarName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 678 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 678 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(linkSpec.MethodName));
             
             #line default
             #line hidden
             this.Write("();\r\n                                        foreach (var ");
             
-            #line 679 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relInstVarName));
             
             #line default
             #line hidden
             this.Write(" in ");
             
-            #line 679 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relInstSetVarName));
             
             #line default
             #line hidden
             this.Write(")\r\n                                        {\r\n");
             
-            #line 681 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 704 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
             else
@@ -1904,35 +1972,35 @@ namespace ");
             #line hidden
             this.Write("                                        var ");
             
-            #line 686 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 709 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relInstVarName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 686 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 709 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 686 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 709 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(linkSpec.MethodName));
             
             #line default
             #line hidden
             this.Write("();\r\n                                        if (");
             
-            #line 687 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 710 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relInstVarName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n                                        {\r\n");
             
-            #line 689 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 712 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             }
 
@@ -1942,7 +2010,7 @@ namespace ");
             this.Write("                                            resultInstances.Add(new Dictionary<st" +
                     "ring, object>()\r\n                                            {\r\n");
             
-            #line 694 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 717 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
             int lpCount = 1;
             foreach (var pk in propSpecs.Keys)
@@ -1955,42 +2023,42 @@ namespace ");
             #line hidden
             this.Write("                                                { \"");
             
-            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 724 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pk));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 724 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relInstVarName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 724 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrPropName));
             
             #line default
             #line hidden
             this.Write(" }");
             
-            #line 701 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 724 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  if (lpCount < propSpecs.Count) { 
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 702 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 725 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 704 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 727 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
                 }
                 lpCount++;
@@ -2002,7 +2070,7 @@ namespace ");
             this.Write("                                            });\r\n                                " +
                     "        }\r\n                                        break;\r\n");
             
-            #line 712 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 735 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
         }
 
@@ -2012,7 +2080,7 @@ namespace ");
             this.Write("                                }\r\n                            }\r\n               " +
                     "             break;\r\n");
             
-            #line 718 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 741 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
 
     }
 
@@ -2043,7 +2111,7 @@ namespace ");
             var spec = new {
                 name = """);
             
-            #line 743 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 766 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
@@ -2066,7 +2134,7 @@ namespace ");
         {
             string domainName = """);
             
-            #line 759 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
+            #line 782 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\adaptor\AdaptorDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default

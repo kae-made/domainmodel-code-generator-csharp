@@ -7,6 +7,7 @@ using Kae.Tools.Generator.utility;
 using Kae.Utility.Logging;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor;
+using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor.adt;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +38,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         private GenFolder.WriteMode behaviorFileWriteMode = GenFolder.WriteMode.Overwrite;
         private bool isAzureDigitalTwins = false;
         private string dtdlNamespace = "";
+        private string dtdlVersion;
 
         protected override void CreateAdditionalContext()
         {
@@ -54,6 +56,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var cpAdaptorGen = new BooleanParam(CPKeyAdaptorGen);
             genContext.AddOption(cpAdaptorGen);
             var cpESAdt = new StringParam(CPKeyAzureDigitalTwins);
+            genContext.AddOption(cpESAdt);
         }
 
         protected override bool AdditionalWorkForResloveContext()
@@ -90,7 +93,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 else if (cp.ParamName == CPKeyAzureDigitalTwins)
                 {
                     isAzureDigitalTwins = true;
-                    dtdlNamespace = ((StringParam)cp).Value;
+                    var dtdlParams = ((StringParam)cp).Value.Split(new char[] { ';' });
+                    dtdlNamespace = dtdlParams[0];
+                    dtdlVersion = dtdlParams[1];
                 }
             }
             if (IsGenCode)
@@ -129,11 +134,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             string projectPath = ProjectName;
             genFolder.CreateFolder(projectPath);
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
-            { new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
-              new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="5.10.0"},
+            {// new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
+             // new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
+              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="6.2.0"},
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.1" }
             });
+             
+            if (isAzureDigitalTwins)
+            {
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "0.1.0");
+                projectFile.AddLibrary("Azure.DigitalTwins.Core", "1.4.0");
+                projectFile.AddLibrary("Azure.Identity", "1.7.0");
+            }
 
             var extPackages = this.coloringManager.GetExternalPackages();
             foreach(var extPackage in extPackages)
@@ -303,16 +315,36 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             if (isAdaptorGen)
             {
-                var adaptorGen = new AdaptorDef(Version, ProjectName, "    ", syncDefs, classObjDefs);
+                string externalStorageImplClassName = "";
+                string externalStorageConnectionStringKey = "";
+                string externalStorageCredentialKey = "";
+                if (isAzureDigitalTwins)
+                {
+                    externalStorageImplClassName = AzureDigitalTwinsAdaptorDef.GetAdaptorImplClassName(ProjectName);
+                    externalStorageConnectionStringKey = "ADTInstanceUri";
+                    externalStorageCredentialKey = "ADTCredential";
+                }
+                var adaptorGen = new AdaptorDef(Version, ProjectName, ProjectName, "    ", syncDefs, classObjDefs, externalStorageImplClassName, externalStorageConnectionStringKey, externalStorageCredentialKey);
                 string adaptorGenCode = adaptorGen.TransformText();
-                string adaptorFolderName = Path.Join(projectPath,AdaptorDef.GetFolderName());
+                string adaptorFolderName = Path.Join(projectPath, AdaptorDef.GetFolderName());
                 genFolder.CreateFolder(adaptorFolderName);
                 string adaptorFileName = $"{ProjectName}Adaptor.cs";
                 genFolder.WriteContentAsync(adaptorFolderName, adaptorFileName, adaptorGenCode, GenFolder.WriteMode.Overwrite).Wait();
                 Console.WriteLine($"Generated - {adaptorFileName}");
-                logger.LogInfo($"Generated - {fileName}");
+                logger.LogInfo($"Generated - {adaptorFileName}");
+
+                if (isAzureDigitalTwins)
+                {
+                    var relDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "R_REL");
+                    var adtGen = new AzureDigitalTwinsAdaptorDef(Version, ProjectName, ProjectName, dtdlNamespace, dtdlVersion, classObjDefs, relDefs, logger);
+                    var adtGenCode = adtGen.TransformText();
+                    string adtAdaptorImplClassName = AzureDigitalTwinsAdaptorDef.GetAdaptorImplClassName(ProjectName);
+                    string adtAdaptorFileName = $"{adtAdaptorImplClassName}.cs";
+                    genFolder.WriteContentAsync(adaptorFolderName, adtAdaptorFileName, adtGenCode, GenFolder.WriteMode.Overwrite).Wait();
+                    Console.WriteLine($"Generated - {adtAdaptorFileName}");
+                    logger.LogInfo($"Generated - {adtAdaptorFileName}");
+                }
             }
         }
-
     }
 }

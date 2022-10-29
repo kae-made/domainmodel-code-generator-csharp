@@ -1,5 +1,6 @@
 ﻿using Kae.CIM;
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor.adt;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
         string nameSpace;
         string indent ="";
         string baseIndent;
+        string projectName;
+        string externalStorageImplClassName;
+        string externalStorageConnectionStringKey;
+        string externalStorageCredentialKey;
+        bool useAzureDigitalTwins = false;
 
         static readonly string folderName = "Adaptor";
 
@@ -35,11 +41,19 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
             { "void", ParamSpec.DataType.Void }
         };
 
-        public AdaptorDef(string version, string nameSpace, string baseIndent, IEnumerable<CIClassDef> ciSyncDefs, IEnumerable<CIClassDef> ciObjDefs)
+        public AdaptorDef(string version, string nameSpace, string baseIndent, string projectName, IEnumerable<CIClassDef> ciSyncDefs, IEnumerable<CIClassDef> ciObjDefs, string externalStorageImplClassName, string externalStorageConnectionStringKey, string externalStorageCredentialKey)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.baseIndent = baseIndent;
+            this.projectName = projectName;
+            this.externalStorageImplClassName = externalStorageImplClassName;
+            this.externalStorageConnectionStringKey = externalStorageConnectionStringKey;
+            this.externalStorageCredentialKey = externalStorageCredentialKey;
+            if (!string.IsNullOrEmpty(externalStorageImplClassName))
+            {
+                useAzureDigitalTwins = true;
+            }
             
             foreach (var ciSyncDef in ciSyncDefs)
             {
@@ -58,6 +72,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
             Initialize();
 
             string domainFacadeClassName = GeneratorNames.GetDomainFacadeClassName(nameSpace);
+            if ((!string.IsNullOrEmpty(externalStorageImplClassName)) && (!string.IsNullOrEmpty(externalStorageConnectionStringKey)))
+            {
+                string adtAdaptorImplClassName = AzureDigitalTwinsAdaptorDef.GetAdaptorImplClassName(projectName);
+            }
 
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);

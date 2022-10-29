@@ -22,17 +22,38 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             this.genImplCode = genImplCode;
         }
 
-        public static string GetRelCondition(CIMClassR_RGO rgo, string targetClassName, bool rgoToRto = true)
+        public void prototype(CIMClassR_SUB subDef)
+        {
+            var subObjDef = subDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
+            string subObjKey = subObjDef.Attr_Key_Lett;
+        }
+
+        public static string GetRelCondition(CIMClassR_RGO rgo, string targetClassName, string phrase, bool rgoToRto = true)
         {
             var orefDefs = rgo.LinkedOtherSideR111();
             string condition = "";
             foreach (var orefDef in orefDefs)
             {
+                var rtoDef = orefDef.LinkedOtherSideR111().LinkedOneSideR110();
+                var subRtoDef = rtoDef.SubClassR204();
+                string targetTxtPhrs = "";
+                if (subRtoDef is CIMClassR_AONE)
+                {
+                    targetTxtPhrs = ((CIMClassR_AONE)subRtoDef).Attr_Txt_Phrs;
+                }
+                else if (subRtoDef is CIMClassR_AOTH)
+                {
+                    targetTxtPhrs = ((CIMClassR_AOTH)subRtoDef).Attr_Txt_Phrs;
+                }
+                else
+                {
+                    targetTxtPhrs = phrase;
+                }
                 var rgoAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                 var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                 var tgtObjDef = tgtAttrDef.LinkedToR102();
                 string tgtClassName = GeneratorNames.GetDomainClassName(tgtObjDef);
-                if (tgtClassName == targetClassName)
+                if (tgtClassName == targetClassName && targetTxtPhrs == phrase)
                 {
                     var rgoAttrPropVarName = GeneratorNames.GetAttrPropertyName(rgoAttrDef);
                     var tgtAttrPropVarName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
@@ -59,17 +80,32 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             return condition;
         }
 
-        public static string GetUnrelCondition(CIMClassR_RGO rgo, string targetClassName, string targetVarName)
+        public static string GetUnrelCondition(CIMClassR_RGO rgo, string targetClassName, string targetVarName, string phrase)
         {
             var orefDefs = rgo.LinkedOtherSideR111();
             string condition = "";
             foreach (var orefDef in orefDefs)
             {
+                var rtoDef = orefDef.LinkedOtherSideR111().LinkedOneSideR110();
+                var subRtoDef = rtoDef.SubClassR204();
+                string targetTxtPhrs = "";
+                if (subRtoDef is CIMClassR_AONE)
+                {
+                    targetTxtPhrs = ((CIMClassR_AONE)subRtoDef).Attr_Txt_Phrs;
+                }
+                else if (subRtoDef is CIMClassR_AOTH)
+                {
+                    targetTxtPhrs = ((CIMClassR_AOTH)subRtoDef).Attr_Txt_Phrs;
+                }
+                else
+                {
+                    targetTxtPhrs = phrase;
+                }
                 var thisAttrDef = orefDef.LinkedToR108().CIMSuperClassO_ATTR();
                 var tgtAttrDef = orefDef.LinkedOtherSideR111().LinkedOtherSideR110().LinkedOtherSideR105();
                 var tgtObjDef = tgtAttrDef.LinkedToR102();
                 string tgtClassName = GeneratorNames.GetDomainClassName(tgtObjDef);
-                if (tgtClassName == targetClassName)
+                if (tgtClassName == targetClassName && targetTxtPhrs == phrase)
                 {
                     var thisAttrPropVarName = GeneratorNames.GetAttrPropertyName(thisAttrDef);
                     var tgtAttrPropVarName = GeneratorNames.GetAttrPropertyName(tgtAttrDef);
