@@ -181,6 +181,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                     foreach (var evtKey in classSpec.Events.Keys)
                     {
                         var evtSpec = classSpec.Events[evtKey];
+                        bool isCreationEvent = DomainClassStateMachine.IsCreationEvent(evtSpec.EvtDef);
                         string stateMachineClassName = GeneratorNames.GetStateMachineClassName(classSpec.ObjDef);
                         string evtClassName = GeneratorNames.GetEventClassName(classSpec.ObjDef, evtSpec.EvtDef);
                         string evtCreateMethodName = $"{stateMachineClassName}.{evtClassName}.Create";
@@ -203,7 +204,30 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
         }
 
 
-        string GetSelectedByIdentitiesCode(string domainClassName, string selectedVarName, string invVarName, IDictionary<string,PropSpec> propSpecs)
+        string GetSelectedByIdentitiesCodeForExternalStorage(string invVarName, IDictionary<string, PropSpec> propSpecs)
+        {
+            string code = "";
+            Dictionary<string, PropSpec> identities = GetIdentityProperties(propSpecs);
+            foreach (var idKey in identities.Keys)
+            {
+                if (!string.IsNullOrEmpty(code))
+                {
+                    code += " AND ";
+                }
+                var propSpec = propSpecs[idKey];
+                var attrDef = propSpec.AttrDef;
+                string attrDataTypeName = DomainDataTypeDefs.GetDataTypeName(DomainDataTypeDefs.GetBaseDT(attrDef));
+                string term = "";
+                if (attrDataTypeName.ToLower() == "string")
+                {
+                    term = "'";
+                }
+                code += $"{attrDef.Attr_Name} = {term}" + "{" + $"{invVarName}[\"{idKey}\"]" + "}" + $"{term}";
+            }
+            return code;
+        }
+
+        string GetSelectedByIdentitiesCode(string domainClassName, string selectedVarName, string invVarName, IDictionary<string, PropSpec> propSpecs)
         {
             string code = "";
             Dictionary<string, PropSpec> identities = GetIdentityProperties(propSpecs);
@@ -592,7 +616,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
 
             return code;
         }
- 
+
     }
 
 

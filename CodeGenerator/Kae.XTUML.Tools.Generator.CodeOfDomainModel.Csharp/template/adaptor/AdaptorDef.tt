@@ -204,9 +204,9 @@ namespace <#= nameSpace #>.Adaptor
 <#
             }
 #>
-                            }<# if (itemCount < classSpec.Operations.Count) { #>,<# } #>
+                            }
+                        }<# if (itemCount < classSpec.Operations.Count) { #>,<# } #>
 
-                        }
 <#
 
             itemCount++;
@@ -359,12 +359,16 @@ namespace <#= nameSpace #>.Adaptor
         if (classSpec.Operations.Count > 0)
         {
             string domainClassName = GeneratorNames.GetDomainClassName(classSpec.ObjDef);
+            string domainClassImplName = GeneratorNames.GetDomainClassImplName(classSpec.ObjDef);
             string classKeyLett = classSpec.KeyLetter;
             string instVarName = $"instanceOf{classKeyLett}";
             string instSelectedCode = GetSelectedByIdentitiesCode(domainClassName, "selected", invVarName + ".Identities", classSpec.Properties);
+            string queryCode = GetSelectedByIdentitiesCodeForExternalStorage(invVarName + ".Identities", classSpec.Properties);
 #>
                                 case "<#= classKeyLett #>":
-                                    var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
+                                    var <#= instVarName #>TempSet = domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>);
+                                    if (domainModel.InstanceRepository.ExternalStorageAdaptor != null) <#= instVarName #>TempSet = domainModel.InstanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(<#= domainFacadeClassName #>.DomainName, "<#= classKeyLett #>", <#= instVarName #>TempSet, () => { return $"<#= queryCode #>"; }, () => { return <#= domainClassImplName #>.CreateInstance(domainModel.InstanceRepository, logger); }, "any").Result;
+                                    var <#= instVarName #> = (<#= domainClassName #>)<#= instVarName #>TempSet.FirstOrDefault();
                                     if (<#= instVarName #> != null)
                                     {
                                         switch (name)
@@ -389,7 +393,7 @@ namespace <#= nameSpace #>.Adaptor
         else
         {
 #>
-                                                 var <#= retVal #> = new { result = <#= invokeCode #> };
+                                                var <#= retVal #> = new { result = <#= invokeCode #> };
                                                 result = Newtonsoft.Json.JsonConvert.SerializeObject(<#= retVal #>);
 <#
         }
@@ -398,7 +402,16 @@ namespace <#= nameSpace #>.Adaptor
 <#
             }
 #>
+                                            default:
+                                                var resultJson = new { result = "error", status = $"\"error-unknown-operator\":\"{name}\"" };
+                                                result = Newtonsoft.Json.JsonConvert.SerializeObject(resultJson);
+                                                break;
                                         }
+                                    }
+                                    else
+                                    {
+                                        var resultJson = new { result = "error", status = $"\"error-unexisted-instance\":\"{classKeyLett}[{invSpec.Identities["MiddleEntityId"]}]\"" };
+                                        result = Newtonsoft.Json.JsonConvert.SerializeObject(resultJson);
                                     }
                                     break;
 <#
@@ -417,6 +430,7 @@ namespace <#= nameSpace #>.Adaptor
 
         public override string SendEvent(string classKeyLett, string name, RequestingParameters parameters)
         {
+            string status = "";
             bool sent = false;
             if (classSpecs.ContainsKey(classKeyLett))
             {
@@ -438,12 +452,16 @@ namespace <#= nameSpace #>.Adaptor
         if (classSpec.Events.Count > 0)
         {
             string domainClassName = GeneratorNames.GetDomainClassName(classSpec.ObjDef);
+            string domainClassImpleName = GeneratorNames.GetDomainClassImplName(classSpec.ObjDef);
             string classKeyLett = classSpec.KeyLetter;
             string instVarName = $"instanceOf{classKeyLett}";
             string instSelectedCode = GetSelectedByIdentitiesCode(domainClassName, "selected", invVarName + ".Identities", classSpec.Properties);
+            string queryCode = GetSelectedByIdentitiesCodeForExternalStorage(invVarName + ".Identities", classSpec.Properties);
 #>
                                 case "<#= classKeyLett #>":
-                                    var <#= instVarName #> = (<#= domainClassName #>)domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>).FirstOrDefault();
+                                    var <#= instVarName #>TempSet = domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>);
+                                    if (domainModel.InstanceRepository.ExternalStorageAdaptor != null) <#= instVarName #>TempSet = domainModel.InstanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(CIMADTTestModelLib.DomainName, "<#= classKeyLett #>", <#= instVarName #>TempSet, () => { return $"<#= queryCode #>"; }, () => { return <#= domainClassImpleName #>.CreateInstance(domainModel.InstanceRepository, logger); }, "any").Result;
+                                    var <#= instVarName #> = (<#= domainClassName #>)<#= instVarName #>TempSet.FirstOrDefault();
                                     switch (name)
                                     {
 <#
@@ -466,12 +484,36 @@ namespace <#= nameSpace #>.Adaptor
                 string evtInvCode = $"{evtCreateMethodName}({instVarName}{paramCode})";
 #>
                                         case "<#= evtClassName #>":
+<#
+                if (evtSpec.CreationEvent)
+                {
+#>
                                             <#= evtInvCode #>;
                                             sent = true;
+<#
+                }
+                else
+                {
+#>
+                                            var evtOf<#= evtClassName #> = <#= evtInvCode #>;
+                                            if (evtOf<#= evtClassName #> != null)
+                                            {
+                                                sent = true;
+                                            }
+                                            else
+                                            {
+                                                status = $"unexisted instance - <#= queryCode #>";
+                                            }
+<#
+                }
+#>
                                             break;
 <#
             }
 #>
+                                        default:
+                                            status = $"unknown event label:'{name}'";
+                                            break;
                                     }
                                     break;
 <#
@@ -483,7 +525,7 @@ namespace <#= nameSpace #>.Adaptor
                     }
                 }
             }
-            var result = new { sent = sent };
+            var result = new { sent = sent, status = status };
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
