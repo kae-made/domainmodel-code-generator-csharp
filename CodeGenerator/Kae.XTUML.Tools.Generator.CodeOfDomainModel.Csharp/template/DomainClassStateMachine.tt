@@ -217,6 +217,13 @@ namespace <#= nameSpace #>
                         receiver.TakeEvent(newEvent);
                     }
                 }
+                else
+                {
+                    if (sendNow)
+                    {
+                        newEvent = null;
+                    }
+                }
 <#
         }
 #>
