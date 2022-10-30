@@ -456,7 +456,7 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(", bool sendNow");
+            this.Write(", bool isSelfEvent, bool sendNow");
             
             #line 193 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassStateMachine.tt"
  if (isCreationEvent) { 
@@ -519,7 +519,7 @@ namespace ");
                 {
                     if (sendNow)
                     {
-                        receiver.TakeEvent(newEvent);
+                        receiver.TakeEvent(newEvent, isSelfEvent);
                     }
                 }
                 else

@@ -1421,7 +1421,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                 {
                     paramCode = $", {paramCode}";
                 }
-                paramCode += ", sendNow:true";
+                paramCode += ", isSelfEvent:false, sendNow:true";
                 if (evtSpec.CreationEvent)
                 {
                     paramCode += ", domainModel.InstanceRepository, logger:logger";

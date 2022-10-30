@@ -71,7 +71,7 @@ namespace ConsoleAppCsharpGenerator
                 {
                     requiredOptions.Remove(args[index]);
                     string domainModelPath = args[++index];
-                    genContext.SetOptionValue(GeneratorBase.CPKeyDomainModelFilePath,(domainModelPath, !File.Exists(domainModelPath)));
+                    genContext.SetOptionValue(GeneratorBase.CPKeyDomainModelFilePath, (domainModelPath, !File.Exists(domainModelPath)));
                 }
                 else if (args[index] == "--project")
                 {
@@ -104,9 +104,13 @@ namespace ConsoleAppCsharpGenerator
                 {
                     genContext.SetOptionValue(CsharpCodeGenerator.CPKeyBackup, bool.Parse(args[++index]));
                 }
-                else if (args[index]== "--adoptor-gen")
+                else if (args[index] == "--adoptor-gen")
                 {
                     genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAdaptorGen, bool.Parse(args[++index]));
+                }
+                else if (args[index] == "--azuredigitaltwins")
+                {
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAzureDigitalTwins, args[++index]);
                 }
                 else
                 {
@@ -123,6 +127,5 @@ namespace ConsoleAppCsharpGenerator
                 return false;
             }
         }
-
     }
 }

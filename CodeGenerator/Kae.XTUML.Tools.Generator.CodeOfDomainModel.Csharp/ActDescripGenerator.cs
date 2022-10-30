@@ -1931,7 +1931,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         createParamCode += ", " + eventParamsCode;
                     }
 
-                    writer.WriteLine($"{indent}{declCode}{vVar.Attr_Name} = {domainClassName}.{eventClassName}.Create({createParamCode}, sendNow:false);");
+                    writer.WriteLine($"{indent}{declCode}{vVar.Attr_Name} = {domainClassName}.{eventClassName}.Create({createParamCode}, isSelfEvent:false, sendNow:false);");
                 }
                 else if (subCsmeDef is CIMClassE_CEA)
                 {
@@ -1943,7 +1943,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         createParamCode = $"{eventParamsCode}, ";
                     }
                     writer.WriteLine($"{indent}// This generator doesn't support Class State Machine.");
-                    writer.WriteLine($"{indent}// {domainClassName}.{eventClassName}.Create({createParamCode}sendNow:false);");
+                    writer.WriteLine($"{indent}// {domainClassName}.{eventClassName}.Create({createParamCode}isSelfEvent:false, sendNow:false);");
                 }
                 else if (subCsmeDef is CIMClassE_CEC)
                 {
@@ -1954,7 +1954,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     {
                         createParamCode += ", " + eventParamsCode;
                     }
-                    writer.WriteLine($"{indent}{declCode}{vVar.Attr_Name} = {domainClassName}.{eventClassName}.Create({createParamCode}, sendNow:false, instanceRepository:instanceRepository, logger:logger);");
+                    writer.WriteLine($"{indent}{declCode}{vVar.Attr_Name} = {domainClassName}.{eventClassName}.Create({createParamCode}, isSelfEvent:false, sendNow:false, instanceRepository:instanceRepository, logger:logger);");
                 }
             }
             else if (subEEssDef is CIMClassE_GES)
@@ -1982,16 +1982,22 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     var genDef = (CIMClassE_GEN)subGsmeDef;
                     var destVarDef = genDef.LinkedToR712();
                     string pVarName = destVarDef.Attr_Name;
+                    string isSelfEventSpec = "isSelfEvent:";
                     if (destVarDef.Attr_Name.ToLower() == "self")
                     {
                         pVarName = this.selfVarNameOnCode;
+                        isSelfEventSpec += "true";
+                    }
+                    else
+                    {
+                        isSelfEventSpec += "false";
                     }
                     string createParamCode = $"receiver:{pVarName}";
                     if (!string.IsNullOrEmpty(eventParamsCode))
                     {
                         createParamCode += ", " + eventParamsCode;
                     }
-                    writer.WriteLine($"{indent}{domainClassName}.{eventClassName}.Create({createParamCode}, sendNow:true);");
+                    writer.WriteLine($"{indent}{domainClassName}.{eventClassName}.Create({createParamCode}, {isSelfEventSpec}, sendNow:true);");
                 }
                 else if (subGsmeDef is CIMClassE_GAR)
                 {

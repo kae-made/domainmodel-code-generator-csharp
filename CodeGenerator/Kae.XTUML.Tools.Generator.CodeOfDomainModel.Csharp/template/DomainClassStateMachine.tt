@@ -190,7 +190,7 @@ namespace <#= nameSpace #>
         }
         string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
 #>
-            public static <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #>, bool sendNow<# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
+            public static <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #>, bool isSelfEvent, bool sendNow<# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
             {
                 var newEvent = new <#= evtClassName #>(receiver)<#= constructorCallArgs #>;
 <#
@@ -214,7 +214,7 @@ namespace <#= nameSpace #>
                 {
                     if (sendNow)
                     {
-                        receiver.TakeEvent(newEvent);
+                        receiver.TakeEvent(newEvent, isSelfEvent);
                     }
                 }
                 else

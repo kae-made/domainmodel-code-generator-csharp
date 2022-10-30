@@ -476,7 +476,7 @@ namespace <#= nameSpace #>.Adaptor
                 {
                     paramCode = $", {paramCode}";
                 }
-                paramCode += ", sendNow:true";
+                paramCode += ", isSelfEvent:false, sendNow:true";
                 if (evtSpec.CreationEvent)
                 {
                     paramCode += ", domainModel.InstanceRepository, logger:logger";
