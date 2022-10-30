@@ -524,10 +524,12 @@ namespace <#= nameSpace #>
 <#
             }
 #>
+<#
+        }
+#>
             }
             <#= stateOfPropVarName #> = false;
 <#
-        }
     }
 
 #>
