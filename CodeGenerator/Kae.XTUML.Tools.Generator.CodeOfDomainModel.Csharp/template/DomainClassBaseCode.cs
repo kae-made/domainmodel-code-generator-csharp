@@ -32,9 +32,26 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.logger = logger;
         }
 
+        public static string GetAttrIdentity0Name(IList<AttributeDef> attrDefs)
+        {
+            string result = "";
+            foreach(var attrDef in attrDefs)
+            {
+                if (attrDef.IdentityLevel0)
+                {
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        result += ";";
+                    }
+                    string attrPropertyName = GeneratorNames.GetAttrPropertyName(attrDef.AttrDef);
+                    result += $"{attrDef.AttrDef.Attr_Name}=" + "{" + $"{attrPropertyName}" + "}";
+                }
+            }
+            return result;
+        }
         public static string GetAttrIdentity0Name(CIMClassO_OBJ objDef)
         {
-            string name = "";
+            string result = "";
             var id0Def = objDef.LinkedFromR104().Where(a => { return a.Attr_Oid_ID == 0; }).FirstOrDefault();
             if (id0Def != null)
             {
@@ -42,10 +59,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 foreach (var oidaDef in oidaDefs)
                 {
                     var oattrDef = oidaDef.LinkedOtherSideR105();
-                    name = GeneratorNames.GetAttrPropertyLocalName(oattrDef);
+                    string attrPropertyName = GeneratorNames.GetAttrPropertyLocalName(oattrDef);
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        result += ";";
+                    }
+                    result += $"{oattrDef.Attr_Name}=" + "{" + $"{attrPropertyName}" + "}";
                 }
             }
-            return name;
+            return result;
         }
         public void prototype()
         {
@@ -692,6 +714,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         {
             public CIMClassO_ATTR AttrDef { get; set; }
             public bool IsIdentity { get; set; }
+            public bool IdentityLevel0 { get; set; }
             public bool IsReferential { get; set; }
             public string DataTypeName { get; set; }
             public bool IsUniqueId { get; set; }
