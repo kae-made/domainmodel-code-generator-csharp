@@ -136,13 +136,13 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             {// new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
              // new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="6.2.0"},
+              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="6.7.0"},
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.1" }
             });
              
             if (isAzureDigitalTwins)
             {
-                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "0.1.0");
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "0.4.0");
                 projectFile.AddLibrary("Azure.DigitalTwins.Core", "1.4.0");
                 projectFile.AddLibrary("Azure.Identity", "1.7.0");
             }
