@@ -676,7 +676,7 @@
 <#= indent #>    var candidates = instanceRepository.GetDomainInstances("<#= targetObjDef.Attr_Key_Lett #>").Where(inst=>(<#= condition #>));
 <#= indent #>    if (candidates.Count() == 0)
 <#= indent #>    {
-<#= indent #>        if (instanceRepository.ExternalStorageAdaptor != null) candidates = (instanceRepository.ExternalStorageAdaptor.CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
+<#= indent #>        if (instanceRepository.ExternalStorageAdaptor != null) candidates = instanceRepository.ExternalStorageAdaptor.CheckTraverseStatus(DomainName, this, "<#= targetObjDef.Attr_Key_Lett #>", "<#= relName #>", candidates, () => { return <#= targetClassImplName #>.CreateInstance(instanceRepository, logger); }, "any").Result;
 <#= indent #>        if (candidates.Count() > 0) ((<#= targetClassName #>)candidates.FirstOrDefault()).<#= methodNameLinkedForOpposite #>();
 <#= indent #>    }
 <#= indent #>    return (<#= targetClassName #>)candidates.FirstOrDefault();

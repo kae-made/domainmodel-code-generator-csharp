@@ -3512,8 +3512,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line default
             #line hidden
-            this.Write("        if (instanceRepository.ExternalStorageAdaptor != null) candidates = (inst" +
-                    "anceRepository.ExternalStorageAdaptor.CheckTraverseStatus(DomainName, this, \"");
+            this.Write("        if (instanceRepository.ExternalStorageAdaptor != null) candidates = insta" +
+                    "nceRepository.ExternalStorageAdaptor.CheckTraverseStatus(DomainName, this, \"");
             
             #line 679 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\RelationshipDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(targetObjDef.Attr_Key_Lett));
