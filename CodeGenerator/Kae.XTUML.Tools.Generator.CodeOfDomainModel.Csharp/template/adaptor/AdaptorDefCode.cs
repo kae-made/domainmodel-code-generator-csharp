@@ -479,20 +479,20 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                                         {
                                             var aoneDef = (CIMClassR_AONE)subRtoDef;
                                             relPhrs = aoneDef.Attr_Txt_Phrs;
-                                            isSet = (aoneDef.Attr_Mult == 1);
-                                            isCond = (aoneDef.Attr_Cond == 1);
-                                            side = "One";
                                             var aothDef = assrDef.LinkedToR211().LinkedFromR210();
+                                            isSet = (aothDef.Attr_Mult == 1);
+                                            isCond = (aothDef.Attr_Cond == 1);
+                                            side = "One";
                                             methodName = GeneratorNames.GetRelationshipMethodName(relDef,"Other",aothDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                                         }
                                         else if (subRtoDef is CIMClassR_AOTH)
                                         {
                                             var aothDef = (CIMClassR_AOTH)subRtoDef;
                                             relPhrs = aothDef.Attr_Txt_Phrs;
-                                            isSet = (aothDef.Attr_Mult == 1);
-                                            isCond = (aothDef.Attr_Cond == 1);
-                                            side = "Other";
                                             var aoneDef = assrDef.LinkedToR211().LinkedFromR209();
+                                            isSet = (aoneDef.Attr_Mult == 1);
+                                            isCond = (aoneDef.Attr_Cond == 1);
+                                            side = "Other";
                                             methodName = GeneratorNames.GetRelationshipMethodName(relDef, "One", aoneDef.Attr_Txt_Phrs, GeneratorNames.RelLinkMethodType.Linked);
                                         }
                                         var assocDef = assrDef.LinkedToR211();
