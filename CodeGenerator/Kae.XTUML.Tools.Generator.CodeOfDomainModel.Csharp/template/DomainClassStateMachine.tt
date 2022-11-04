@@ -230,6 +230,25 @@ namespace <#= nameSpace #>
 
                 return newEvent;
             }
+
+            public override IDictionary<string, object> GetSupplementalData()
+            {
+                var supplementalData = new Dictionary<string, object>();
+
+<#
+        foreach (var evtdiDef in evtdiDefs)
+        {
+            var evtdiName = evtdiDef.Attr_Name;
+            var dtDef = evtdiDef.LinkedToR524();
+            var dataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+#>
+                supplementalData.Add("<#= evtdiName #>", <#= evtdiName #>);
+<#
+        }
+#>
+
+                return supplementalData;
+            }
         }
 
 <#
@@ -240,17 +259,20 @@ namespace <#= nameSpace #>
 
         protected InstanceRepository instanceRepository;
 
+        protected string DomainName { get { return target.DomainName; } }
+
+        // Constructor
 <#
     if (hasCreationEvent)
     {
 #>
-        public <#= stateMachineClassName #>(<#= domainClassName #> target, InstanceRepository instanceRepository, Logger logger) : base(0, logger)
+        public <#= stateMachineClassName #>(<#= domainClassName #> target, bool synchronousMode, InstanceRepository instanceRepository, Logger logger) : base(0, synchronousMode, logger)
 <#
     }
     else
     {
 #>
-        public <#= stateMachineClassName #>(<#= domainClassName #> target, InstanceRepository instanceRepository, Logger logger) : base(1, logger)
+        public <#= stateMachineClassName #>(<#= domainClassName #> target, bool synchronousMode, InstanceRepository instanceRepository, Logger logger) : base(1, synchronousMode, logger)
 <#
     }
 #>
