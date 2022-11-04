@@ -132,7 +132,7 @@ namespace ");
     var attrDefs = objDef.LinkedFromR102();
     foreach (var attrDef in attrDefs)
     {
-        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false };
+        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false, IdentityLevel0 = false };
         var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
         var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
         var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
@@ -188,14 +188,14 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("\r\n        public string GetIdForExternalStorage() {  return ");
+            this.Write("\r\n        public string GetIdForExternalStorage() {  return $\"");
             
             #line 119 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(id0AttrName));
             
             #line default
             #line hidden
-            this.Write("; }\r\n\r\n        public static ");
+            this.Write("\"; }\r\n\r\n        public static ");
             
             #line 121 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassBaseName));
@@ -216,14 +216,15 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("=null)\r\n        {\r\n            var newInstance = new ");
+            this.Write("=null, bool synchronousMode = false)\r\n        {\r\n            var newInstance = ne" +
+                    "w ");
             
             #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(domainClassBaseName));
             
             #line default
             #line hidden
-            this.Write("(instanceRepository, logger);\r\n");
+            this.Write("(instanceRepository, logger, synchronousMode);\r\n");
             
             #line 124 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(logInstanceCreationGen));
@@ -253,9 +254,9 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("(InstanceRepository instanceRepository, Logger logger)\r\n        {\r\n            th" +
-                    "is.instanceRepository = instanceRepository;\r\n            this.logger = logger;\r\n" +
-                    "");
+            this.Write("(InstanceRepository instanceRepository, Logger logger, bool synchronousMode)\r\n   " +
+                    "     {\r\n            this.instanceRepository = instanceRepository;\r\n            t" +
+                    "his.logger = logger;\r\n");
             
             #line 136 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 
@@ -309,7 +310,7 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("(this, instanceRepository, logger);\r\n");
+            this.Write("(this, synchronousMode, instanceRepository, logger);\r\n");
             
             #line 159 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 

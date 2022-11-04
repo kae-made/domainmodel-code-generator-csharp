@@ -62,7 +62,7 @@ namespace <#= nameSpace #>
     var attrDefs = objDef.LinkedFromR102();
     foreach (var attrDef in attrDefs)
     {
-        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false };
+        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false, IdentityLevel0 = false };
         var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
         var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
         var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
@@ -116,11 +116,11 @@ namespace <#= nameSpace #>
     string id0AttrName = GetAttrIdentity0Name(objDef);
 #>
 
-        public string GetIdForExternalStorage() {  return <#= id0AttrName #>; }
+        public string GetIdForExternalStorage() {  return $"<#= id0AttrName #>"; }
 
-        public static <#= domainClassBaseName #> CreateInstance(InstanceRepository instanceRepository, Logger logger=null, <#= changedStateClassName #> <#= changedStateVarName #>=null)
+        public static <#= domainClassBaseName #> CreateInstance(InstanceRepository instanceRepository, Logger logger=null, <#= changedStateClassName #> <#= changedStateVarName #>=null, bool synchronousMode = false)
         {
-            var newInstance = new <#= domainClassBaseName #>(instanceRepository, logger);
+            var newInstance = new <#= domainClassBaseName #>(instanceRepository, logger, synchronousMode);
 <#= logInstanceCreationGen #>
             instanceRepository.Add(newInstance);
 
@@ -129,7 +129,7 @@ namespace <#= nameSpace #>
             return newInstance;
         }
 
-        public <#= domainClassBaseName #>(InstanceRepository instanceRepository, Logger logger)
+        public <#= domainClassBaseName #>(InstanceRepository instanceRepository, Logger logger, bool synchronousMode)
         {
             this.instanceRepository = instanceRepository;
             this.logger = logger;
@@ -155,7 +155,7 @@ namespace <#= nameSpace #>
             {
                 string stateMachineClassName = GeneratorNames.GetStateMachineClassName(objDef);
 #>
-            <#= stateMachineLocalVariableName #> = new <#= stateMachineClassName #>(this, instanceRepository, logger);
+            <#= stateMachineLocalVariableName #> = new <#= stateMachineClassName #>(this, synchronousMode, instanceRepository, logger);
 <#
             }
         }
