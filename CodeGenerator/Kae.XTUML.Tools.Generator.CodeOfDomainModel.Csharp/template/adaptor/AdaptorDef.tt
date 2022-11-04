@@ -35,19 +35,19 @@ using System.Threading.Tasks;
 
 namespace <#= nameSpace #>.Adaptor
 {
-    // Entry for Application front end.
-    public static class DomainModelAdaptorEntry
-    {
-        public static IDictionary<string, object> Configuration { get; } = new Dictionary<string, object>();
-        public static DomainModelAdaptor GetAdaptor(Logger logger) { foreach (var k in Configuration.Keys) { ADTTestModelAdaptor.Configuration.Add(k, Configuration[k]); } return <#= nameSpace #>Adaptor.GetInstance(logger); }
-    }
-
 <#
     Initialize();
 
     string domainFacadeClassName = GeneratorNames.GetDomainFacadeClassName(nameSpace);
     string adaptorName = $"{nameSpace}Adaptor";
 #>
+    // Entry for Application front end.
+    public static class DomainModelAdaptorEntry
+    {
+        public static IDictionary<string, object> Configuration { get; } = new Dictionary<string, object>();
+        public static DomainModelAdaptor GetAdaptor(Logger logger) { foreach (var k in Configuration.Keys) { <#= adaptorName #>.Configuration.Add(k, Configuration[k]); } return <#= nameSpace #>Adaptor.GetInstance(logger); }
+    }
+
     public class <#= adaptorName #> : DomainModelAdaptor
     {
         <#= domainFacadeClassName #> domainModel;
