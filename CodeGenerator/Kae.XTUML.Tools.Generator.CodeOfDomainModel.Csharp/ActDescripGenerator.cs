@@ -1932,6 +1932,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     }
 
                     writer.WriteLine($"{indent}{declCode}{vVar.Attr_Name} = {domainClassName}.{eventClassName}.Create({createParamCode}, isSelfEvent:false, sendNow:false);");
+                    writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null && instanceRepository.ExternalStorageAdaptor.DoseEventComeFromExternal())");
+                    writer.WriteLine($"{indent}" + "{");
+                    writer.WriteLine($"{indent}    changedStates.Add(new CEventChangedState() {{ OP = ChangedState.Operation.Create, Target = {dstVariableDef.Name}, Event = {vVar.Attr_Name} }});");
+                    writer.WriteLine($"{indent}" + "}");
                 }
                 else if (subCsmeDef is CIMClassE_CEA)
                 {
@@ -1955,6 +1959,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         createParamCode += ", " + eventParamsCode;
                     }
                     writer.WriteLine($"{indent}{declCode}{vVar.Attr_Name} = {domainClassName}.{eventClassName}.Create({createParamCode}, isSelfEvent:false, sendNow:false, instanceRepository:instanceRepository, logger:logger);");
+                    writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null && instanceRepository.ExternalStorageAdaptor.DoseEventComeFromExternal())");
+                    writer.WriteLine($"{indent}" + "{");
+                    writer.WriteLine($"{indent}    changedStates.Add(new CEventChangedState() {{ OP = ChangedState.Operation.Create, Target = null, Event = {vVar.Attr_Name} }});");
+                    writer.WriteLine($"{indent}" + "}");
                 }
             }
             else if (subEEssDef is CIMClassE_GES)
@@ -1983,10 +1991,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     var destVarDef = genDef.LinkedToR712();
                     string pVarName = destVarDef.Attr_Name;
                     string isSelfEventSpec = "isSelfEvent:";
+                    bool isSefEvent = false;
                     if (destVarDef.Attr_Name.ToLower() == "self")
                     {
                         pVarName = this.selfVarNameOnCode;
                         isSelfEventSpec += "true";
+                        isSefEvent = true;
                     }
                     else
                     {
@@ -1997,7 +2007,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     {
                         createParamCode += ", " + eventParamsCode;
                     }
-                    writer.WriteLine($"{indent}{domainClassName}.{eventClassName}.Create({createParamCode}, {isSelfEventSpec}, sendNow:true);");
+                    if (isSefEvent)
+                    {
+                        writer.WriteLine($"{indent}{domainClassName}.{eventClassName}.Create({createParamCode}, {isSelfEventSpec}, sendNow:true);");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null && instanceRepository.ExternalStorageAdaptor.DoseEventComeFromExternal())");
+                        writer.WriteLine($"{indent}" + "{");
+                        writer.WriteLine($"{indent}    changedStates.Add(new CEventChangedState() {{ OP = ChangedState.Operation.Create, Target = {pVarName}, Event = {domainClassName}.{eventClassName}.Create({createParamCode}, false, sendNow:false) }});");
+                        writer.WriteLine($"{indent}" + "}");
+                        writer.WriteLine($"{indent}else");
+                        writer.WriteLine($"{indent}" + "{");
+                        writer.WriteLine($"{indent}    {domainClassName}.{eventClassName}.Create({createParamCode}, {isSelfEventSpec}, sendNow:true);");
+                        writer.WriteLine($"{indent}" + "}");
+                    }
                 }
                 else if (subGsmeDef is CIMClassE_GAR)
                 {
