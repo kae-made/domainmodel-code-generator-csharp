@@ -347,7 +347,14 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(" reciever) : base((int)Events.");
+            this.Write(" reciever) : base(\"");
+            
+            #line 129 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassStateMachine.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(evtClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\", (int)Events.");
             
             #line 129 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassStateMachine.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(evtName));

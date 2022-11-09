@@ -17,14 +17,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private string indent;
         private CIMClassO_OBJ objDef;
         private bool genImplCode;
+        IDictionary<string, CIMClassS_EE> usedExternalEntities;
         private ColoringManager coloringManager;
         private Logger logger;
 
-        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, ColoringManager colringManager, Logger logger)
+        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager colringManager, Logger logger)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genImplCode = genImplCode;
+            this.usedExternalEntities = usedEEs;
             this.coloringManager = colringManager;
             this.logger = logger;
         }
@@ -46,7 +48,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                         {
                             string actionDescrip = dbattrDef.Attr_Action_Semantics;
                             var actDef = dabDef.CIMSuperClassACT_ACT();
-                            var actGen = new ActDescripGenerator(actDef, "this", "", "", coloringManager, logger);
+                            var actGen = new ActDescripGenerator(actDef, "this", "", "", usedExternalEntities, coloringManager, logger);
                             string actGenCode = actGen.Generate();
                         }
                     }

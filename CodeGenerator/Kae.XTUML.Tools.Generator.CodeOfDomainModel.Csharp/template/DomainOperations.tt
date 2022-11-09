@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Text;
 using System.Reflection;
 using Kae.DomainModel.Csharp.Framework;
 using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
@@ -75,7 +77,7 @@ namespace <#= nameSpace #>
         {
             Console.WriteLine($"  - Generating {syncDef.Attr_Name}...");
             var actDef = fnbDef.CIMSuperClassACT_ACT();
-            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", coloringManager, logger);
+            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, logger);
             string code = actDescripGen.Generate();
 #>
             // Generated from action description
@@ -102,5 +104,40 @@ namespace <#= nameSpace #>
 <#
     }
 #>
+
+        public IList<string> CreateExternalEntities()
+        {
+            var configuration = new List<string>();
+<#
+            int numOfEE = 0;
+            foreach(var eeKey in usedExternalEntities.Keys)
+            {
+                var eeDef = usedExternalEntities[eeKey];
+                string eeKeyLetter = eeDef.Attr_Key_Lett;
+                var eeImplInfo = GetExternalEntityConstructorName(eeDef);
+                numOfEE++;
+#>
+            instanceRepository.Add(new <#= eeImplInfo.New #>());
+            var refOf<#= eeKey #> = instanceRepository.GetExternalEntity("<#= eeKey #>");
+            configuration.AddRange(refOf<#= eeKey #>.ConfigurationKeys);
+<#
+            }
+#>
+            return configuration;
+        }
+        public void Initialize(IDictionary<string, IDictionary<string, object>> configuration)
+        {
+<#
+            foreach(var eeKey in usedExternalEntities.Keys)
+            {
+                var eeDef = usedExternalEntities[eeKey];
+                string eeKeyLetter = eeDef.Attr_Key_Lett;
+#>
+            var refOf<#= eeKey #> = instanceRepository.GetExternalEntity("<#= eeKey #>");
+            refOf<#= eeKey #>.Initialize(configuration["<#= eeKey #>"]);
+<#
+            }
+#>
+        }
     }
 }

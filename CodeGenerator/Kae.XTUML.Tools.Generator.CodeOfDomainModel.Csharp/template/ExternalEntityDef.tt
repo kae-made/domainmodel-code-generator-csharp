@@ -23,6 +23,7 @@ using System.Linq;
 using System.Reflection;
 using Kae.StateMachine;
 using Kae.DomainModel.Csharp.Framework;
+using Kae.Utility.Logging;
 
 <#
     string wrapperClassName = GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false);
@@ -34,6 +35,11 @@ namespace <#= nameSpace #>.ExternalEntities
         protected static readonly string eeKeyLetter = "<#= eeDef.Attr_Key_Lett #>";
         public string EEKey { get { return eeKeyLetter; } }
 
+        protected Logger logger;
+        public Logger Logger { get { return logger; } set { logger = value; } }
+
+        protected List<string> configuration = new List<string>();
+        public IList<string> Configuration { get { return configuration; } }
 <#
     var brgDefs = eeDef.LinkedFromR19();
     foreach(var brgDef in brgDefs){
@@ -56,5 +62,12 @@ namespace <#= nameSpace #>.ExternalEntities
 <#
     }
 #>
+
+        public void Initialize(IDictionary<string, string> configuration)
+        {
+            InitializeImpl(configuration);
+        }
+
+        protected abstract void InitializeImpl(IDictionary<string, string> configuration);
     }
 }

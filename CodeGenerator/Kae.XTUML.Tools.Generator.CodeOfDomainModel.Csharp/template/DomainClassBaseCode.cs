@@ -19,15 +19,17 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string nameSpace;
         string facadeClassName;
         CIMClassO_OBJ objDef;
+        IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
         Logger logger;
 
-        public DomainClassBase(string version, string nameSpace, string facadeClassName, CIMClassO_OBJ objDef, ColoringManager coloringManager, Logger logger)
+        public DomainClassBase(string version, string nameSpace, string facadeClassName, CIMClassO_OBJ objDef, IDictionary<string,CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.facadeClassName = facadeClassName;
             this.objDef = objDef;
+            this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
             this.logger = logger;
         }

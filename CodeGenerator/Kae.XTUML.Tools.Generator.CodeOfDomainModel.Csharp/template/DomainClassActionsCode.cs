@@ -19,16 +19,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         CIMClassO_OBJ objDef;
         CIMClassSM_SM smDef;
         bool generateCode;
+        IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
         Logger logger;
 
-        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode, ColoringManager coloringManager, Logger logger)
+        public DomainClassActions(string version, string nameSpace, CIMClassO_OBJ objDef, CIMClassSM_SM smDef, bool generateCode, IDictionary<string,CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.objDef = objDef;
             this.smDef = smDef;
             this.generateCode = generateCode;
+            this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
             this.logger = logger;
         }
@@ -46,7 +48,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 {
                     Console.WriteLine($"Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var actDef = sabDef.CIMSuperClassACT_ACT();
-                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ", coloringManager, logger);
+                    var actionGen = new ActDescripGenerator(actDef, "this", "    ", "        ", usedExternalEntities, coloringManager, logger);
                     string code = actionGen.Generate();
                 }
             }

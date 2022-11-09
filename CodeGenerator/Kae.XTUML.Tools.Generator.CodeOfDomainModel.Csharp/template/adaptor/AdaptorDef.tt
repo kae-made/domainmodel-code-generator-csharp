@@ -61,22 +61,64 @@ namespace <#= nameSpace #>.Adaptor
             if (adapterInstance == null)
             {
                 var instanceRepository = new InstanceRepositoryInMemory(logger);
-<#
-    if ((!string.IsNullOrEmpty(externalStorageImplClassName)) && (!string.IsNullOrEmpty(externalStorageConnectionStringKey)))
-    {
-#>
-                var azureDigitalTwinsAdaptor = new <#= externalStorageImplClassName #>((string)Configuration["<#= externalStorageConnectionStringKey #>"], (TokenCredential)Configuration["<#= externalStorageCredentialKey #>"], instanceRepository, logger);
-                azureDigitalTwinsAdaptor.Initialize();
-                instanceRepository.ExternalStorageAdaptor = azureDigitalTwinsAdaptor;
-<#
-    }
-#>
+
                 var cimLib = new <#= domainFacadeClassName #>(instanceRepository);
                 adapterInstance = new <#= adaptorName #>(cimLib, logger);
             }
             return adapterInstance;
         }
 
+        public override IDictionary<string, IList<string>> ConfigurationKeys()
+        {
+            var configurationKeys = new Dictionary<string, IList<string>>();
+
+            var externalEntities = domainModel.InstanceRepository.GetExternalEntities();
+            foreach(var externalEntity in externalEntities)
+            {
+                configurationKeys.Add(externalEntity.EEKey, new List<string>());
+                foreach(var cKey in externalEntity.ConfigurationKeys)
+                {
+                    configurationKeys[externalEntity.EEKey].Add(cKey);
+                }
+            }
+
+<#
+    if ((!string.IsNullOrEmpty(externalStorageImplClassName)) && (!string.IsNullOrEmpty(externalStorageConnectionStringKey)))
+    {
+#>
+            // for Azure Digital Twins Adaptor
+            configurationKeys.Add("AzureDigitalTwins", new List<string>());
+            configurationKeys["AzureDigitalTwins"].Add("ADTInstanceUri");
+            configurationKeys["AzureDigitalTwins"].Add("ADTCredential");
+
+<#
+    }
+#>
+            return configurationKeys;
+        }
+
+        public override void Initialize(IDictionary<string, IDictionary<string, object>> config)
+        {
+            var externalEntities = domainModel.InstanceRepository.GetExternalEntities();
+            foreach(var externalEntity in externalEntities)
+            {
+                externalEntity.Initialize(config[externalEntity.EEKey]);
+            }
+
+<#
+    if ((!string.IsNullOrEmpty(externalStorageImplClassName)) && (!string.IsNullOrEmpty(externalStorageConnectionStringKey)))
+    {
+#>
+            // for Azure Digital Twins
+            string adtInstanceUri = (string)config["AzureDigitalTwins"]["ADTInstanceUri"];
+            TokenCredential adtCredential = (TokenCredential)config["AzureDigitalTwins"]["ADTCredential"];
+            var azureDigitalTwinsAdaptor = new ADTTestModelAzureDigitalTwinsAdaptor(adtInstanceUri, adtCredential, domainModel.InstanceRepository, logger);
+            azureDigitalTwinsAdaptor.Initialize();
+            domainModel.InstanceRepository.ExternalStorageAdaptor = azureDigitalTwinsAdaptor;
+<#
+    }
+#>
+        }
 
         public <#= adaptorName #>(<#= domainFacadeClassName #> domainModel, Logger logger) : base(logger)
         {
@@ -460,7 +502,7 @@ namespace <#= nameSpace #>.Adaptor
 #>
                                 case "<#= classKeyLett #>":
                                     var <#= instVarName #>TempSet = domainModel.InstanceRepository.GetDomainInstances("<#= classKeyLett #>").Where(<#= instSelectedCode #>);
-                                    if (domainModel.InstanceRepository.ExternalStorageAdaptor != null) <#= instVarName #>TempSet = domainModel.InstanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(CIMADTTestModelLib.DomainName, "<#= classKeyLett #>", <#= instVarName #>TempSet, () => { return $"<#= queryCode #>"; }, () => { return <#= domainClassImpleName #>.CreateInstance(domainModel.InstanceRepository, logger); }, "any").Result;
+                                    if (domainModel.InstanceRepository.ExternalStorageAdaptor != null) <#= instVarName #>TempSet = domainModel.InstanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(<#= domainFacadeClassName #>.DomainName, "<#= classKeyLett #>", <#= instVarName #>TempSet, () => { return $"<#= queryCode #>"; }, () => { return <#= domainClassImpleName #>.CreateInstance(domainModel.InstanceRepository, logger); }, "any").Result;
                                     var <#= instVarName #> = (<#= domainClassName #>)<#= instVarName #>TempSet.FirstOrDefault();
                                     switch (name)
                                     {

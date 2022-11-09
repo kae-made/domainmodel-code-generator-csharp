@@ -126,7 +126,7 @@ namespace <#= nameSpace #>
         {
             <#= domainClassName #> reciever;
 
-            public <#= evtClassName #>(<#= domainClassName #> reciever) : base((int)Events.<#= evtName #>)
+            public <#= evtClassName #>(<#= domainClassName #> reciever) : base("<#= evtClassName #>", (int)Events.<#= evtName #>)
             {
                 this.reciever = reciever;
             }

@@ -203,7 +203,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                 Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
                 var actDef = opbDef.CIMSuperClassACT_ACT();
                 string baseIndent = "    ";
-                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, coloringManager, logger);
+                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, logger);
                 var descripCode = actDescripGen.Generate();
 
             

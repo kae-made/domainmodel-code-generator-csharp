@@ -7,6 +7,7 @@ using Kae.Tools.Generator.Coloring.DomainWeaving;
 using Kae.Utility.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +20,17 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string nameSpace;
         string domainFacadeClassName;
         IEnumerable<CIClassDef> syncClassDefs;
+        IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
         Logger logger;
 
-        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, ColoringManager coloringManager, Logger logger)
+        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.domainFacadeClassName = domainFacadeClassName;
             this.syncClassDefs = syncDefs;
+            this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
             this.logger = logger;
         }
@@ -42,14 +45,28 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 var retDtDef = syncDef.LinkedToR25();
                 if (retDtDef.Attr_Name == "void") ;
                 string syncName = syncDef.Attr_Name;
-                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", coloringManager, logger);
+                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", usedExternalEntities, coloringManager, logger);
                 string code = actDescripGen.Generate();
             }
         }
 
+        public static (string New, string Namespace) GetExternalEntityConstructorName(CIMClassS_EE eeDef)
+        {
+            string constructorName = "";
+            string nameSpace = "";
+            string eeKeyLetter = eeDef.Attr_Key_Lett;
+            var marked = ExternalEntityDef.GetColorMark(eeDef);
+            if (marked.ContainsKey("constructor"))
+            {
+                constructorName = marked["constructor"]["new"];
+                nameSpace = marked["constructor"]["namespace"];
+            }
+            return (constructorName, nameSpace);
+        }
+
         public void prototype()
         {
-            foreach(var syncClassDef in syncClassDefs)
+            foreach (var syncClassDef in syncClassDefs)
             {
                 var syncDef = (CIMClassS_SYNC)syncClassDefs;
                 var retDtDef = syncDef.LinkedToR25();
@@ -67,6 +84,24 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                         args += ", ";
                     }
                     args += $"{pDTName} {sparmDef.Attr_Name}";
+                }
+            }
+
+            foreach(var eeKey in usedExternalEntities.Keys)
+            {
+                var eeDef = usedExternalEntities[eeKey];
+                string eeKeyLetter = eeDef.Attr_Key_Lett;
+                using (var reader = new StringReader(eeDef.Attr_Descrip))
+                {
+                    string readline = null;
+                    while ((readline = reader.ReadLine()) != null)
+                    {
+                        if (readline.StartsWith("@constructor"))
+                        {
+                            string constructorName = readline.Substring(readline.IndexOf("("));
+                            constructorName = constructorName.Substring(0, constructorName.Length - 1);
+                        }
+                    }
                 }
             }
         }

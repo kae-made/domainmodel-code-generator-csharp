@@ -18,18 +18,20 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         private string baseIndent;
         private string indent;
         private string selfVarNameOnCode;
+        private IDictionary<string, CIMClassS_EE> usedExternalEntities;
         private Logger logger;
 
         private List<Dictionary<string, VariableDef>> declaredVariables = new List<Dictionary<string, VariableDef>>();
 
         ColoringManager coloringManager;
 
-        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, ColoringManager coloringManager, Logger logger)
+        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
         {
             this.actDef = actDef;
             this.selfVarNameOnCode = selfVarName;
             this.baseIndent = baseIndent;
             this.indent = indent;
+            this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
             this.logger = logger;
         }
@@ -2044,7 +2046,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     {
                         createParamCode += ", " + eventParamsCode;
                     }
-                    writer.WriteLine($"{indent}{domainClassName}.{eventClassName}.Create({createParamCode}, sendNow:true, instanceRepository:instanceRepository, logger:logger);");
+                    writer.WriteLine($"{indent}{domainClassName}.{eventClassName}.Create({createParamCode}, isSelfEvent:false, sendNow:true, instanceRepository:instanceRepository, logger:logger);");
                 }
             }
 
@@ -2316,6 +2318,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 string eeRefCode = $"var {eeWrapperRefVarName} = ({eeWrapper})instanceRepository.GetExternalEntity(\"{eeDef.Attr_Key_Lett}\")";
                 eeReferDefs.Add(eeDef.Attr_Key_Lett, eeRefCode);
+            }
+            if (!usedExternalEntities.ContainsKey(eeDef.Attr_Key_Lett))
+            {
+                usedExternalEntities.Add(eeDef.Attr_Key_Lett, eeDef);
             }
 
             string result = $"{eeWrapperRefVarName}.{brgDef.Attr_Name}({paramCode})";

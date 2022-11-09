@@ -17,14 +17,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string version;
         string nameSpace;
         CIMClassO_OBJ objDef;
+        IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
         Logger logger;
 
-        public DomainClassOperations(string version, string nameSpace, CIMClassO_OBJ objDef, ColoringManager coloringManager, Logger logger)
+        public DomainClassOperations(string version, string nameSpace, CIMClassO_OBJ objDef, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.objDef = objDef;
+            this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
             this.logger = logger;
         }
@@ -36,7 +38,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             {
                 var opbDef = tfrDef.LinkedFromR696();
                 var actDef = opbDef.CIMSuperClassACT_ACT();
-                var actDescripGen = new ActDescripGenerator(actDef, "this","", "", coloringManager, logger);
+                var actDescripGen = new ActDescripGenerator(actDef, "this","", "", usedExternalEntities, coloringManager, logger);
                 actDescripGen.Generate();
             }
         }

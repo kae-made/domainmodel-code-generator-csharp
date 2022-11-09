@@ -2,7 +2,9 @@
 using Kae.CIM.MetaModel.CIMofCIM;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +25,67 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         }
 
         public static string GetFolderName() { return folderName; }
+
+        public static bool IsBuiltInExternalEntity(IDictionary<string, IDictionary<string, string>> marking)
+        {
+            bool result = false;
+
+            if (marking.ContainsKey("builtin"))
+            {
+                if (marking["builtin"].Values.ElementAt(0).ToLower() == "true")
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public static IDictionary<string, IDictionary<string, string>> GetColorMark(CIMClassS_EE eeDef)
+        {
+            var results = new Dictionary<string, IDictionary<string, string>>();
+            string descrip = eeDef.Attr_Descrip;
+            using (var reader = new StringReader(descrip))
+            {
+                string line = "";
+                while((line=reader.ReadLine()) != null)
+                {
+                    if (line.StartsWith("@"))
+                    {
+                        var frags = line.Substring(1).Split(new char[] { ';' });
+                        foreach (var frag in frags)
+                        {
+                            int op = frag.IndexOf("(");
+                            int cp = frag.LastIndexOf(")");
+                            string markName = frag.Substring(0, op);
+                            if (!results.ContainsKey(markName))
+                            {
+                                results.Add(markName, new Dictionary<string, string>());
+                            }
+                            string markArgs = frag.Substring(op + 1, (cp - op) - 1);
+                            var margs = markArgs.Split(new char[] { ',' });
+                            foreach (var marg in margs)
+                            {
+                                string margName = marg.Trim();
+                                string margValue = marg.Trim();
+                                if (marg.IndexOf(":") > 0)
+                                {
+                                    margName = marg.Substring(0, marg.IndexOf(":"));
+                                    margValue = marg.Substring(marg.IndexOf(":") + 1);
+                                }
+                                if (!results[markName].ContainsKey(margName))
+                                {
+                                    results[markName].Add(margName, "");
+                                }
+                                results[markName][margName] = margValue;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return results;
+        }
 
         public void prototype()
         {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Knowledge & Experience. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using Kae.CIM.MetaModel.CIMofCIM;
+using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,12 +78,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         public static string GetEventEnumLabelName(CIMClassO_OBJ objDef, CIMClassSM_EVT evtDef)
         {
-            return $"{objDef.Attr_Key_Lett}{evtDef.Attr_Numb}";
+            return $"{objDef.Attr_Key_Lett}_{evtDef.Attr_Numb}";
         }
 
         public static string GetEventClassName(CIMClassO_OBJ objDef, CIMClassSM_EVT evtDef)
         {
-            return $"{ objDef.Attr_Key_Lett}{ evtDef.Attr_Numb}_{ToProgramAvailableString(evtDef.Attr_Mning)}";
+            return $"{ objDef.Attr_Key_Lett}_{ evtDef.Attr_Numb}_{ToProgramAvailableString(evtDef.Attr_Mning)}";
         }
         public static string GetStateEnumLabelName(CIMClassSM_STATE stateDef)
         {
@@ -238,10 +239,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         public static string GetExternalEntityWrappterClassName(CIMClassS_EE eeDef, bool fullName = true)
         {
+            var eeImplInfo = DomainOperations.GetExternalEntityConstructorName(eeDef);
             string name = $"{eeDef.Attr_Key_Lett}Wrapper";
             if (fullName)
             {
-                name = "ExternalEntities." + name;
+                if (!string.IsNullOrEmpty(eeImplInfo.Namespace))
+                {
+                    name = $"{eeImplInfo.Namespace}.{name}";
+                }
+                else
+                {
+                    name = "ExternalEntities." + name;
+                }
             }
             if (eeDef.Attr_Name == "Time" && eeDef.Attr_Key_Lett == "TIM")
             {
