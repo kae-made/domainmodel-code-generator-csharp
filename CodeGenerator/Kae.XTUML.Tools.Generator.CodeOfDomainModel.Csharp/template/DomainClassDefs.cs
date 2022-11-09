@@ -138,7 +138,7 @@ using Kae.DomainModel.Csharp.Framework;
             
             #line 55 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassDefs.tt"
 
-        var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, usedExternalEntities, coloringManager, logger);
+        var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
         string propertiesGenCode = propertiesGen.TransformText();
 
             
@@ -194,7 +194,7 @@ using Kae.DomainModel.Csharp.Framework;
             
             #line 84 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassDefs.tt"
 
-        var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, usedExternalEntities, coloringManager, logger);
+        var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
         string operationGenCode = operationsGen.TransformText();
 
             

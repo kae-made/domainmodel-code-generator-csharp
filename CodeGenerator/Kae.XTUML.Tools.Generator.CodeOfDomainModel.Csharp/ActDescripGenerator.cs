@@ -20,12 +20,13 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         private string selfVarNameOnCode;
         private IDictionary<string, CIMClassS_EE> usedExternalEntities;
         private Logger logger;
+        private bool isAzureIoTHub;
 
         private List<Dictionary<string, VariableDef>> declaredVariables = new List<Dictionary<string, VariableDef>>();
 
         ColoringManager coloringManager;
 
-        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
+        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
         {
             this.actDef = actDef;
             this.selfVarNameOnCode = selfVarName;
@@ -33,6 +34,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             this.indent = indent;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
+            this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
         }
 
@@ -719,7 +721,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 instVarName = this.selfVarNameOnCode;
             }
-            return $"{indent}{instVarName}.{tfrDef.Attr_Name}({paramCode});";
+            string implCode = $"{indent}{instVarName}.{tfrDef.Attr_Name}({paramCode});";
+
+            return implCode;
         }
         protected string GenerateACT_Assign(CIMClassACT_AI actAiDef)
         {

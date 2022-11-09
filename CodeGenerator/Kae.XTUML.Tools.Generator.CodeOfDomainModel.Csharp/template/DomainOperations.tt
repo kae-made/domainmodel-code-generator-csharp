@@ -77,7 +77,7 @@ namespace <#= nameSpace #>
         {
             Console.WriteLine($"  - Generating {syncDef.Attr_Name}...");
             var actDef = fnbDef.CIMSuperClassACT_ACT();
-            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, logger);
+            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
             string code = actDescripGen.Generate();
 #>
             // Generated from action description
@@ -117,9 +117,19 @@ namespace <#= nameSpace #>
                 var eeImplInfo = GetExternalEntityConstructorName(eeDef);
                 numOfEE++;
 #>
+
             instanceRepository.Add(new <#= eeImplInfo.New #>());
             var refOf<#= eeKey #> = instanceRepository.GetExternalEntity("<#= eeKey #>");
             configuration.AddRange(refOf<#= eeKey #>.ConfigurationKeys);
+<#
+            }
+            if (isAzureIoTHub)
+            {
+#>
+
+            instanceRepository.Add(new Kae.DomainModel.Csharp.Framework.ExternalEntities.AzureIoTHub.AzureIoTHubImpl());
+            var refOfAIH = instanceRepository.GetExternalEntity("AIH");
+            configuration.AddRange(refOfAIH.ConfigurationKeys);
 <#
             }
 #>
@@ -135,6 +145,13 @@ namespace <#= nameSpace #>
 #>
             var refOf<#= eeKey #> = instanceRepository.GetExternalEntity("<#= eeKey #>");
             refOf<#= eeKey #>.Initialize(configuration["<#= eeKey #>"]);
+<#
+            }
+            if (isAzureIoTHub)
+            {
+#>
+            var refOfAIH = instanceRepository.GetExternalEntity("AIH");
+            refOfAIH.Initialize(configuration["AIH"]);
 <#
             }
 #>

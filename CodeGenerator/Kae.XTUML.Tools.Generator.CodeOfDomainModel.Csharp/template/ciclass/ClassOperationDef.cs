@@ -181,20 +181,217 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line 67 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
             }
+            if (isAzureIoTHub && objDef.Attr_Descrip.StartsWith("@iotpnp"))
+            {
+                string attrNameForDeviceId = PropertyDef.GetAttrNameForDeviceId(objDef);
+                if (tparmDefs.Count()==0)
+                {
+
+            
+            #line default
+            #line hidden
+            
+            #line 75 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    string payload = \"{}\";\r\n");
+            
+            #line 76 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+
+                }
+                else
+                {
+
+            
+            #line default
+            #line hidden
+            
+            #line 81 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    var invokeParams = new {\r\n");
+            
+            #line 82 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+
+                    int indexParam = 0;
+                    foreach (var tparamDef in tparmDefs)
+                    {
+                        indexParam++;
+
+            
+            #line default
+            #line hidden
+            
+            #line 88 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("        ");
+            
+            #line 88 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(tparamDef.Attr_Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 88 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(tparamDef.Attr_Name));
+            
+            #line default
+            #line hidden
+            
+            #line 88 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+ if (indexParam < tparmDefs.Count()) { 
+            
+            #line default
+            #line hidden
+            this.Write(",");
+            
+            #line 88 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 90 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+
+                    }
+
+            
+            #line default
+            #line hidden
+            
+            #line 93 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    };\r\n");
+            
+            #line 94 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    string payload = Newtonsoft.Json.JsonConvert.SerializeObject(invokeParams);\r\n" +
+                    "");
+            
+            #line 95 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+
+                }
+
+            
+            #line default
+            #line hidden
+            
+            #line 98 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    var resultOfInvocation = azureIoTHubWrapper.InvokeOperation(\"");
+            
+            #line 98 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(opName));
+            
+            #line default
+            #line hidden
+            this.Write("\", payload, ");
+            
+            #line 98 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(attrNameForDeviceId));
+            
+            #line default
+            #line hidden
+            this.Write(").Result;\r\n");
+            
+            #line 99 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    int statusOfInvocationResult = resultOfInvocation.status;\r\n");
+            
+            #line 100 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    logger?.LogInfo($\"Result of ");
+            
+            #line 100 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(opName));
+            
+            #line default
+            #line hidden
+            this.Write(" invocation for \'{");
+            
+            #line 100 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(attrNameForDeviceId));
+            
+            #line default
+            #line hidden
+            this.Write("}\' status - \'{statusOfInvocationResult}\'\");\r\n\r\n");
+            
+            #line 102 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+
+                if (retDtDef.Attr_Name != "void")
+                {
 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 71 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 107 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    string payloadOfInvicationResult = resultOfInvocation.resultPayload;\r\n");
+            
+            #line 108 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    dynamic resultPayload = Newtonsoft.Json.JsonConvert.DeserializeObject(payload" +
+                    "OfInvicationResult);\r\n");
+            
+            #line 109 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(indent));
+            
+            #line default
+            #line hidden
+            this.Write("    return resultPayload.result;\r\n");
+            
+            #line 110 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+
+                }
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 117 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    var changedStates = new List<ChangedState>();\r\n");
             
-            #line 72 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
             bool genSyncState = true;
             var opbDef = tfrDef.LinkedFromR696();
@@ -203,28 +400,29 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                 Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
                 var actDef = opbDef.CIMSuperClassACT_ACT();
                 string baseIndent = "    ";
-                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, logger);
-                var descripCode = actDescripGen.Generate();
+                string descripCode = "";
+                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                descripCode = actDescripGen.Generate();
 
             
             #line default
             #line hidden
             
-            #line 83 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 130 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    // Generated from action description\r\n");
             
-            #line 84 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 131 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(descripCode));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 85 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 132 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
             }
             else
@@ -234,14 +432,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 90 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    // Please record changing states by using changedStates;\r\n");
             
-            #line 91 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 138 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
             }
             if (retDtDef.Attr_Name != "void") genSyncState = false;
@@ -252,21 +450,21 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 97 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 144 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 98 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 145 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    instanceRepository.SyncChangedStates(changedStates);\r\n");
             
-            #line 99 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 146 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
             }
             if (opbDef == null)
@@ -276,14 +474,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line default
             #line hidden
             
-            #line 104 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 151 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("    throw new NotImplementedException();\r\n");
             
-            #line 105 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 152 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
@@ -291,22 +489,23 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             this.Write("    // Please delete above throw exception statement after implement this method." +
                     "\r\n");
             
-            #line 106 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 153 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
+            }
             }
 
             
             #line default
             #line hidden
             
-            #line 109 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 157 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(indent));
             
             #line default
             #line hidden
             this.Write("}\r\n\r\n");
             
-            #line 111 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
+            #line 159 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
         }
     }

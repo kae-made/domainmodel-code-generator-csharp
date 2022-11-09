@@ -24,6 +24,19 @@ using Kae.StateMachine;
 using Kae.Utility.Logging;
 using Kae.DomainModel.Csharp.Framework;
 using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
+<#
+    bool generateAzureIoTHubCode = isAzureIoTHub;
+    if (!objDef.Attr_Descrip.StartsWith("@iotpnp"))
+    {
+        generateAzureIoTHubCode = false;
+    }
+    if (generateAzureIoTHubCode)
+    {
+#>
+using Kae.DomainModel.Csharp.Framework.ExternalEntities.AzureIoTHub;
+<#
+    }
+#>
 
 namespace <#= nameSpace #>
 {
@@ -50,6 +63,15 @@ namespace <#= nameSpace #>
         InstanceRepository instanceRepository;
         protected Logger logger;
 
+<#
+    if (generateAzureIoTHubCode)
+    {
+#>
+        protected AIHWrapper azureIoTHubWrapper { get; set; }
+
+<#
+    }
+#>
 <#
     bool hasStateMachine = false;
     var ismDef = objDef.LinkedFromR518();
@@ -121,6 +143,15 @@ namespace <#= nameSpace #>
         public static <#= domainClassBaseName #> CreateInstance(InstanceRepository instanceRepository, Logger logger=null, <#= changedStateClassName #> <#= changedStateVarName #>=null, bool synchronousMode = false)
         {
             var newInstance = new <#= domainClassBaseName #>(instanceRepository, logger, synchronousMode);
+<#
+    if (generateAzureIoTHubCode)
+    {
+#>
+            // Extension for Azure IoT Hub
+            newInstance.azureIoTHubWrapper = (AIHWrapper)instanceRepository.GetExternalEntity("AIH");
+<#
+    }
+#>
 <#= logInstanceCreationGen #>
             instanceRepository.Add(newInstance);
 
@@ -164,7 +195,7 @@ namespace <#= nameSpace #>
         }
 <#
     // attribute generation
-    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, usedExternalEntities, coloringManager, logger);
+    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
     string propertiesGenCode = propertiesGen.TransformText();
 #>
 <#= propertiesGenCode #>

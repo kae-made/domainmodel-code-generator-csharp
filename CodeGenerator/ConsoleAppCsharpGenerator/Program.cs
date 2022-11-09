@@ -112,6 +112,10 @@ namespace ConsoleAppCsharpGenerator
                 {
                     genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAzureDigitalTwins, args[++index]);
                 }
+                else if (args[index]=="--azure-iot-hub")
+                {
+                    genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAzureIoTHub, bool.Parse(args[++index]));
+                }
                 else
                 {
                     // ShowCommandline();

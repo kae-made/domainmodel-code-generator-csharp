@@ -66,6 +66,52 @@
 <#= descrip #>
 <#
             }
+            if (isAzureIoTHub && objDef.Attr_Descrip.StartsWith("@iotpnp"))
+            {
+                string attrNameForDeviceId = PropertyDef.GetAttrNameForDeviceId(objDef);
+                if (tparmDefs.Count()==0)
+                {
+#>
+<#= indent #>    string payload = "{}";
+<#
+                }
+                else
+                {
+#>
+<#= indent #>    var invokeParams = new {
+<#
+                    int indexParam = 0;
+                    foreach (var tparamDef in tparmDefs)
+                    {
+                        indexParam++;
+#>
+<#= indent #>        <#= tparamDef.Attr_Name #> = <#= tparamDef.Attr_Name #><# if (indexParam < tparmDefs.Count()) { #>,<# } #>
+
+<#
+                    }
+#>
+<#= indent #>    };
+<#= indent #>    string payload = Newtonsoft.Json.JsonConvert.SerializeObject(invokeParams);
+<#
+                }
+#>
+<#= indent #>    var resultOfInvocation = azureIoTHubWrapper.InvokeOperation("<#= opName #>", payload, <#= attrNameForDeviceId #>).Result;
+<#= indent #>    int statusOfInvocationResult = resultOfInvocation.status;
+<#= indent #>    logger?.LogInfo($"Result of <#= opName #> invocation for '{<#= attrNameForDeviceId #>}' status - '{statusOfInvocationResult}'");
+
+<#
+                if (retDtDef.Attr_Name != "void")
+                {
+#>
+
+<#= indent #>    string payloadOfInvicationResult = resultOfInvocation.resultPayload;
+<#= indent #>    dynamic resultPayload = Newtonsoft.Json.JsonConvert.DeserializeObject(payloadOfInvicationResult);
+<#= indent #>    return resultPayload.result;
+<#
+                }
+            }
+            else
+            {
 #>
 
 <#= indent #>    var changedStates = new List<ChangedState>();
@@ -77,8 +123,9 @@
                 Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
                 var actDef = opbDef.CIMSuperClassACT_ACT();
                 string baseIndent = "    ";
-                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, logger);
-                var descripCode = actDescripGen.Generate();
+                string descripCode = "";
+                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                descripCode = actDescripGen.Generate();
 #>
 <#= indent #>    // Generated from action description
 <#= descripCode #>
@@ -104,6 +151,7 @@
 <#= indent #>    throw new NotImplementedException();
 <#= indent #>    // Please delete above throw exception statement after implement this method.
 <#
+            }
             }
 #>
 <#= indent #>}

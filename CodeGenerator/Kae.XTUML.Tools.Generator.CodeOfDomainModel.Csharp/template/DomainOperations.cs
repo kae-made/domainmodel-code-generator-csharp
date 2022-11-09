@@ -152,7 +152,7 @@ namespace ");
         {
             Console.WriteLine($"  - Generating {syncDef.Attr_Name}...");
             var actDef = fnbDef.CIMSuperClassACT_ACT();
-            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, logger);
+            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
             string code = actDescripGen.Generate();
 
             
@@ -224,37 +224,52 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("            instanceRepository.Add(new ");
+            this.Write("\r\n            instanceRepository.Add(new ");
             
-            #line 120 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 121 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeImplInfo.New));
             
             #line default
             #line hidden
             this.Write("());\r\n            var refOf");
             
-            #line 121 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 122 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write(" = instanceRepository.GetExternalEntity(\"");
             
-            #line 121 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 122 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write("\");\r\n            configuration.AddRange(refOf");
             
-            #line 122 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write(".ConfigurationKeys);\r\n");
             
-            #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 124 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+
+            }
+            if (isAzureIoTHub)
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write(@"
+            instanceRepository.Add(new Kae.DomainModel.Csharp.Framework.ExternalEntities.AzureIoTHub.AzureIoTHubImpl());
+            var refOfAIH = instanceRepository.GetExternalEntity(""AIH"");
+            configuration.AddRange(refOfAIH.ConfigurationKeys);
+");
+            
+            #line 133 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
 
             }
 
@@ -264,7 +279,7 @@ namespace ");
             this.Write("            return configuration;\r\n        }\r\n        public void Initialize(IDic" +
                     "tionary<string, IDictionary<string, object>> configuration)\r\n        {\r\n");
             
-            #line 130 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 140 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
 
             foreach(var eeKey in usedExternalEntities.Keys)
             {
@@ -276,35 +291,47 @@ namespace ");
             #line hidden
             this.Write("            var refOf");
             
-            #line 136 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 146 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write(" = instanceRepository.GetExternalEntity(\"");
             
-            #line 136 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 146 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write("\");\r\n            refOf");
             
-            #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 147 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write(".Initialize(configuration[\"");
             
-            #line 137 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 147 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(eeKey));
             
             #line default
             #line hidden
             this.Write("\"]);\r\n");
             
-            #line 138 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+            #line 148 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
+
+            }
+            if (isAzureIoTHub)
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("            var refOfAIH = instanceRepository.GetExternalEntity(\"AIH\");\r\n        " +
+                    "    refOfAIH.Initialize(configuration[\"AIH\"]);\r\n");
+            
+            #line 155 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainOperations.tt"
 
             }
 

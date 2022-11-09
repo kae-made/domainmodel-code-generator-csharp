@@ -22,9 +22,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         IEnumerable<CIClassDef> syncClassDefs;
         IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
+        bool isAzureIoTHub;
         Logger logger;
 
-        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, Logger logger)
+        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
@@ -32,6 +33,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.syncClassDefs = syncDefs;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
+            this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
         }
 
@@ -45,7 +47,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 var retDtDef = syncDef.LinkedToR25();
                 if (retDtDef.Attr_Name == "void") ;
                 string syncName = syncDef.Attr_Name;
-                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", usedExternalEntities, coloringManager, logger);
+                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
                 string code = actDescripGen.Generate();
             }
         }

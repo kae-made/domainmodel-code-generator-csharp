@@ -18,11 +18,21 @@
         hasStateMachine = true;
     }
 
+    string attrNameForIoTHubDeviceId = "";
+    if (isAzureIoTHub)
+    {
+        attrNameForIoTHubDeviceId = GetAttrNameForDeviceId(objDef);
+    }
+
     var implAttrDefs = new List<AttributeDef>();
     var attrDefs = objDef.LinkedFromR102();
     foreach (var attrDef in attrDefs)
     {
         var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false, IsStructured = false };
+        if (isAzureIoTHub)
+        {
+            ResolveIoTHubColoring(implAttrDef);
+        }
         var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
         var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
         var subDtDef = dtDef.SubClassR17();
@@ -135,7 +145,12 @@
                 }
                 if (implAttrDef.IsState == false)
                 {
-                    accessorImple += " set { " + $"{localVarName} = value; {stateVarName} = true;" + " }";
+                    accessorImple += " set { " + $"{localVarName} = value; {stateVarName} = true;";
+                    if (implAttrDef.IsDesiredProperty)
+                    {
+                        accessorImple += $" azureIoTHubWrapper.UpdateProperty(\"{implAttrDef.AttrDef.Attr_Name}\", value, {attrNameForIoTHubDeviceId});";
+                    }
+                    accessorImple += " }";
                 }
             }
             if (implAttrDef.ActDef == null)
@@ -146,7 +161,7 @@
             }
             else
             {
-                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", usedExternalEntities, coloringManager, logger);
+                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
                 string actGenCode = actGen.Generate();
 #>
 <#= indent #>public <#= attrPropDataTypeName #> <#= propName #>
