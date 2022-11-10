@@ -1,6 +1,7 @@
 ﻿using Kae.Tools.Generator;
 using Kae.Tools.Generator.Context;
 using Kae.Utility.Logging;
+using Kae.Utility.Logging.WPF;
 using Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -42,7 +43,7 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
         List<string> dotNetVers = new List<string>() { ".NET 5.0", ".NET 6.0", ".NET Core 3.1" };
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            textBlockLogger = new TextBlockLogger(tbLog);
+            textBlockLogger = WPFLogger.CreateLogger(tbLog);
             tvGenFolder.ItemsSource = generatedViewerItems;
             cbDotNetVer.ItemsSource = dotNetVers;
             cbDotNetVer.SelectedIndex = 0;
@@ -170,6 +171,11 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
             genContext.SetOptionValue(CsharpCodeGenerator.CPKeyOverWrite, (cbOverwrite.IsChecked == true));
             genContext.SetOptionValue(GeneratorBase.CPKeyGenFolderPath, (tbGenFolder.Text, true));
             genContext.SetOptionValue(CsharpCodeGenerator.CPKeyBackup, (cbBackup.IsChecked == true));
+            if ((cbAzureDigitalTwins.IsChecked == true) && (!string.IsNullOrEmpty(tbDTDLNamespace.Text)))
+            {
+                genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAzureDigitalTwins, tbDTDLNamespace.Text);
+            }
+            genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAzureIoTHub, (cbAzureIoTHub.IsChecked == true));
             if (!string.IsNullOrEmpty(tbColors.Text))
             {
                 genContext.SetOptionValue(GeneratorBase.CPKeyColoringFilePath, (tbColors.Text, false));
@@ -325,6 +331,9 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
                             break;
                         }
                     }
+                    cbAzureDigitalTwins.IsChecked = config.AzureDigitalTwins;
+                    tbDTDLNamespace.Text = config.DTDLNamespace;
+                    cbAzureIoTHub.IsChecked = config.AzureIoTHub;
                 }
                 buttonGenerate.IsEnabled = true;
             }
@@ -345,7 +354,10 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
                 Backup = (cbBackup.IsChecked == true),
                 ActionGen = (cbGenAction.IsChecked == true),
                 AdaptorGen = (cbGenAdaptor.IsChecked == true),
-                Colors = tbColors.Text
+                Colors = tbColors.Text,
+                AzureDigitalTwins = (cbAzureDigitalTwins.IsChecked == true),
+                DTDLNamespace = tbDTDLNamespace.Text,
+                AzureIoTHub = (cbAzureIoTHub.IsChecked == true)
             };
             string content = Newtonsoft.Json.JsonConvert.SerializeObject(config);
             var dialog = new SaveFileDialog();
@@ -374,27 +386,10 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
         {
             CheckStatus();
         }
-    }
 
-    class TextBlockLogger : Logger
-    {
-        TextBlock logBox;
-
-        public TextBlockLogger(TextBlock box)
+        private void cbAzureDigitalTwins_Checked(object sender, RoutedEventArgs e)
         {
-            this.logBox = box;
-        }
-        protected override async Task LogInternal(Level level, string log, string timestamp)
-        {
-            logBox.Dispatcher.Invoke(() =>
-            {
-                var sb = new StringBuilder();
-                var writer = new StringWriter(sb);
-                writer.WriteLine($"{level.ToString()}:{timestamp} {log}");
-                writer.Write(logBox.Text);
-
-                logBox.Text = sb.ToString();
-            });
+            tbDTDLNamespace.IsEnabled = cbAzureDigitalTwins.IsChecked.Value;
         }
     }
 
@@ -411,5 +406,8 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
         public bool ActionGen { get; set; }
         public bool AdaptorGen { get; set; }
         public string Colors { get; set; }
+        public bool AzureDigitalTwins { get; set; }
+        public string DTDLNamespace { get; set; }
+        public bool AzureIoTHub { get; set; }
     }
 }
