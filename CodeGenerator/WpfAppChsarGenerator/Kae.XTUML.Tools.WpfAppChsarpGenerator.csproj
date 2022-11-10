@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Kae.Utility.Logging.WPF" Version="0.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.csproj" />
   </ItemGroup>
 
