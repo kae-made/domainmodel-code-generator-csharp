@@ -99,13 +99,14 @@ using Kae.Utility.Logging;
         public Logger Logger { get { return logger; } set { logger = value; } }
 
         protected List<string> configuration = new List<string>();
-        public IList<string> Configuration { get { return configuration; } }
+        public IList<string> ConfigurationKeys { get { return configuration; } }
 ");
             
             #line 43 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
 
     var brgDefs = eeDef.LinkedFromR19();
-    foreach(var brgDef in brgDefs){
+    foreach(var brgDef in brgDefs)
+    {
         var retDtDef = brgDef.LinkedToR20();
         string retDtName = DomainDataTypeDefs.GetDataTypeName(retDtDef);
         string paramsCode = "";
@@ -126,38 +127,210 @@ using Kae.Utility.Logging;
             #line hidden
             this.Write("        public abstract ");
             
-            #line 61 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            #line 62 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(retDtName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 61 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            #line 62 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(brgDef.Attr_Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 61 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            #line 62 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramsCode));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 62 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            #line 63 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
 
     }
 
             
             #line default
             #line hidden
-            this.Write("\r\n        public void Initialize(IDictionary<string, string> configuration)\r\n    " +
+            this.Write("\r\n        public void Initialize(IDictionary<string, object> configuration)\r\n    " +
                     "    {\r\n            InitializeImpl(configuration);\r\n        }\r\n\r\n        protecte" +
-                    "d abstract void InitializeImpl(IDictionary<string, string> configuration);\r\n    " +
-                    "}\r\n}\r\n");
+                    "d abstract void InitializeImpl(IDictionary<string, object> configuration);\r\n    " +
+                    "}\r\n\r\n");
+            
+            #line 75 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+    string eeImplClassName = GeneratorNames.GetExternalEntityImplClassName(eeDef);
+    string eeEntryClassName = GeneratorNames.GetExternalEntityEntryClassName(eeDef);
+
+            
+            #line default
+            #line hidden
+            this.Write("#if IMPLEMENTATION\r\n    // Generated part for implementation\r\n    // Please creat" +
+                    "e another C# project and copy this file into the project, remove directive and w" +
+                    "rite code.\r\n    public static class ");
+            
+            #line 82 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(eeEntryClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        public static ");
+            
+            #line 84 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(wrapperClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" GetInstance(Logger logger)\r\n        {\r\n           return new ");
+            
+            #line 86 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(eeImplClassName));
+            
+            #line default
+            #line hidden
+            this.Write("() { Logger= logger };\r\n        }\r\n    }\r\n\r\n    internal class ");
+            
+            #line 90 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(eeImplClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" : ");
+            
+            #line 90 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(wrapperClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        public ");
+            
+            #line 92 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(eeImplClassName));
+            
+            #line default
+            #line hidden
+            this.Write("()\r\n        {\r\n            // please add configuration keys into \'");
+            
+            #line 94 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(wrapperClassName));
+            
+            #line default
+            #line hidden
+            this.Write(".configuration\' if necessary\r\n        }\r\n\r\n        protected override void Initia" +
+                    "lizeImpl(IDictionary<string, object> configuration)\r\n        {\r\n            // p" +
+                    "lease write implementation\r\n        }\r\n");
+            
+            #line 101 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+    foreach(var brgDef in brgDefs)
+    {
+        var retDtDef = brgDef.LinkedToR20();
+        string retDtName = DomainDataTypeDefs.GetDataTypeName(retDtDef);
+        string paramsCode = "";
+        var bparmDefs = brgDef.LinkedFromR21();
+        foreach (var bparmDef in bparmDefs)
+        {
+            var parmDtDef = bparmDef.LinkedToR22();
+            var parmDtName= DomainDataTypeDefs.GetDataTypeName(parmDtDef);
+            if (!string.IsNullOrEmpty(paramsCode))
+            {
+                paramsCode += ", ";
+            }
+            paramsCode += $"{parmDtName} {bparmDef.Attr_Name}";
+        }
+        var implOfReturn = GetImplReturnCode(brgDef);
+        string initCode = implOfReturn.initCode;
+        string retCode = implOfReturn.retCode;
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        public override ");
+            
+            #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(retDtName));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(brgDef.Attr_Name));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 123 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(paramsCode));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n");
+            
+            #line 125 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+        if (!string.IsNullOrEmpty(initCode))
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 129 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(initCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 130 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("            // please write implementation\r\n");
+            
+            #line 134 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+        if (!string.IsNullOrEmpty(retCode))
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 138 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(retCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 139 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n");
+            
+            #line 143 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
+
+    }
+
+            
+            #line default
+            #line hidden
+            this.Write("    }\r\n\r\n#endif\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

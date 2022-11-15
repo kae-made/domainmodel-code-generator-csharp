@@ -147,25 +147,23 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             {// new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
              // new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="7.3.2"},
+              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="7.4.0"},
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.1" }
             });
 
             if (isAdaptorGen)
             {
-                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor", "1.5.1");
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor", "1.8.0");
             }
              
             if (isAzureDigitalTwins)
             {
-                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "1.1.2");
-                projectFile.AddLibrary("Azure.DigitalTwins.Core", "1.4.0");
-                projectFile.AddLibrary("Azure.Identity", "1.7.0");
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "1.2.0");
             }
 
             if (isAzureIoTHub)
             {
-                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.ExternalEntities.AzureIoTHub", "0.1.1");
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.ExternalEntities.AzureIoTHub", "1.0.0");
             }
 
             var extPackages = this.coloringManager.GetExternalPackages();
@@ -313,13 +311,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     var marked = ExternalEntityDef.GetColorMark(eeDef);
                     if (!ExternalEntityDef.IsBuiltInExternalEntity(marked))
                     {
-                        var eeDefGen = new ExternalEntityDef(Version, ProjectName, eeDef);
-                        //eeDefGen.prototype();
-                        string eeDefGenCode = eeDefGen.TransformText();
-                        fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";
-                        genFolder.WriteContentAsync(eeDefFolderName, fileName, eeDefGenCode, GenFolder.WriteMode.Overwrite).Wait();
-                        Console.WriteLine($"Generated - {fileName}");
-                        logger.LogInfo($"Generated - {fileName}");
+                        if (eeDef.Attr_Key_Lett != "STR" && eeDef.Attr_Key_Lett != "RND")
+                        {
+                            var eeDefGen = new ExternalEntityDef(Version, ProjectName, eeDef);
+                            //eeDefGen.prototype();
+                            string eeDefGenCode = eeDefGen.TransformText();
+                            fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";
+                            genFolder.WriteContentAsync(eeDefFolderName, fileName, eeDefGenCode, GenFolder.WriteMode.Overwrite).Wait();
+                            Console.WriteLine($"Generated - {fileName}");
+                            logger.LogInfo($"Generated - {fileName}");
+                        }
                     }
                 }
 #if false

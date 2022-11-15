@@ -63,6 +63,24 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 constructorName = marked["constructor"]["new"];
                 nameSpace = marked["constructor"]["namespace"];
             }
+            else
+            {
+                if (eeDef.Attr_Key_Lett == "TIM")
+                {
+                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntities.TIM.impl.TIMImpl";
+                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntities.TIM";
+                }
+                else if (eeDef.Attr_Key_Lett == "STR")
+                {
+                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntity.STR.STRImpl";
+                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntity.STR";
+                }
+                else if (eeDef.Attr_Key_Lett == "RND")
+                {
+                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntity.RND.RNDImpl";
+                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntity.RND";
+                }
+            }
             return (constructorName, nameSpace);
         }
 

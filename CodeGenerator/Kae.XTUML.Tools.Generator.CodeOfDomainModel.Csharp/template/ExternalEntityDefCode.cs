@@ -40,6 +40,64 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 
             return result;
         }
+        public static (string initCode, string retCode) GetImplReturnCode(CIMClassS_BRG brgDef)
+        {
+            var dtDef = brgDef.LinkedToR20();
+            string initCode = "";
+            string retCode = "";
+            string resultVarName = "result";
+            string retDTName = DomainDataTypeDefs.GetDataTypeName(dtDef);
+            var subDtDef = dtDef.SubClassR17();
+            if (subDtDef is CIMClassS_UDT)
+            {
+                subDtDef = ((CIMClassS_UDT)subDtDef).LinkedToR18().SubClassR17();
+            }
+            if (subDtDef is CIMClassS_CDT)
+            {
+                if (retDTName != "void")
+                {
+                    if (retDTName == "DateTime" || retDTName == "EventData" || retDTName.EndsWith("Timer"))
+                    {
+                        initCode = $"{retDTName} {resultVarName} = null;";
+                    }
+                    else
+                    {
+                        switch (retDTName)
+                        {
+                            case "bool":
+                                initCode = $"bool {resultVarName} = true;";
+                                break;
+                            case "int":
+                                initCode = $"int {resultVarName} = 0;";
+                                break;
+                            case "double":
+                                initCode = $"double {resultVarName} = 0.0;";
+                                break;
+                            case "string":
+                                initCode = $"string {resultVarName} = \"\";";
+                                break;
+                            default:
+                                initCode = $"// Unknown datatype - {retDTName}";
+                                break;
+
+                        }
+                    }
+                    retCode = $"return {resultVarName};";
+                }
+            }
+            else if (subDtDef is CIMClassS_SDT)
+            {
+                initCode = $"{retDTName} {resultVarName} = null;";
+                retCode = $"return {resultVarName};";
+            }
+            else if (subDtDef is CIMClassS_EDT)
+            {
+                var firstEnumDef = ((CIMClassS_EDT)subDtDef).LinkedFromR27().FirstOrDefault();
+                initCode = $"{retDTName} {resultVarName} = {retDTName}.{firstEnumDef.Attr_Name};";
+                retCode = $"return {resultVarName};";
+            }
+            return (initCode, retCode);
+        }
 
         public static IDictionary<string, IDictionary<string, string>> GetColorMark(CIMClassS_EE eeDef)
         {
@@ -108,6 +166,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                     }
                     paramsCode += $"{parmDtName} {bparmDef.Attr_Name}";
                 }
+                var implOfReturn = GetImplReturnCode(brgDef);
+                string initCode = implOfReturn.initCode;
+                string retCode = implOfReturn.retCode;
             }
         }
     }

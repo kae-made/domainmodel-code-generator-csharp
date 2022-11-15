@@ -259,6 +259,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return name;
         }
 
+        public static string GetExternalEntityImplClassName(CIMClassS_EE eeDef)
+        {
+            return $"{eeDef.Attr_Key_Lett}Impl";
+        }
+        public static string GetExternalEntityEntryClassName(CIMClassS_EE eeDef)
+        {
+            return $"{eeDef.Attr_Key_Lett}ExternalEntityEntry";
+        }
+
         public static string GetExternalEntityWrapperRefVarName(CIMClassS_EE eeDef)
         {
             return $"_ee{eeDef.Attr_Key_Lett}Ref_";
