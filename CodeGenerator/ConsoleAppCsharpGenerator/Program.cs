@@ -108,7 +108,7 @@ namespace ConsoleAppCsharpGenerator
                 {
                     genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAdaptorGen, bool.Parse(args[++index]));
                 }
-                else if (args[index] == "--azuredigitaltwins")
+                else if (args[index] == "--azure-digital-twins")
                 {
                     genContext.SetOptionValue(CsharpCodeGenerator.CPKeyAzureDigitalTwins, args[++index]);
                 }
