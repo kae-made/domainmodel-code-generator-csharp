@@ -181,7 +181,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             #line 67 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
             }
-            if (isAzureIoTHub && objDef.Attr_Descrip.StartsWith("@iotpnp"))
+            if (isAzureIoTHub && objDef.Attr_Descrip.StartsWith("@iotpnp") && tfrDef.Attr_Descrip.StartsWith("@iotpnp"))
             {
                 string attrNameForDeviceId = PropertyDef.GetAttrNameForDeviceId(objDef);
                 if (tparmDefs.Count()==0)
