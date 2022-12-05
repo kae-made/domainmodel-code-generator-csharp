@@ -393,16 +393,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line 118 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
-            bool genSyncState = true;
-            var opbDef = tfrDef.LinkedFromR696();
-            if (opbDef != null)
-            {
-                Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
-                var actDef = opbDef.CIMSuperClassACT_ACT();
-                string baseIndent = "    ";
-                string descripCode = "";
-                var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
-                descripCode = actDescripGen.Generate();
+                bool genSyncState = true;
+                var opbDef = tfrDef.LinkedFromR696();
+                if (opbDef != null)
+                {
+                    Console.WriteLine($"  - Generating {tfrDef.Attr_Name}...");
+                    var actDef = opbDef.CIMSuperClassACT_ACT();
+                    string baseIndent = "    ";
+                    string descripCode = "";
+                    var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                    descripCode = actDescripGen.Generate();
 
             
             #line default
@@ -424,9 +424,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line 132 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
-            }
-            else
-            {
+                }
+                else
+                {
 
             
             #line default
@@ -441,10 +441,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line 138 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
-            }
-            if (retDtDef.Attr_Name != "void") genSyncState = false;
-            if (genSyncState)
-            {
+                }
+                if (retDtDef.Attr_Name != "void") genSyncState = false;
+                if (genSyncState)
+                {
 
             
             #line default
@@ -466,9 +466,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line 146 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
-            }
-            if (opbDef == null)
-            {
+                }
+                if (opbDef == null)
+                {
 
             
             #line default
@@ -491,7 +491,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             
             #line 153 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ciclass\ClassOperationDef.tt"
 
-            }
+                }
             }
 
             

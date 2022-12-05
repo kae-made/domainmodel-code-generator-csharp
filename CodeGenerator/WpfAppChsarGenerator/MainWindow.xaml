@@ -69,13 +69,13 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <CheckBox Name="cbAzureDigitalTwins" Content="Azure Digital Twins : " VerticalAlignment="Center" Margin="1" Checked="cbAzureDigitalTwins_Checked" Unchecked="cbAzureDigitalTwins_Checked"/>
-                <TextBox Name="tbDTDLNamespace" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="1" Grid.Column="1" IsEnabled="False"/>
+                <TextBox Name="tbDTDLNamespace" Text="dtmi:com:company;1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="1" Grid.Column="1" IsEnabled="False"/>
                 <CheckBox Name="cbAzureIoTHub" Content="Azure IoT Hub" VerticalAlignment="Center" Margin="1" Grid.Column="2"/>
             </Grid>
             <Button Name="buttonColors" Content="Colors" Grid.Row="8" Margin="1" Click="buttonColors_Click"/>
             <TextBox Name="tbColors" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="1"/>
             <Button Name="buttonGenerate" Grid.Row="9" Grid.RowSpan="2" Grid.ColumnSpan="2" Content="Generate C# Code" Margin="1" IsEnabled="False" Click="buttonGenerate_Click"/>
-            <Border Grid.Row="10" Grid.ColumnSpan="2" Margin="1" BorderBrush="Blue" BorderThickness="1">
+            <Border Grid.Row="11" Grid.ColumnSpan="2" Margin="1" BorderBrush="Blue" BorderThickness="1">
                 <ScrollViewer >
                     <TextBlock Name="tbLog"/>
                 </ScrollViewer>

@@ -1,4 +1,6 @@
-﻿using Kae.CIM.MetaModel.CIMofCIM;
+﻿// Copyright (c) Knowledge & Experience. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using Kae.CIM.MetaModel.CIMofCIM;
 using Kae.Tools.Generator.Coloring;
 using Kae.Tools.Generator.Coloring.DomainWeaving;
 using Kae.Utility.Logging;
@@ -2453,10 +2455,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else if (unyDef.Attr_Operator.ToLower() == "not")
             {
-                code = $"! {oprdCode}";
+                code = $"! ({oprdCode})";
                 if (sqlStyle)
                 {
-                    code = $"NOT {oprdCode}";
+                    code = $"NOT ({oprdCode})";
                 }
             }
             else

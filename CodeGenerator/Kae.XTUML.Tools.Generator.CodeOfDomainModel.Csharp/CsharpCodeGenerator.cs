@@ -101,6 +101,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     {
                         isAzureDigitalTwins = true;
                         var dtdlParams = ((StringParam)cp).Value.Split(new char[] { ';' });
+                        if (dtdlParams.Length != 2)
+                        {
+                            logger.LogError("DTDL namespace should be <namespace>;<version>");
+                            throw new ArgumentOutOfRangeException("DTDL namespace should be <namespace>;<version>");
+                        }
                         dtdlNamespace = dtdlParams[0];
                         dtdlVersion = dtdlParams[1];
                     }
@@ -352,7 +357,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     externalStorageConnectionStringKey = "ADTInstanceUri";
                     externalStorageCredentialKey = "ADTCredential";
                 }
-                var adaptorGen = new AdaptorDef(Version, ProjectName, ProjectName, "    ", syncDefs, classObjDefs, externalStorageImplClassName, externalStorageConnectionStringKey, externalStorageCredentialKey);
+                var adaptorGen = new AdaptorDef(Version, ProjectName, "    ", ProjectName, syncDefs, classObjDefs, externalStorageImplClassName, externalStorageConnectionStringKey, externalStorageCredentialKey);
                 string adaptorGenCode = adaptorGen.TransformText();
                 string adaptorFolderName = Path.Join(projectPath, AdaptorDef.GetFolderName());
                 genFolder.CreateFolder(adaptorFolderName);

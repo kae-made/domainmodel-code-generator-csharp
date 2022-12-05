@@ -189,6 +189,8 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
                 generator.GenerateEnvironment();
                 generator.GenerateContents();
 
+                textBlockLogger.LogInfo("Generation completed.");
+
                 RefleshGeneratedView();
             });
             task.Start();

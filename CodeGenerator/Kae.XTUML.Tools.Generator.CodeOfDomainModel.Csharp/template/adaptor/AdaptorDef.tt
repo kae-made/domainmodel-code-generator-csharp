@@ -40,6 +40,7 @@ namespace <#= nameSpace #>.Adaptor
 
     string domainFacadeClassName = GeneratorNames.GetDomainFacadeClassName(nameSpace);
     string adaptorName = $"{nameSpace}Adaptor";
+    string adtAdaptorImplClassName = adt.AzureDigitalTwinsAdaptorDef.GetAdaptorImplClassName(projectName);
 #>
     // Entry for Application front end.
     public static class DomainModelAdaptorEntry
@@ -112,7 +113,7 @@ namespace <#= nameSpace #>.Adaptor
             // for Azure Digital Twins
             string adtInstanceUri = (string)config["AzureDigitalTwins"]["ADTInstanceUri"];
             TokenCredential adtCredential = (TokenCredential)config["AzureDigitalTwins"]["ADTCredential"];
-            var azureDigitalTwinsAdaptor = new ADTTestModelAzureDigitalTwinsAdaptor(adtInstanceUri, adtCredential, domainModel.InstanceRepository, logger);
+            var azureDigitalTwinsAdaptor = new <#= adtAdaptorImplClassName #>(adtInstanceUri, adtCredential, domainModel.InstanceRepository, logger);
             azureDigitalTwinsAdaptor.Initialize();
             domainModel.InstanceRepository.ExternalStorageAdaptor = azureDigitalTwinsAdaptor;
 <#
