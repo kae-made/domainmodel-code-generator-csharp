@@ -170,6 +170,7 @@ namespace <#= nameSpace #>
     {
         string propName = GeneratorNames.GetAttrPropertyName(implAttrDef.AttrDef);
         string propLocalName = GeneratorNames.GetAttrPropertyLocalName(implAttrDef.AttrDef);
+        string stateVarName = GeneratorNames.GetPropertyStateVariableName(implAttrDef.AttrDef);
         if (implAttrDef.IsIdentity && (implAttrDef.IsReferential == false))
         {
             if (implAttrDef.IsUniqueId)
@@ -177,6 +178,7 @@ namespace <#= nameSpace #>
                 var newGuid = Guid.NewGuid().ToString();
 #>
             <#= propLocalName #> = Guid.NewGuid().ToString();
+            <#= stateVarName #> = true;
 <#
             }
         }
@@ -580,7 +582,7 @@ namespace <#= nameSpace #>
         if (implAttrDef.IsState)
         {
 #>
-            results.Add("<#= attrDef.Attr_Name #>", <#= stateMachineLocalVariableName #>.CurrentState);
+            results.Add("<#= attrDef.Attr_Name #>", $"{<#= stateMachineLocalVariableName #>.CurrentState}");
 
 <#
         }
@@ -589,7 +591,21 @@ namespace <#= nameSpace #>
 #>
             if (<#= stateOfPropVarName #>)
             {
+<#
+                var subDtDef = dtDef.SubClassR17();
+                if (subDtDef is CIMClassS_EDT)
+                {
+#>
+                results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>.ToString());
+<#
+                }
+                else
+                {
+#>
                 results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
+<#
+                }
+#>
                 <#= stateOfPropVarName #> = false;
             }
 <#
@@ -640,7 +656,7 @@ namespace <#= nameSpace #>
         if (implAttrDef.IsState)
         {
 #>
-            results.Add("<#= attrDef.Attr_Name #>", <#= stateMachineLocalVariableName #>.CurrentState);
+            if (!onlyIdentity) results.Add("<#= attrDef.Attr_Name #>", <#= stateMachineLocalVariableName #>.CurrentState);
 <#
         }
         else
@@ -648,7 +664,7 @@ namespace <#= nameSpace #>
             if (implAttrDef.IsIdentity)
             {
 #>
-            results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
+            if (!onlyIdentity) results.Add("<#= attrDef.Attr_Name #>", <#= localPropVarName #>);
 <#
             }
             else

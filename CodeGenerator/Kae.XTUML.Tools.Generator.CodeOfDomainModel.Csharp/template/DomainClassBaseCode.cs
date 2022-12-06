@@ -94,6 +94,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false };
                 var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
                 var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
+                var subDtDef = dtDef.SubClassR17();
+                if (subDtDef is CIMClassS_EDT)
+                {
+
+                }
+                else
+                {
+
+                }
                 var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
                 implAttrDef.DataTypeName = attrPropDataTypeName;
                 bool generate = true;
