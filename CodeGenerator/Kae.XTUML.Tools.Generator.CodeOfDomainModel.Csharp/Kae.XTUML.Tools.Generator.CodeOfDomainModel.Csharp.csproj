@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>3.0.0</Version>
+    <Version>3.1.1</Version>
     <Authors>Hiroshi Ota</Authors>
     <Company>Knowledge &amp; Experience</Company>
     <PackageProjectUrl>https://github.com/kae-made/domainmodel-code-generator-csharp</PackageProjectUrl>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kae.Tools.Generator" Version="6.4.0" />
+    <PackageReference Include="Kae.Tools.Generator" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
