@@ -327,7 +327,7 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
                     tbColors.Text = config.Colors;
                     for(int index =0;index < dotNetVers.Count; index++)
                     {
-                        if (dotNetVers[index] == config.DotNetVer)
+                        if (supportedDotNetVers[index] == config.DotNetVer)
                         {
                             cbDotNetVer.SelectedIndex= index;
                             break;
@@ -363,6 +363,7 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
             };
             string content = Newtonsoft.Json.JsonConvert.SerializeObject(config);
             var dialog = new SaveFileDialog();
+            dialog.FileName = $"{tbProjectName.Text}.json";
             if (dialog.ShowDialog() == true)
             {
                 if (File.Exists(dialog.FileName))

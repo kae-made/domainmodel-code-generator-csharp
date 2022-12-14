@@ -20,16 +20,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         IEnumerable<CIClassDef> classObjDefs;
         IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
+        bool isAzureDigitalTwins;
         bool isAzureIoTHub;
         Logger logger;
 
-        public DomainClassDefs(string version, string nameSpace, IEnumerable<CIClassDef> classObjDef, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
+        public DomainClassDefs(string version, string nameSpace, IEnumerable<CIClassDef> classObjDef, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.classObjDefs = classObjDef;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
+            this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
         }
@@ -66,7 +68,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                var propertiesGen = new ciclass.PropertyDef("        ", objDef, false, usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                 string propertiesGenCode = propertiesGen.TransformText();
             }
         }
@@ -84,7 +86,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                var operationsGen = new ciclass.ClassOperationDef("        ", objDef, false, usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                 string operationGenCode = operationsGen.TransformText();
 
             }

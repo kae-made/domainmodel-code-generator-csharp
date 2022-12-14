@@ -152,7 +152,7 @@ namespace ");
         {
             Console.WriteLine($"  - Generating {syncDef.Attr_Name}...");
             var actDef = fnbDef.CIMSuperClassACT_ACT();
-            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+            var actDescripGen = new ActDescripGenerator(actDef, "'This Statement should not appear!'", "    ", "        ", usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
             string code = actDescripGen.Generate();
 
             
@@ -218,7 +218,7 @@ namespace ");
             {
                 var eeDef = usedExternalEntities[eeKey];
                 string eeKeyLetter = eeDef.Attr_Key_Lett;
-                var eeImplInfo = GetExternalEntityConstructorName(eeDef);
+                var eeImplInfo = GetExternalEntityConstructorName(eeDef, isAzureDigitalTwins);
                 numOfEE++;
 
             

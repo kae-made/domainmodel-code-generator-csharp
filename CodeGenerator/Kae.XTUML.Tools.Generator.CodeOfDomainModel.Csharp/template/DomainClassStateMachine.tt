@@ -231,6 +231,16 @@ namespace <#= nameSpace #>
                 return newEvent;
             }
 
+            public override string GetReceiverIdentities()
+            {
+                string identiteis = "";
+                if (this.reciever != null)
+                {
+                    identiteis = this.reciever.GetIdForExternalStorage();
+                }
+                return identiteis;
+            }
+
             public override IDictionary<string, object> GetSupplementalData()
             {
                 var supplementalData = new Dictionary<string, object>();

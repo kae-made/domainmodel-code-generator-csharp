@@ -115,7 +115,7 @@ namespace ");
                 {
                     Console.WriteLine($"  - Generating '{stateDef.Attr_Numb}.{stateDef.Attr_Name}'...");
                     var smActDef = sabDef.CIMSuperClassACT_ACT();
-                    var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                    var actionGen = new ActDescripGenerator(smActDef, "target", "    ", "        ", usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                     genCodeFromDescrip = actionGen.Generate();
                 }
             }

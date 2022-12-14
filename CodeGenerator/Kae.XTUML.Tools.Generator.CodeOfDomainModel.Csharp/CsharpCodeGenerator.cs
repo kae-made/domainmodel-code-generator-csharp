@@ -109,7 +109,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                         dtdlNamespace = dtdlParams[0];
                         dtdlVersion = dtdlParams[1];
                     }
-                }else if (cp.ParamName == CPKeyAzureIoTHub)
+                }
+                else if (cp.ParamName == CPKeyAzureIoTHub)
                 {
                     isAzureIoTHub = ((BooleanParam)cp).Value;
                 }
@@ -152,15 +153,16 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var projectFile = new ProjectFile(Version, projectPath, DotNetVersion, new List<ProjectFile.Library>()
             {// new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
              // new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
-              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="7.5.0"},
+              new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="7.7.0" },
+              new ProjectFile.Library(){ Name="Kae.DomainModel.Csharp.Framework.ExternalEntity", Version="2.3.2" },
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.2" }
             });
 
             if (isAdaptorGen)
             {
-                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor", "1.9.0");
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor", "1.11.0");
             }
-             
+
             if (isAzureDigitalTwins)
             {
                 projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "1.3.0");
@@ -172,7 +174,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
 
             var extPackages = this.coloringManager.GetExternalPackages();
-            foreach(var extPackage in extPackages)
+            foreach (var extPackage in extPackages)
             {
                 projectFile.AddLibrary(extPackage);
             }
@@ -182,7 +184,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             genFolder.WriteContentAsync(projectPath, fileName, projectFileCode, GenFolder.WriteMode.Overwrite).Wait();
             Console.WriteLine($"Generated - {fileName}");
             logger.LogInfo($"Generated - {fileName}");
-            
+
 
             return true;
         }
@@ -221,7 +223,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             Console.WriteLine($"Generated - {fileName}");
             logger.LogInfo($"Generated - {fileName}");
 
-            var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureIoTHub, logger);
+            var domainClassDefs = new DomainClassDefs(Version, ProjectName, classObjDefs, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureDigitalTwins, isAzureIoTHub, logger);
             //domainClassDefs.prototype();
             var domainClassDefsCode = domainClassDefs.TransformText();
             fileName = "DomainClassDefs.cs";
@@ -234,7 +236,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             foreach (var classObjDef in classObjDefs)
             {
                 var objDef = (CIMClassO_OBJ)classObjDef;
-                var domainClassBase = new DomainClassBase(Version, ProjectName, domainFacadeClassName, objDef, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureIoTHub, logger);
+                var domainClassBase = new DomainClassBase(Version, ProjectName, domainFacadeClassName, objDef, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureDigitalTwins, isAzureIoTHub, logger);
                 var domainClassBaseCode = domainClassBase.TransformText();
                 fileName = $"DomainClass{objDef.Attr_Key_Lett}Base.cs";
                 genFolder.WriteContentAsync(projectPath, fileName, domainClassBaseCode, GenFolder.WriteMode.Overwrite).Wait();
@@ -250,7 +252,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 }
                 if (hasOperations)
                 {
-                    var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureIoTHub, logger);
+                    var domainClassOperations = new DomainClassOperations(Version, ProjectName, objDef, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureDigitalTwins, isAzureIoTHub, logger);
                     //domainClassOperations.prototype();
                     //domainClassOperations.prototypeAct();
                     var domainClassOperationsCode = domainClassOperations.TransformText();
@@ -279,7 +281,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     Console.WriteLine($"Generated - {fileName}");
                     logger.LogInfo($"Generated - {fileName}");
 
-                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureIoTHub, logger);
+                    var domainClassActions = new DomainClassActions(Version, ProjectName, objDef, smDef, IsGenCode, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureDigitalTwins, isAzureIoTHub, logger);
                     // domainClassActions.prototype();
                     // domainClassActions.prototypeAction();
                     var domainClassActionsCode = domainClassActions.TransformText();
@@ -297,7 +299,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             logger.LogInfo($"Generated - {fileName}");
 
             var syncDefs = modelRepository.GetCIInstances(CIMOOAofOOADomainName, "S_SYNC");
-            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureIoTHub, logger);
+            var domainOperations = new DomainOperations(Version, ProjectName, domainFacadeClassName, syncDefs, usedExternalEntitiesInActions, ColoringManagerForDomainWeaving, isAzureDigitalTwins, isAzureIoTHub, logger);
             var domainOperationsCode = domainOperations.TransformText();
             // domainOperations.prototypeAction();
             fileName = $"{domainFacadeClassName}Operations.cs";
@@ -316,9 +318,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     var marked = ExternalEntityDef.GetColorMark(eeDef);
                     if (!ExternalEntityDef.IsBuiltInExternalEntity(marked))
                     {
-                        if (eeDef.Attr_Key_Lett != "STR" && eeDef.Attr_Key_Lett != "RND")
+                        if (eeDef.Attr_Key_Lett != "STR" && eeDef.Attr_Key_Lett != "RND" && eeDef.Attr_Key_Lett != "ETMR")
                         {
-                            var eeDefGen = new ExternalEntityDef(Version, ProjectName, eeDef);
+                            var eeDefGen = new ExternalEntityDef(Version, ProjectName, eeDef, isAzureDigitalTwins);
                             //eeDefGen.prototype();
                             string eeDefGenCode = eeDefGen.TransformText();
                             fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";

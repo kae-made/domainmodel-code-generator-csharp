@@ -21,6 +21,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private bool genImplCode;
         IDictionary<string, CIMClassS_EE> usedExternalEntities;
         private ColoringManager coloringManager;
+        private bool isAzureDigitalTwins;
         private bool isAzureIoTHub;
         private Logger logger;
 
@@ -99,13 +100,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             return attrNameForDeviceId;
         }
 
-        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager colringManager, bool azureIoTHub, Logger logger)
+        public PropertyDef(string indent, CIMClassO_OBJ objDef, bool genImplCode, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager colringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genImplCode = genImplCode;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = colringManager;
+            this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub= azureIoTHub;
             this.logger = logger;
         }
@@ -128,7 +130,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                         {
                             string actionDescrip = dbattrDef.Attr_Action_Semantics;
                             var actDef = dabDef.CIMSuperClassACT_ACT();
-                            var actGen = new ActDescripGenerator(actDef, "this", "", "", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                            var actGen = new ActDescripGenerator(actDef, "this", "", "", usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                             string actGenCode = actGen.Generate();
                         }
                     }

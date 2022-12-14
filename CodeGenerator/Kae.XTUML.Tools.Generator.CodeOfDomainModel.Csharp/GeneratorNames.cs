@@ -73,7 +73,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         public static string GetTfrOpName(CIMClassO_TFR tfrDef)
         {
             string tfrName = tfrDef.Attr_Name;
-            return $"{tfrName.Substring(0,1)}{tfrName.Substring(1)}";
+            return $"{tfrName.Substring(0, 1)}{tfrName.Substring(1)}";
         }
 
         public static string GetEventEnumLabelName(CIMClassO_OBJ objDef, CIMClassSM_EVT evtDef)
@@ -83,7 +83,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         public static string GetEventClassName(CIMClassO_OBJ objDef, CIMClassSM_EVT evtDef)
         {
-            return $"{ objDef.Attr_Key_Lett}_{ evtDef.Attr_Numb}_{ToProgramAvailableString(evtDef.Attr_Mning)}";
+            return $"{objDef.Attr_Key_Lett}_{evtDef.Attr_Numb}_{ToProgramAvailableString(evtDef.Attr_Mning)}";
         }
         public static string GetStateEnumLabelName(CIMClassSM_STATE stateDef)
         {
@@ -117,7 +117,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 return result;
             }
             var frags = content.Split(new char[] { ' ' });
-            foreach(var frag in frags)
+            foreach (var frag in frags)
             {
                 result += frag.Substring(0, 1).ToUpper() + frag.Substring(1);
             }
@@ -155,7 +155,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 result += ToProgramAvailableString(phrase);
             }
-            return result;            
+            return result;
         }
 
         public static string GetSuperTypeMethodName(CIMClassR_SUBSUP subSupDef)
@@ -237,9 +237,9 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             varName = "changedStates";
         }
 
-        public static string GetExternalEntityWrappterClassName(CIMClassS_EE eeDef, bool fullName = true)
+        public static string GetExternalEntityWrappterClassName(CIMClassS_EE eeDef, bool isAzureDigitalTwins, bool fullName = true)
         {
-            var eeImplInfo = DomainOperations.GetExternalEntityConstructorName(eeDef);
+            var eeImplInfo = DomainOperations.GetExternalEntityConstructorName(eeDef, isAzureDigitalTwins);
             string name = $"{eeDef.Attr_Key_Lett}Wrapper";
             if (fullName)
             {
@@ -255,6 +255,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             if (eeDef.Attr_Name == "Time" && eeDef.Attr_Key_Lett == "TIM")
             {
                 name = "Kae.DomainModel.Csharp.Framework.ExternalEntities.TIM.TIMWrapper";
+            }
+            else if (eeDef.Attr_Name == "Random" && eeDef.Attr_Key_Lett == "RND")
+            {
+                name = "Kae.DomainModel.Csharp.Framework.ExternalEntities.RND.RNDWrapper";
+            }
+            else if (eeDef.Attr_Name == "String Utility" && eeDef.Attr_Key_Lett == "STR")
+            {
+                name = "Kae.DomainModel.Csharp.Framework.ExternalEntities.STR.STRWrapper";
+            }
+            else if (eeDef.Attr_Name == "Extended Timer" && eeDef.Attr_Key_Lett == "ETMR")
+            {
+                name = "Kae.DomainModel.Csharp.Framework.ExternalEntities.ETMR.ETMRWrapper";
             }
             return name;
         }

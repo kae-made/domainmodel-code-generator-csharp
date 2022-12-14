@@ -19,15 +19,17 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
         private bool genLogicCode;
         private IDictionary<string, CIMClassS_EE> usedExternalEntities;
         private ColoringManager coloringManager;
+        private bool isAzureDigitalTwins;
         private bool isAzureIoTHub;
         private Logger logger;
 
-        public ClassOperationDef(string indent, CIMClassO_OBJ objDef, bool genLogicCode, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
+        public ClassOperationDef(string indent, CIMClassO_OBJ objDef, bool genLogicCode, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
         {
             this.indent = indent;
             this.objDef = objDef;
             this.genLogicCode = genLogicCode;
             this.usedExternalEntities = usedEEs;
+            this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub = azureIoTHub;
             this.coloringManager = coloringManager;
             this.logger = logger;

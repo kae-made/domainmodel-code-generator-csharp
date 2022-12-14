@@ -287,7 +287,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                     var paramSpec = new ParamSpec() { Name = sparamDef.Attr_Name };
                     paramSpec.TypeSpec = GetTypeSpec(sparamDef.LinkedToR26());
                     paramSpec.TypeKind = GetDataType(paramSpec.TypeSpec);
-                    domOpSpec.Parameters.Add(paramSpec.Name, paramSpec);
+                    if (paramSpec.TypeKind != ParamSpec.DataType.Unsupported)
+                    {
+                        domOpSpec.Parameters.Add(paramSpec.Name, paramSpec);
+                    }
                 }
                 domainOpSpecs.Add(domOpSpec.Name, domOpSpec);
             }
@@ -311,29 +314,32 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                     var attrDtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
                     propSpec.TypeSpec = GetTypeSpec(attrDtDef);
                     propSpec.DataType = GetDataType(propSpec.TypeSpec);
-                    propSpec.AccessorName = GeneratorNames.GetAttrPropertyName(attrDef);
-                    var subAttrDef = attrDef.SubClassR106();
-                    if (subAttrDef is CIMClassO_BATTR)
+                    if (propSpec.DataType != ParamSpec.DataType.Unsupported)
                     {
-                        var bAttrDef = (CIMClassO_BATTR)subAttrDef;
-                        var subBAttrDef = bAttrDef.SubClassR107();
-                        if (subBAttrDef is CIMClassO_DBATTR)
+                        propSpec.AccessorName = GeneratorNames.GetAttrPropertyName(attrDef);
+                        var subAttrDef = attrDef.SubClassR106();
+                        if (subAttrDef is CIMClassO_BATTR)
                         {
-                            propSpec.Writable = false;
-                            propSpec.Mathematical = true;
+                            var bAttrDef = (CIMClassO_BATTR)subAttrDef;
+                            var subBAttrDef = bAttrDef.SubClassR107();
+                            if (subBAttrDef is CIMClassO_DBATTR)
+                            {
+                                propSpec.Writable = false;
+                                propSpec.Mathematical = true;
+                            }
+                            if (propSpec.TypeSpec.DtDef.Attr_Name == "state<State_Model>")
+                            {
+                                propSpec.StateMachineState = true;
+                                propSpec.Writable = false;
+                            }
                         }
-                        if (propSpec.TypeSpec.DtDef.Attr_Name == "state<State_Model>")
+                        else if (subAttrDef is CIMClassO_RATTR)
                         {
-                            propSpec.StateMachineState = true;
+                            propSpec.Reference = true;
                             propSpec.Writable = false;
                         }
+                        classSpec.Properties.Add(propSpec.Name, propSpec);
                     }
-                    else if (subAttrDef is CIMClassO_RATTR)
-                    {
-                        propSpec.Reference = true;
-                        propSpec.Writable = false;
-                    }
-                    classSpec.Properties.Add(propSpec.Name, propSpec);
                 }
                 var oidDefs = objDef.LinkedFromR104();
                 foreach (var oidDef in oidDefs)
@@ -370,7 +376,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                         var dtParm = tparmDef.LinkedToR118();
                         var parmSpec = new ParamSpec() { Name = tparmDef.Attr_Name, TypeSpec = GetTypeSpec(dtParm) };
                         parmSpec.TypeKind = GetDataType(parmSpec.TypeSpec);
-                        opSpec.Parameters.Add(parmSpec.Name, parmSpec);
+                        if (parmSpec.TypeKind != ParamSpec.DataType.Unsupported)
+                        {
+                            opSpec.Parameters.Add(parmSpec.Name, parmSpec);
+                        }
                     }
                     classSpec.Operations.Add(opSpec.Name, opSpec);
                 }
@@ -570,7 +579,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
             }
             else
             {
-                dataType = typeKinds[spec.NameOnCode];
+                if (typeKinds.ContainsKey(spec.NameOnCode))
+                {
+                    dataType = typeKinds[spec.NameOnCode];
+                }
+                else
+                {
+                    dataType = ParamSpec.DataType.Unsupported;
+                }
             }
             return dataType;
         }
@@ -654,7 +670,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
             DateTime,
             Void,
             Enum,
-            Complex
+            Complex,
+            Unsupported
         }
         public string Name { get; set; }
         public DataType TypeKind { get; set; }

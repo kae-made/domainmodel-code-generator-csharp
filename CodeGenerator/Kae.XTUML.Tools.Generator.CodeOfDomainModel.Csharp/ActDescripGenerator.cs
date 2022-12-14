@@ -22,13 +22,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         private string selfVarNameOnCode;
         private IDictionary<string, CIMClassS_EE> usedExternalEntities;
         private Logger logger;
+        private bool isAzureDigitalTwins;
         private bool isAzureIoTHub;
 
         private List<Dictionary<string, VariableDef>> declaredVariables = new List<Dictionary<string, VariableDef>>();
 
         ColoringManager coloringManager;
 
-        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
+        public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
         {
             this.actDef = actDef;
             this.selfVarNameOnCode = selfVarName;
@@ -36,6 +37,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             this.indent = indent;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
+            this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
         }
@@ -656,7 +658,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 paramCode += $"{paramDef.Attr_Name}:{paramValCode}";
             }
 
-            string eeWrapper = GeneratorNames.GetExternalEntityWrappterClassName(eeDef);
+            string eeWrapper = GeneratorNames.GetExternalEntityWrappterClassName(eeDef, isAzureDigitalTwins);
             string eeWrapperRefVarName = GeneratorNames.GetExternalEntityWrapperRefVarName(eeDef);
             if (!eeReferDefs.ContainsKey(eeDef.Attr_Key_Lett))
             {
@@ -1751,6 +1753,10 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {
                 var rSimpDef = (CIMClassR_SIMP)subRelDef;
                 var rFormDef = rSimpDef.LinkedFromR208();
+                if (rFormDef == null)
+                {
+                    logger.LogError($"R{relDef.Attr_Numb} may not be formalized!");
+                }
                 var formObjDef = rFormDef.CIMSuperClassR_RGO().CIMSuperClassR_OIR().LinkedOtherSideR201();
                 var partVar = lVariableDef;
                 var formVar = rVariableDef;
@@ -2318,7 +2324,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             var eeDef = brgDef.LinkedToR19();
             var dtDef = brgDef.LinkedToR20();
 
-            string eeWrapper = GeneratorNames.GetExternalEntityWrappterClassName(eeDef);
+            string eeWrapper = GeneratorNames.GetExternalEntityWrappterClassName(eeDef, isAzureDigitalTwins);
             string eeWrapperRefVarName = GeneratorNames.GetExternalEntityWrapperRefVarName(eeDef);
             if (!eeReferDefs.ContainsKey(eeDef.Attr_Key_Lett))
             {
@@ -2688,7 +2694,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 {
                     dt = tParm.LinkedToR118();
                 }
-            } 
+            }
             else if (EvtDiDef != null)
             {
                 dt = EvtDiDef.LinkedToR524();

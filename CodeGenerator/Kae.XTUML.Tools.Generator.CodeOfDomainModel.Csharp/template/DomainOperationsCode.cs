@@ -22,10 +22,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         IEnumerable<CIClassDef> syncClassDefs;
         IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
-        bool isAzureIoTHub;
+        bool isAzureDigitalTwins = false;
+        bool isAzureIoTHub = false;
         Logger logger;
 
-        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
+        public DomainOperations(string version, string nameSpace, string domainFacadeClassName, IEnumerable<CIClassDef> syncDefs, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
@@ -33,6 +34,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.syncClassDefs = syncDefs;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
+            this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
         }
@@ -47,12 +49,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 var retDtDef = syncDef.LinkedToR25();
                 if (retDtDef.Attr_Name == "void") ;
                 string syncName = syncDef.Attr_Name;
-                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                var actDescripGen = new ActDescripGenerator(actDef, "target", "    ", "        ", usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                 string code = actDescripGen.Generate();
             }
         }
 
-        public static (string New, string Namespace) GetExternalEntityConstructorName(CIMClassS_EE eeDef)
+        public static (string New, string Namespace) GetExternalEntityConstructorName(CIMClassS_EE eeDef, bool isAzureDigitalTwins)
         {
             string constructorName = "";
             string nameSpace = "";
@@ -72,13 +74,25 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
                 else if (eeDef.Attr_Key_Lett == "STR")
                 {
-                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntity.STR.STRImpl";
-                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntity.STR";
+                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntities.STR.STRImpl";
+                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntities.STR";
                 }
                 else if (eeDef.Attr_Key_Lett == "RND")
                 {
-                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntity.RND.RNDImpl";
-                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntity.RND";
+                    constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntities.RND.RNDImpl";
+                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntities.RND";
+                }
+                else if (eeDef.Attr_Key_Lett == "ETMR")
+                {
+                    nameSpace = "Kae.DomainModel.Csharp.Framework.ExternalEntities.ETMR";
+                    if (isAzureDigitalTwins)
+                    {
+                        constructorName = "Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins.ExtendedTimerForAzureDigitalTwins";
+                    }
+                    else
+                    {
+                        constructorName = "Kae.DomainModel.Csharp.Framework.ExternalEntities.ETMR.impl.ETMRImpl";
+                    }
                 }
             }
             return (constructorName, nameSpace);

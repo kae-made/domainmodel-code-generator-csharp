@@ -312,7 +312,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
             }
             else
             {
-                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                var actGen = new ActDescripGenerator(implAttrDef.ActDef, "this", $"{indent}    ", "    ", usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                 string actGenCode = actGen.Generate();
 
             

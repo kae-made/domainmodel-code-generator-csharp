@@ -21,10 +21,11 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         CIMClassO_OBJ objDef;
         IDictionary<string, CIMClassS_EE> usedExternalEntities;
         ColoringManager coloringManager;
+        bool isAzureDigitalTwins;
         bool isAzureIoTHub;
         Logger logger;
 
-        public DomainClassBase(string version, string nameSpace, string facadeClassName, CIMClassO_OBJ objDef, IDictionary<string,CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureIoTHub, Logger logger)
+        public DomainClassBase(string version, string nameSpace, string facadeClassName, CIMClassO_OBJ objDef, IDictionary<string,CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
         {
             this.version = version;
             this.nameSpace = nameSpace;
@@ -32,6 +33,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             this.objDef = objDef;
             this.usedExternalEntities = usedEEs;
             this.coloringManager = coloringManager;
+            this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
         }

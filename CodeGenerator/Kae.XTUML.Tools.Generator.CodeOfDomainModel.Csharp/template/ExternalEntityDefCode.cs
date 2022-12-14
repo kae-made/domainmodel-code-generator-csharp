@@ -16,12 +16,14 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
         string nameSpace;
         CIMClassS_EE eeDef;
         static readonly string folderName = "ExternalEntities";
+        bool isAzureDigitalTwins;
 
-        public ExternalEntityDef(string version, string nameSpace,CIMClassS_EE eeDef)
+        public ExternalEntityDef(string version, string nameSpace,CIMClassS_EE eeDef, bool azureDigitalTwins)
         {
             this.version = version;
             this.nameSpace = nameSpace;
             this.eeDef = eeDef;
+            this.isAzureDigitalTwins = azureDigitalTwins;
         }
 
         public static string GetFolderName() { return folderName; }
@@ -111,31 +113,46 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                     if (line.StartsWith("@"))
                     {
                         var frags = line.Substring(1).Split(new char[] { ';' });
-                        foreach (var frag in frags)
+                        bool builtin = false;
+                        foreach(var frag in frags)
                         {
-                            int op = frag.IndexOf("(");
-                            int cp = frag.LastIndexOf(")");
-                            string markName = frag.Substring(0, op);
-                            if (!results.ContainsKey(markName))
+                            if (frag.StartsWith("builtin"))
                             {
-                                results.Add(markName, new Dictionary<string, string>());
+                                if (frag.ToLower().IndexOf("true") > 0)
+                                {
+                                    builtin = true;
+                                    break;
+                                }
                             }
-                            string markArgs = frag.Substring(op + 1, (cp - op) - 1);
-                            var margs = markArgs.Split(new char[] { ',' });
-                            foreach (var marg in margs)
+                        }
+                        if (builtin == false)
+                        {
+                            foreach (var frag in frags)
                             {
-                                string margName = marg.Trim();
-                                string margValue = marg.Trim();
-                                if (marg.IndexOf(":") > 0)
+                                int op = frag.IndexOf("(");
+                                int cp = frag.LastIndexOf(")");
+                                string markName = frag.Substring(0, op);
+                                if (!results.ContainsKey(markName))
                                 {
-                                    margName = marg.Substring(0, marg.IndexOf(":"));
-                                    margValue = marg.Substring(marg.IndexOf(":") + 1);
+                                    results.Add(markName, new Dictionary<string, string>());
                                 }
-                                if (!results[markName].ContainsKey(margName))
+                                string markArgs = frag.Substring(op + 1, (cp - op) - 1);
+                                var margs = markArgs.Split(new char[] { ',' });
+                                foreach (var marg in margs)
                                 {
-                                    results[markName].Add(margName, "");
+                                    string margName = marg.Trim();
+                                    string margValue = marg.Trim();
+                                    if (marg.IndexOf(":") > 0)
+                                    {
+                                        margName = marg.Substring(0, marg.IndexOf(":"));
+                                        margValue = marg.Substring(marg.IndexOf(":") + 1);
+                                    }
+                                    if (!results[markName].ContainsKey(margName))
+                                    {
+                                        results[markName].Add(margName, "");
+                                    }
+                                    results[markName][margName] = margValue;
                                 }
-                                results[markName][margName] = margValue;
                             }
                         }
                     }
@@ -147,7 +164,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
 
         public void prototype()
         {
-            string wrapperClassName = GeneratorNames.GetExternalEntityWrappterClassName(eeDef);
+            string wrapperClassName = GeneratorNames.GetExternalEntityWrappterClassName(eeDef, isAzureDigitalTwins);
             string keyLett = eeDef.Attr_Key_Lett;
             var brgDefs = eeDef.LinkedFromR19();
             foreach(var brgDef in brgDefs){

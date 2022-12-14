@@ -197,7 +197,7 @@ namespace <#= nameSpace #>
         }
 <#
     // attribute generation
-    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
     string propertiesGenCode = propertiesGen.TransformText();
 #>
 <#= propertiesGenCode #>

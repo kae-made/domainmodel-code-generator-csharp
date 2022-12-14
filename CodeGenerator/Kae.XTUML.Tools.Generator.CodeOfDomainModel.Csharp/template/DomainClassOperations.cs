@@ -89,7 +89,7 @@ namespace ");
             
             #line 36 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassOperations.tt"
 
-    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+    var operationsGen = new ciclass.ClassOperationDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
     string operationGenCode = operationsGen.TransformText();
 
             

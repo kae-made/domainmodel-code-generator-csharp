@@ -401,7 +401,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.ciclass
                     var actDef = opbDef.CIMSuperClassACT_ACT();
                     string baseIndent = "    ";
                     string descripCode = "";
-                    var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+                    var actDescripGen = new ActDescripGenerator(actDef, "this", baseIndent, indent + baseIndent, usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
                     descripCode = actDescripGen.Generate();
 
             

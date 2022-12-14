@@ -394,7 +394,7 @@ using Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage;
             #line 198 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\DomainClassBase.tt"
 
     // attribute generation
-    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureIoTHub, logger);
+    var propertiesGen = new ciclass.PropertyDef("        ", objDef, true, usedExternalEntities, coloringManager, isAzureDigitalTwins, isAzureIoTHub, logger);
     string propertiesGenCode = propertiesGen.TransformText();
 
             
