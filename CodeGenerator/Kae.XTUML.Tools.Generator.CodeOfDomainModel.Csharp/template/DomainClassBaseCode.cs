@@ -734,6 +734,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
             public string DataTypeName { get; set; }
             public bool IsUniqueId { get; set; }
             public bool IsState { get; set; }
+            public bool IsTimer { get; set; }
         }
     }
 }

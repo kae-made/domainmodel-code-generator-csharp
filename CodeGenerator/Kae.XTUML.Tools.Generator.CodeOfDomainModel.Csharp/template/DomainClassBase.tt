@@ -84,7 +84,7 @@ namespace <#= nameSpace #>
     var attrDefs = objDef.LinkedFromR102();
     foreach (var attrDef in attrDefs)
     {
-        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false, IdentityLevel0 = false };
+        var implAttrDef = new AttributeDef() { AttrDef = attrDef, IsIdentity = false, IsReferential = false, IsUniqueId = false, IsState = false, IdentityLevel0 = false, IsTimer = false };
         var attrPropName = GeneratorNames.GetAttrPropertyName(attrDef);
         var dtDef = DomainDataTypeDefs.GetBaseDT(attrDef);
         var attrPropDataTypeName = DomainDataTypeDefs.GetDataTypeName(dtDef);
@@ -96,6 +96,10 @@ namespace <#= nameSpace #>
             {
                 implAttrDef.IsState = true;
             }
+        }
+        if (dtDef.Attr_Name == "inst_ref<Timer>")
+        {
+            implAttrDef.IsTimer = true;
         }
 
         var subAttrDef = attrDef.SubClassR106();
@@ -527,6 +531,7 @@ namespace <#= nameSpace #>
         else
         {
 #>
+// should adopt timer setting
 <#
             if (isStructuredDataType == false)
             {
@@ -541,7 +546,29 @@ namespace <#= nameSpace #>
 #>
                 if (propertyValues["<#= attrDef.Attr_Name #>"] is string)
                 {
+<#
+                    if (implAttrDef.IsTimer)
+                    {
+                        if (isAzureDigitalTwins)
+                        {
+#>
+                <#= localPropVarName #> = new Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins.TimerImpl() { TimerIdOnService = propertyValues["<#= attrDef.Attr_Name #>"] };
+<#
+                        }
+                        else
+                        {
+#>
+                // Timer instance restore is not supported in the case of In Memory environment
+<#
+                        }
+                    }
+                    else
+                    {
+#>
                     <#= localPropVarName #> = <#= dataTypeName #>.Parse((string)propertyValues["<#= attrDef.Attr_Name #>"]);
+<#
+                    }
+#>
                 }
                 else
                 {
