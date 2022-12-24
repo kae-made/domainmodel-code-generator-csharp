@@ -65,7 +65,7 @@ using Kae.Utility.Logging;
             
             #line 28 "C:\Users\kae-m\source\repos\xtMULMetaModelProjects\Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp\template\ExternalEntityDef.tt"
 
-    string wrapperClassName = GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false);
+    string wrapperClassName = GeneratorNames.GetExternalEntityWrappterClassName(eeDef, isAzureDigitalTwins, false);
 
             
             #line default

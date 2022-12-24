@@ -154,7 +154,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             {// new ProjectFile.Library() { Name = "Kae.StateMachine", Version = "0.3.0" },
              // new ProjectFile.Library() { Name = "Kae.Utility.Logging", Version = "1.0.0"},
               new ProjectFile.Library(){ Name = "Kae.DomainModel.Csharp.Framework", Version="7.7.0" },
-              new ProjectFile.Library(){ Name="Kae.DomainModel.Csharp.Framework.ExternalEntity", Version="2.3.2" },
+              new ProjectFile.Library(){ Name="Kae.DomainModel.Csharp.Framework.ExternalEntity", Version="2.4.0" },
               new ProjectFile.Library() { Name = "Newtonsoft.Json", Version="13.0.2" }
             });
 
@@ -165,7 +165,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             if (isAzureDigitalTwins)
             {
-                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "1.3.0");
+                projectFile.AddLibrary("Kae.DomainModel.Csharp.Framework.Adaptor.ExternalStorage.AzureDigitalTwins", "2.4.0");
             }
 
             if (isAzureIoTHub)
@@ -323,7 +323,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                             var eeDefGen = new ExternalEntityDef(Version, ProjectName, eeDef, isAzureDigitalTwins);
                             //eeDefGen.prototype();
                             string eeDefGenCode = eeDefGen.TransformText();
-                            fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, false)}.cs";
+                            fileName = $"{GeneratorNames.GetExternalEntityWrappterClassName(eeDef, isAzureDigitalTwins, false)}.cs";
                             genFolder.WriteContentAsync(eeDefFolderName, fileName, eeDefGenCode, GenFolder.WriteMode.Overwrite).Wait();
                             Console.WriteLine($"Generated - {fileName}");
                             logger.LogInfo($"Generated - {fileName}");
