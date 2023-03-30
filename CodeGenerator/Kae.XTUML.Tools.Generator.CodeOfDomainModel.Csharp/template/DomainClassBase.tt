@@ -271,6 +271,61 @@ namespace <#= nameSpace #>
 <#
     }
 
+    // delegate polymorphic events
+    var uipEvtDefs = EventDelegate.GetUnimplementedEvents(objDef, false);
+    foreach (var uipEvtDef in uipEvtDefs)
+    {
+        string delegateMethodName = EventDelegate.GetDelegateMethodName(uipEvtDef);
+#>
+        public void <#= delegateMethodName #>(EventData domainEvent)
+        {
+<#
+        var isImplementedBySelf = EventDelegate.IsImplementedBySelf(uipEvtDef, objDef);
+        if (isImplementedBySelf)
+        {
+            string createEventCode = EventDelegate.GetCreateEventForDelegated(objDef, uipEvtDef, "domainEvent");
+#>
+            <#= createEventCode #>;
+<#
+        }
+        else
+        {
+            string subClassGetMethodName = EventDelegate.GetGetSubClassMethodName(objDef, uipEvtDef);
+#>
+            this.<#= subClassGetMethodName #>().<#= delegateMethodName #>(domainEvent);
+<#
+        }
+#>
+        }
+<#
+    }
+    var uipEvtDefsUpper = EventDelegate.GetUnimplementedEventsUpper(objDef);
+    uipEvtDefsUpper = EventDelegate.RemoveGeneratedPEvents(uipEvtDefs, uipEvtDefsUpper);
+    foreach (var uipEvtDef in uipEvtDefsUpper)
+    {
+        string delegateMethodName = EventDelegate.GetDelegateMethodName(uipEvtDef);
+#>
+        public void <#= delegateMethodName #>(EventData domainEvent)
+        {
+<#
+        var isImplementedBySelf = EventDelegate.IsImplementedBySelf(uipEvtDef, objDef);
+        if (isImplementedBySelf)
+        {
+#>
+            Generation Error - please contact to master@kae-made.jp
+<#
+        }
+        else
+        {
+            // string subClassGetMethodName = EventDelegate.GetGetSubClassMethodName(objDef, uipEvtDef);
+#>
+            logger?.Log(Logger.Level.Info, $"unimplemented event - '{domainEvent.EventNumber}:{domainEvent.EventName}'");
+<#
+        }
+#>
+        }
+<#
+    }
 #>
         
         public bool Validate()

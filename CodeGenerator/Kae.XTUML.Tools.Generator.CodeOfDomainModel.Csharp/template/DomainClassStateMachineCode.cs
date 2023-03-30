@@ -65,7 +65,57 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template
                 }
                 else if (subEvtDef is CIMClassSM_PEVT)
                 {
+                    string getSubClassMethodNameOfpm = "";
+                    var nlevtDefs = ((CIMClassSM_PEVT)subEvtDef).LinkedFromR527();
+                    foreach (var nlevtDef in nlevtDefs)
+                    {
+                        var pmEvtDef = nlevtDef.CIMSuperClassSM_SEVT().CIMSuperClassSM_EVT();
+                        var ismDef = pmEvtDef.LinkedToR502().SubClassR517();
+                        if (ismDef != null)
+                        {
+                            var objDefOfpm = ((CIMClassSM_ISM)ismDef).LinkedToR518();
+                            var oirDefs = objDefOfpm.LinkedOneSideR201();
+                            foreach (var oirDef in oirDefs)
+                            {
+                                var rgoDef = oirDef.SubClassR203();
+                                if (rgoDef is CIMClassR_RGO)
+                                {
+                                    var subRelDef = ((CIMClassR_RGO)rgoDef).SubClassR205();
+                                    if (subRelDef is CIMClassR_SUB)
+                                    {
+                                        var subsupRelDef = ((CIMClassR_SUB)subRelDef).LinkedToR213();
+                                        var superObjDef = subsupRelDef.LinkedFromR212().CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
+                                        if (superObjDef.Attr_Key_Lett == objDefOfpm.Attr_Key_Lett)
+                                        {
+                                            var relOfpm = subsupRelDef.CIMSuperClassR_REL();
+                                            getSubClassMethodNameOfpm = GeneratorNames.GetSubRelClassMethodName(relOfpm);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (nlevtDefs.Count() > 0)
+                    {
 
+                    }
+                    string prefixIf = "if";
+                    foreach (var nlevtDef in nlevtDefs)
+                    {
+                        string domainClassNameOfpm = "";
+                        string stateMachineClassNameOfpm = "";
+                        string eventClassNameOfpm = "";
+                        var pmEvtDef = nlevtDef.CIMSuperClassSM_SEVT().CIMSuperClassSM_EVT();
+                        var ismDef = pmEvtDef.LinkedToR502().SubClassR517();
+                        if (ismDef != null)
+                        {
+                            var objDefOfpm = ((CIMClassSM_ISM)ismDef).LinkedToR518();
+                            domainClassNameOfpm = GeneratorNames.GetDomainClassName(objDefOfpm);
+                            stateMachineClassNameOfpm = GeneratorNames.GetStateMachineClassName(objDefOfpm);
+                            eventClassNameOfpm = GeneratorNames.GetEventClassName(objDefOfpm, pmEvtDef);
+                        }
+                        prefixIf = $"else {prefixIf}";
+                    }
                 }
             }
 

@@ -19,6 +19,7 @@
 // ------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using Kae.StateMachine;
 using Kae.DomainModel.Csharp.Framework;
 using Kae.Utility.Logging;
 
@@ -37,6 +38,8 @@ namespace <#= nameSpace #>
             var objDef = rsuperDef.CIMSuperClassR_RTO().LinkedToR109().LinkedToR104();
             var getSuperClassMethodName = GeneratorNames.GetGetSuperClassMethodName(relDef);
             var superDomainClassName = GeneratorNames.GetDomainClassName(objDef);
+            var uiPEvtDefs = EventDelegate.GetUnimplementedEvents(objDef, true);
+            // var uiPEvtDefs = EventDelegate.GetUnimplementedEventsUpper(objDef);
             if (isFirst == false)
             {
 #>
@@ -47,6 +50,15 @@ namespace <#= nameSpace #>
     public interface <#= interfaceName #>
     {
         public <#= superDomainClassName #> <#= getSuperClassMethodName #>();
+<#
+            foreach (var uiPEvtDef in uiPEvtDefs)
+            {
+                string delegateEventMethodName = EventDelegate.GetDelegateMethodName(uiPEvtDef);
+#>
+        public void <#= delegateEventMethodName #>(EventData domainEvent);
+<#
+            }
+#>
     }
 <#
             isFirst = false;

@@ -167,6 +167,18 @@ namespace <#= nameSpace #>
 
         bool isCreationEvent = IsCreationEvent(evtDef);
         var evtdiDefs = evtDef.LinkedFromR532();
+        if (subEvtDef is CIMClassSM_SEVT)
+        {
+            var sevtDef = (CIMClassSM_SEVT)subEvtDef;
+            var subSevtDef = sevtDef.SubClassR526();
+            if (subSevtDef is CIMClassSM_NLEVT)
+            {
+                var nlevtDef = (CIMClassSM_NLEVT)subSevtDef;
+                var pevtDef = nlevtDef.LinkedToR527();
+                var origEvtDef = pevtDef.CIMSuperClassSM_EVT();
+                evtdiDefs = origEvtDef.LinkedFromR532();
+            }            
+        }
         var createArgs = "";
         var constructorCallArgs = "";
         foreach (var evtdiDef in evtdiDefs)
@@ -190,10 +202,22 @@ namespace <#= nameSpace #>
         }
         string domainClassBaseName = GeneratorNames.GetDomainClassImplName(objDef);
 #>
-            public static <#= evtClassName #> Create(<#= domainClassName #> receiver<#= createArgs #>, bool isSelfEvent, bool sendNow<# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
+            // Create and send instance of <#= evtClassName #>
+            public static EventData Create(<#= domainClassName #> receiver<#= createArgs #>, bool isSelfEvent, bool sendNow<# if (isCreationEvent) { #>, InstanceRepository instanceRepository, Logger logger<# } #>)
             {
+<#
+        if (subEvtDef is CIMClassSM_PEVT)
+        {
+#>
+                EventData newEvent = null;
+<#
+        }
+        else
+        {
+#>
                 var newEvent = new <#= evtClassName #>(receiver)<#= constructorCallArgs #>;
 <#
+        }
         if (isCreationEvent)
         {
 #>
@@ -325,50 +349,60 @@ namespace <#= nameSpace #>
         stateTransferTableDef.Add(sttEntry);
     }
 
-    int sttColumns = stateTransferTableDef[0].NexTransitions.Count();
-    int sttRows = stateTransferTableDef.Count;
+    if (stateTransferTableDef.Count > 0)
+    {
+        int sttColumns = stateTransferTableDef[0].NexTransitions.Count();
+        int sttRows = stateTransferTableDef.Count;
 #>
         protected int[,] stateTransitionTable = new int[<#= sttRows #>, <#= sttColumns #>]
             {
 <#
-    var sttDef = stateTransferTableDef.OrderBy(entry => entry.StateNumber);
-    index = 0;
-    foreach(var sttEntry in sttDef)
-    {
-        string sttRowDef = "";
-        foreach(var nt in sttEntry.NexTransitions)
+        var sttDef = stateTransferTableDef.OrderBy(entry => entry.StateNumber);
+        index = 0;
+        foreach(var sttEntry in sttDef)
         {
-            if (!string.IsNullOrEmpty(sttRowDef))
+            string sttRowDef = "";
+            foreach(var nt in sttEntry.NexTransitions)
             {
-                sttRowDef += ", ";
-            }
-            string nextState = "";
-             if (nt.NextStateDef != null)
-             {
-                 nextState = $"States.{GeneratorNames.ToProgramAvailableString(nt.NextStateDef.Attr_Name)}";
-             }
-             else
-             {
-                 if (nt.IsIgnore)
+                if (!string.IsNullOrEmpty(sttRowDef))
+                {
+                    sttRowDef += ", ";
+                }
+                string nextState = "";
+                 if (nt.NextStateDef != null)
                  {
-                     nextState = "ITransition.Transition.Ignore";
+                     nextState = $"States.{GeneratorNames.ToProgramAvailableString(nt.NextStateDef.Attr_Name)}";
                  }
-                 else if (nt.IsCantHappen)
+                 else
                  {
-                     nextState = "ITransition.Transition.CantHappen";
+                     if (nt.IsIgnore)
+                     {
+                         nextState = "ITransition.Transition.Ignore";
+                     }
+                     else if (nt.IsCantHappen)
+                     {
+                         nextState = "ITransition.Transition.CantHappen";
+                     }
                  }
+                 sttRowDef += $"(int){nextState}";
              }
-             sttRowDef += $"(int){nextState}";
-         }
 #>
                 { <#= sttRowDef #> }<# if (++index < stateTransferTableDef.Count()) { #>, <# } #>
 
 <#
-    }
+        }
 #>
             };
 
 <#
+    }
+    else
+    {
+#>
+        protected int[,] stateTransitionTable = null;
+
+<#
+    }
     var logSttTxn0 = new logging.Logging("logger", "            ", objDef, "target", logging.Logging.Mode.StatTransition, "entering");
     var logSttTxnE0Gen = logSttTxn0.TransformText();
     var logSttTxn1 = new logging.Logging("logger", "            ", objDef, "target", logging.Logging.Mode.StatTransition, "entered");

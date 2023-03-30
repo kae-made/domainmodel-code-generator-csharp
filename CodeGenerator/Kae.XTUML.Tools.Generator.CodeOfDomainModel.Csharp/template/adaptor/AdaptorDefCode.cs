@@ -537,13 +537,6 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                     {
                         var evtSpec = new EventSpec() { EvtDef = smEvtDef, Name = GeneratorNames.GetEventClassName(objDef, smEvtDef), ReturnType = ParamSpec.DataType.Void, ReturnTypeSpec = null, Parameters = new Dictionary<string, ParamSpec>() };
                         var smEvtDiDefs = smEvtDef.LinkedFromR532();
-                        foreach (var smEvtDiDef in smEvtDiDefs)
-                        {
-                            var dtDef = smEvtDiDef.LinkedToR524();
-                            var paramSpec = new ParamSpec() { Name = smEvtDiDef.Attr_Name, TypeSpec = GetTypeSpec(dtDef) };
-                            paramSpec.TypeKind = GetDataType(paramSpec.TypeSpec);
-                            evtSpec.Parameters.Add(paramSpec.Name, paramSpec);
-                        }
                         var subSmEvtDef = smEvtDef.SubClassR525();
                         if (subSmEvtDef is CIMClassSM_SEVT)
                         {
@@ -556,6 +549,18 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp.template.adaptor
                                     evtSpec.CreationEvent = true;
                                 }
                             }
+                            else if (subSEvtDef is CIMClassSM_NLEVT)
+                            {
+                                var pEvtDefForNl = ((CIMClassSM_NLEVT)subSEvtDef).LinkedToR527();
+                                smEvtDiDefs = pEvtDefForNl.CIMSuperClassSM_EVT().LinkedFromR532();
+                            }
+                        }
+                        foreach (var smEvtDiDef in smEvtDiDefs)
+                        {
+                            var dtDef = smEvtDiDef.LinkedToR524();
+                            var paramSpec = new ParamSpec() { Name = smEvtDiDef.Attr_Name, TypeSpec = GetTypeSpec(dtDef) };
+                            paramSpec.TypeKind = GetDataType(paramSpec.TypeSpec);
+                            evtSpec.Parameters.Add(paramSpec.Name, paramSpec);
                         }
                         classSpec.Events.Add(evtSpec.Name, evtSpec);
                     }
