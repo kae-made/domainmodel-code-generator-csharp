@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <AssemblyName>DomainModelCsharpGUIGenerator</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kae.Utility.Logging.WPF" Version="1.0.0" />
+    <PackageReference Include="Kae.Utility.Logging.WPF" Version="0.10.0" />
   </ItemGroup>
 
   <ItemGroup>
