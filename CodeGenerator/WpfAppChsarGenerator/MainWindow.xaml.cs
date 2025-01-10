@@ -73,6 +73,10 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
 
         private void buttonDomainModel_Click(object sender, RoutedEventArgs e)
         {
+            if (cbGenAction.IsChecked == true)
+            {
+                MessageBox.Show("Please select xtuml file under gen/code_generation of BridgePoint workspace!");
+            }
             if (cbDomainModelSelectionIsFolder.IsChecked == true)
             {
                 if (cbGenAction.IsEnabled == true)
@@ -157,7 +161,7 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
 
         }
 
-        private void buttonGenerate_Click(object sender, RoutedEventArgs e)
+        private async void buttonGenerate_Click(object sender, RoutedEventArgs e)
         {
             var generator = new CsharpCodeGenerator(textBlockLogger, version);
             var genContext = generator.GetContext();
@@ -181,15 +185,19 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
                 genContext.SetOptionValue(GeneratorBase.CPKeyColoringFilePath, (tbColors.Text, false));
             }
 
-            var task = new Task(() =>
+            var task = new Task(async () =>
             {
                 generator.ResolveContext();
+                await textBlockLogger.LogInfo("Loading metamodel...");
                 generator.LoadMetaModel();
+                await textBlockLogger.LogInfo("Loading Domain Models...");
                 generator.LoadDomainModels();
+                await textBlockLogger.LogInfo("Generating development environment...");
                 generator.GenerateEnvironment();
+                await textBlockLogger.LogInfo("Generating C# code files...");
                 generator.GenerateContents();
 
-                textBlockLogger.LogInfo("Generation completed.");
+                await textBlockLogger.LogInfo("Generation completed.");
 
                 RefleshGeneratedView();
             });

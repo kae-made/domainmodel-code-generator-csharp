@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kae.Utility.Logging.WPF" Version="0.10.0" />
+    <PackageReference Include="Kae.Utility.Logging.WPF" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>

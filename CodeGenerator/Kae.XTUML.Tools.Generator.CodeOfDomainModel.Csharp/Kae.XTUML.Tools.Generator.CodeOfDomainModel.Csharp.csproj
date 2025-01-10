@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Kae.Tools.Generator" Version="6.5.1" />
+    <PackageReference Include="Kae.XTUML.Tools.CIModelResolver" Version="2.3.3-alpha" />
   </ItemGroup>
 
   <ItemGroup>
