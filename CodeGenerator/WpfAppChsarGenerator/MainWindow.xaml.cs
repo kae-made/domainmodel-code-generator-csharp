@@ -187,21 +187,30 @@ namespace Kae.XTUML.Tools.WpfAppChsarpGenerator
 
             var task = new Task(async () =>
             {
-                generator.ResolveContext();
-                await textBlockLogger.LogInfo("Loading metamodel...");
-                generator.LoadMetaModel();
-                await textBlockLogger.LogInfo("Loading Domain Models...");
-                generator.LoadDomainModels();
-                await textBlockLogger.LogInfo("Generating development environment...");
-                generator.GenerateEnvironment();
-                await textBlockLogger.LogInfo("Generating C# code files...");
-                generator.GenerateContents();
+                try
+                {
+                    generator.ResolveContext();
+                    await textBlockLogger.LogInfo("Loading metamodel...");
+                    generator.LoadMetaModel();
+                    await textBlockLogger.LogInfo("Loading Domain Models...");
+                    generator.LoadDomainModels();
+                    await textBlockLogger.LogInfo("Generating development environment...");
+                    generator.GenerateEnvironment();
+                    await textBlockLogger.LogInfo("Generating C# code files...");
+                    generator.GenerateContents();
 
-                await textBlockLogger.LogInfo("Generation completed.");
+                    await textBlockLogger.LogInfo("Generation completed.");
 
-                RefleshGeneratedView();
+                    RefleshGeneratedView();
+                }
+                catch (Exception ex)
+                {
+                    await textBlockLogger.LogError("Trouble!", ex);
+                }
             });
+            buttonGenerate.IsEnabled = false;
             task.Start();
+            buttonGenerate.IsEnabled = true;
         }
 
         private void buttonGenFolder_Click(object sender, RoutedEventArgs e)

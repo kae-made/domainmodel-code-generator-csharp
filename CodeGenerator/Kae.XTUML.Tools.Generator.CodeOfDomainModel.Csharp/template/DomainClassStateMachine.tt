@@ -70,7 +70,7 @@ namespace <#= nameSpace #>
 <#
     foreach (var stateDef in stateDefs)
     {
-        var stateName = GeneratorNames.GetStateEnumLabelName(stateDef);
+        var stateName = GeneratorNames.GetStateEnumLabelName(stateDef, true);
         
 #>
             <#= stateName #> = <#= ++index #><# if (index < stateDefs.Count()) { #>,<# } #>
@@ -371,7 +371,7 @@ namespace <#= nameSpace #>
                 string nextState = "";
                  if (nt.NextStateDef != null)
                  {
-                     nextState = $"States.{GeneratorNames.ToProgramAvailableString(nt.NextStateDef.Attr_Name)}";
+                     nextState = $"States.{GeneratorNames.GetStateEnumLabelName(nt.NextStateDef)}";
                  }
                  else
                  {

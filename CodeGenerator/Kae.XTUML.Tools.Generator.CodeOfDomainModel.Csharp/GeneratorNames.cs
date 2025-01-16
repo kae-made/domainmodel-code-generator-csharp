@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
@@ -85,9 +86,20 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         {
             return $"{objDef.Attr_Key_Lett}_{evtDef.Attr_Numb}_{ToProgramAvailableString(evtDef.Attr_Mning)}";
         }
-        public static string GetStateEnumLabelName(CIMClassSM_STATE stateDef)
+        public static string GetStateEnumLabelName(CIMClassSM_STATE stateDef, bool isDecl = false)
         {
-            return ToProgramAvailableString(stateDef.Attr_Name);
+            var name = ToProgramAvailableString(stateDef.Attr_Name);
+            if (Regex.Match(name, @"^[0-9]").Success)
+            {
+                string[] replace = { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+                int numOfBegin = int.Parse(name.Substring(0, 1));
+                name = $"{replace[numOfBegin]}{name.Substring(1)}";
+                if (isDecl)
+                {
+                    name = $"/* {numOfBegin} */ {name}";
+                }
+            }
+            return name;
         }
 
         public static string GetStateActionMethodName(CIMClassSM_STATE stateDef)

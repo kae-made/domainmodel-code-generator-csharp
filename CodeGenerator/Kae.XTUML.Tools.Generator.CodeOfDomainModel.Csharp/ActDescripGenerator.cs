@@ -27,6 +27,34 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
         private List<Dictionary<string, VariableDef>> declaredVariables = new List<Dictionary<string, VariableDef>>();
 
+        private class TempSetVarFolder
+        {
+            private List<List<string>> declaredTempVariable = new List<List<string>>();
+            public void AddBlock()
+            {
+                declaredTempVariable.Add(new List<string>());
+            }
+            public void DeleteBlock()
+            {
+                declaredTempVariable.RemoveAt(declaredTempVariable.Count - 1);
+            }
+            public void Declared(string varName)
+            {
+                declaredTempVariable[declaredTempVariable.Count - 1].Add(varName);
+            }
+            public bool HasDeclared(string varName)
+            {
+                for (int i = declaredTempVariable.Count - 1; i >= 0; i--)
+                {
+                    if (declaredTempVariable[i].Contains(varName))
+                        return true;
+                }
+                declaredTempVariable[declaredTempVariable.Count - 1].Add(varName);
+                return false;
+            }
+        }
+        private TempSetVarFolder currentTempSetVarFolder;
+
         ColoringManager coloringManager;
 
         public ActDescripGenerator(CIMClassACT_ACT actDef, string selfVarName, string baseIndent, string indent, IDictionary<string, CIMClassS_EE> usedEEs, ColoringManager coloringManager, bool azureDigitalTwins, bool azureIoTHub, Logger logger)
@@ -40,6 +68,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             this.isAzureDigitalTwins = azureDigitalTwins;
             this.isAzureIoTHub = azureIoTHub;
             this.logger = logger;
+            this.currentTempSetVarFolder = new TempSetVarFolder();
         }
 
         Dictionary<string, string> eeReferDefs = new Dictionary<string, string>();
@@ -250,6 +279,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
 
             declaredVariables.Add(new Dictionary<string, VariableDef>());
             blockDepth++;
+            currentTempSetVarFolder.AddBlock();
+
             var varDefs = blkDef.LinkedFromR823();
             foreach (var varDef in varDefs)
             {
@@ -402,6 +433,7 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                     }
                 }
             }
+            currentTempSetVarFolder.DeleteBlock();
 
             return sb.ToString();
         }
@@ -758,8 +790,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
         protected string GenerateACT_Delete(CIMClassACT_DEL actDelDef)
         {
             var varDef = actDelDef.LinkedToR634();
-
-            return $"{indent}{varDef.Attr_Name}.DeleteInstance(changedStates);";
+            string varName = varDef.Attr_Name;
+            if (varName.ToLower() == "self")
+            {
+                varName= this.selfVarNameOnCode;
+            }
+            return $"{indent}{varName}.DeleteInstance(changedStates);";
         }
         protected string GenerateACT_CNV(CIMClassACT_CNV actCnvDef)
         {
@@ -1597,9 +1633,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name}TempSet = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
-                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {varDef.Attr_Name}TempSet = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"any\").Result;");
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varDef.Attr_Name}TempSet.FirstOrDefault());");
+                string varTempSetName = $"{varDef.Attr_Name}TempSet";
+                string tempSetDeclCode = "";
+                if (!currentTempSetVarFolder.HasDeclared(varTempSetName))
+                {
+                    tempSetDeclCode = "var ";
+                }
+                writer.WriteLine($"{indent}{tempSetDeclCode}{varTempSetName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\");");
+                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {varTempSetName} = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return \"\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"any\").Result;");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varTempSetName}.FirstOrDefault());");
             }
 
             return sb.ToString();
@@ -1659,9 +1701,15 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             }
             else
             {
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name}TempSet = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode}));");
-                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {varDef.Attr_Name}TempSet = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
-                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varDef.Attr_Name}TempSet.FirstOrDefault());");
+                string tempSetDeclCode = "";
+                string varTempSetName = $"{varDef.Attr_Name}TempSet";
+                if (!currentTempSetVarFolder.HasDeclared(varTempSetName))
+                {
+                    tempSetDeclCode = "var ";
+                }
+                writer.WriteLine($"{indent}{tempSetDeclCode}{varTempSetName} = instanceRepository.GetDomainInstances(\"{objDef.Attr_Key_Lett}\").Where(selected => ({valCode}));");
+                writer.WriteLine($"{indent}if (instanceRepository.ExternalStorageAdaptor != null) {varTempSetName} = instanceRepository.ExternalStorageAdaptor.CheckInstanceStatus(DomainName, \"{objDef.Attr_Key_Lett}\", {varDef.Attr_Name}TempSet, () => {{ return $\"{valCodeForSql}\"; }}, () => {{ return {domainClassImplClassName}.CreateInstance(instanceRepository, logger); }}, \"{actFiwDef.Attr_cardinality}\").Result;");
+                writer.WriteLine($"{indent}{declCode}{varDef.Attr_Name} = ({domainClassName})({varTempSetName}.FirstOrDefault());");
             }
 
 
@@ -2196,6 +2244,8 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
             return code;
         }
 
+        
+
         protected VariableDef HasDeclaredVariable(string varName)
         {
             VariableDef declared = null;
@@ -2493,7 +2543,12 @@ namespace Kae.XTUML.Tools.Generator.CodeOfDomainModel.Csharp
                 string paramValCode = GenerateV_VAL(paramValDef, out paramVarName);
                 paramCode += $"{paramDef.Attr_Name}:{paramValCode}";
             }
-            string result = $"{valDef.Attr_Name}.{trfDef.Attr_Name}({paramCode})";
+            string valName = valDef.Attr_Name;
+            if (valName.ToLower() == "self")
+            {
+                valName = selfVarNameOnCode;
+            }
+            string result = $"{valName}.{trfDef.Attr_Name}({paramCode})";
             if (sqlStyle)
             {
                 result = "{" + result + "}";
